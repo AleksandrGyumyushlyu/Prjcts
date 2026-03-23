@@ -9,6 +9,8 @@ namespace Prjcts
 {
     internal class Point
     {
+        public static readonly Point Origin = new Point();
+
         private double x;
         private double y;
 
@@ -103,20 +105,19 @@ namespace Prjcts
         }
 
         /// <summary>
-        /// Finds out which <c>Point</c> instance is farthest from the 0,0 coordinates (origin) from array of <c>Point</c> instances
+        /// Finds out which <c>Point</c> instance is farthest from the 0,0 coordinates (Origin) from array of <c>Point</c> instances
         /// </summary>
         /// <param name="points">Array of <c>Point</c> instances to find out which is farthest from the origin (center dot (0,0)) </param>
         public static Point FarthestPoint(Point[] points)
         {
             double largestDistance, currentDistance; 
             int lrgDistIndex;
-            Point origin = new Point();
 
-            largestDistance = points[0].Distance(origin);
+            largestDistance = points[0].Distance(Origin);
             lrgDistIndex = 0;
             for (int i = 1; i < points.Length; i++)
             {
-                currentDistance = points[i].Distance(origin);
+                currentDistance = points[i].Distance(Origin);
                 if (currentDistance > largestDistance)
                 {
                     largestDistance = currentDistance;
@@ -135,11 +136,10 @@ namespace Prjcts
         public static Point[] HalfPoints(Point[] points)
         {
             Point[] middlePoints = new Point[points.Length];
-            Point origin = new Point();
 
             for (int i = 0; i < points.Length; i++)
             {
-                middlePoints[i] = points[i].MiddlePoint(origin);	
+                middlePoints[i] = points[i].MiddlePoint(Origin);	
             }
 
             return middlePoints;
