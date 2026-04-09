@@ -13,7 +13,7 @@ namespace Prjcts
             {
                 repeatChoosing = false;
 
-                Console.Write("1 - Point\n2 - Dates\n3 - Rectangle\n4 - Rational\n5 - Passport\n6 - Traveler\n7 - Line\n0 - Close\nChoose: ");
+                Console.Write("1 - Point\n2 - Dates\n3 - Rectangle\n4 - Rational\n5 - Passport\n6 - Traveler\n7 - Line\n8 - Parabola\n0 - Close\nChoose: ");
 
                 switch (Console.ReadKey().KeyChar)
                 {
@@ -48,6 +48,10 @@ namespace Prjcts
                     case '7':
                         Console.WriteLine();
                         Line.UnitTest();
+                        break;
+                    case '8':
+                        Console.WriteLine();
+                        Parabola.UnitTest();
                         break;
                     default:
                         Console.WriteLine();
