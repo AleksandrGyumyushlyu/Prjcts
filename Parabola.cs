@@ -49,7 +49,7 @@ namespace Prjcts
             c = (p * p) - k;
         }
 
-        // TODO Rest of the tasks
+        // TODO Do the rest of the functions
     
         /// <summary>
         /// When printing the instance of <c>Parabola</b> forses to print it in f(x) = ax² + bx + c format
