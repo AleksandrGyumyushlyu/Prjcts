@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)' == 'Unix'">
-    <BaseOutputPath>/home/just1ceb/tmp_build/bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>/home/just1ceb/tmp_build/obj</BaseIntermediateOutputPath>
+    <!-- <BaseOutputPath>/home/just1ceb/tmp_build/bin</BaseOutputPath> -->
+    <!-- <BaseIntermediateOutputPath>/home/just1ceb/tmp_build/obj</BaseIntermediateOutputPath> -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 </Project>
