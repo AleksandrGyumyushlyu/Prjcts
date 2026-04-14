@@ -1,0 +1,15 @@
+C:\Users\Ten\Documents\CSHomework\bin\Debug\net8.0\Prjcts.exe
+C:\Users\Ten\Documents\CSHomework\bin\Debug\net8.0\Prjcts.deps.json
+C:\Users\Ten\Documents\CSHomework\bin\Debug\net8.0\Prjcts.runtimeconfig.json
+C:\Users\Ten\Documents\CSHomework\bin\Debug\net8.0\Prjcts.dll
+C:\Users\Ten\Documents\CSHomework\bin\Debug\net8.0\Prjcts.pdb
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.AssemblyInfoInputs.cache
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.AssemblyInfo.cs
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.csproj.CoreCompileInputs.cache
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.sourcelink.json
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.dll
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\refint\Prjcts.dll
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.pdb
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\Prjcts.genruntimeconfig.cache
+C:\Users\Ten\Documents\CSHomework\obj\Debug\net8.0\ref\Prjcts.dll
