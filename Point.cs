@@ -163,7 +163,7 @@ namespace Prjcts
         /// </summary>
         public override string ToString()
         {
-            return $"( {this.x:0.##}, {this.y:0.##} )".ToString();
+            return $"( {this.x:0.##;-0.##;0}, {this.y:0.##;-0.##;0} )".ToString();
         }
 
         public static void UnitTest()
