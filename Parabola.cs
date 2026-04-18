@@ -17,10 +17,8 @@ namespace Prjcts
         private double c;
 
         /*
-            I activated feature in KDE plasma so when I press right alt and 2, it prints ², also it has ³ and ¹, so it's me
-            I'm wasting on documentation most of the time, I write functions faster than documentation, I hate it but I
-            can't stop cuz I would have to delete documentation in rest of the files because I want to be consistent. anyway
-            it's me and not AI, also can type «Text», „Text” and ∞, ° all sorts of useless bs 😏(emoji is from win + .)
+           I activated feature in KDE plasma so when I press right ctrl and 2, it prints ², also it has ³ and ¹.
+           Also can type «Text», „Text” and ∞, ° all sorts of useless bs 😏(emoji is from win + .)
         */
 
         /// <summary>
@@ -60,30 +58,30 @@ namespace Prjcts
         /// Function will find current's <c>Parabola</c> instance interception <c>Points</c> with <b>X axis</b>
         /// </summary>
         /// <returns>
-        /// Array of <c>Points</c> where current <c>Parabola</c> instance intercepting with <b>X axis</b>
+        /// Array of <c>Points</c> where current <c>Parabola</c> instance intercepting with <b>X axis</b> If not intercepting returns <b><c>null</c></b>
         /// </returns>
-        /// <remark> Should be used only with safety checks if it's returning null or it will crash </remark>
+        /// <remark> Should be used only with null checks if it's returning null or it will crash </remark>
         public Point[] Xintercept()
         {
+            Point[] points = new Point[2];
+
             if ((Math.Pow(this.b, 2) - 4 * this.a * this.c) < 0)
             {
-                return null;
+                points[0] = null;
+                points[1] = null;
             }
-            else if ((this.c - (Math.Pow(this.b, 2) / (4 * this.a)) == 0))
+            else if ((this.c - ((this.b * this.b) / (4 * this.a)) == 0))
             {
-                Point xIntercept = new Point(-this.b / (a * 2), 0);
-
-                Point[] point = { xIntercept, null };
-                return point;
+                points[0] = new Point(-this.b / (a * 2), 0);
+                points[1] = null;
             }
             else
             {
-                Point firstIntercept = new Point((-this.b + Math.Sqrt(Math.Pow(this.b, 2) - 4 * this.a * this.c)) / (this.a * 2), 0);
-                Point secondIntercept = new Point((-this.b - Math.Sqrt(Math.Pow(this.b, 2) - 4 * this.a * this.c)) / (this.a * 2), 0);
-
-                Point[] points = { firstIntercept, secondIntercept };
-                return points;
+                points[0] = new Point((-this.b + (Math.Sqrt((this.b * this.b) - (4 * this.a * this.c))) / (this.a * 2)), 0);
+                points[1] = new Point((-this.b - (Math.Sqrt((this.b * this.b) - (4 * this.a * this.c))) / (this.a * 2)), 0);
             }
+
+            return points;
         }
 
         /// <summary>
@@ -92,10 +90,10 @@ namespace Prjcts
         /// <param name="parabola">Any <c>Parabula</c> instance/'function'</param>
         public static void PrintXintercept(Parabola parabola)
         {
-            if (parabola.Xintercept() != null)
+            if (parabola.Xintercept()[0] != null)
             {
                 Console.Write($"{parabola} has interception point with X axis: ");
-                Console.Write(parabola.Xintercept()[0   ]);
+                Console.Write(parabola.Xintercept()[0]);
                 Console.Write(parabola.Xintercept()[1] != null ? $" and {parabola.Xintercept()[1]}\n" : "\n");
             }
             else
@@ -105,12 +103,39 @@ namespace Prjcts
         }
 
         /// <summary>
-        /// Function will find <b>Y</b> coordinate that will be on <b>X</b> coordinate passed as <b>parameter</b> 
+        /// Function will find <b>Y</b> coordinate that will be on <b>X</b> coordinate passed as <b>parameter</b> on current <c>Parabola</c> instance
         /// </summary>
         /// <param name="x"><b>X</b> coordinate for the <c>Point</c> which's <b>Y</b> coordinate function will find</param>
         public double GetY(double x)
         {
             return this.a * (x * x) + this.b * x + c;
+        }
+
+        /// <summary>
+        /// Function will provide <b>a parameter</b> of the current <c>Parabola</c> instance
+        /// </summary>
+        /// <returns><b>a parameter</b> of the current <c>Parabola</c> instance</returns>
+        public double GetA()
+        {
+            return this.a;
+        }
+
+        /// <summary>
+        /// Function will provide <b>b parameter</b> of the current <c>Parabola</c> instance
+        /// </summary>
+        /// <returns><b>b parameter</b> of the current <c>Parabola</c> instance</returns>
+        public double GetB()
+        {
+            return this.b;
+        }
+
+        /// <summary>
+        /// Function will provide <b>c parameter</b> of the current <c>Parabola</c> instance
+        /// </summary>
+        /// <returns><b>c parameter</b> of the current <c>Parabola</c> instance</returns>
+        public double GetC()
+        {
+            return this.c;
         }
 
         /// <summary>
@@ -123,23 +148,192 @@ namespace Prjcts
             return p.GetY() == GetY(p.GetX());
         }
 
+        /// <summary>
+        /// Function will find the <b>vertex</b> of the current <c>Parabola</c> instance
+        /// </summary>
+        /// <returns><c>Point</c> instance of the <b>vertex</b> of the current <c>Parabola</c> instance</returns>
         public Point Extreme()
         {
-
+            double p = (this.b / this.a) / -2;
+            double k = this.c - (this.a * (p*p));
+            return new Point(p, k);
         }
 
-        // TODO Do the rest of the functions
-    
+        /// <summary>
+        /// Function will find <b>Tangent function</b> of the current <c>Parabola</c> instance on <b>X</b> coordinate that's passed as <b>parameter</b>
+        /// </summary>
+        /// <param name="X"><b>X</b> coordinate where to find the <b>Tangent</b></param>
+        /// <returns><c>Line</c> instance of the <b>Tangent</b> function on the <b>X</b> coordinate of the current <c>Parabola</c> instance</returns>
+        public Line Tangent(double x)
+        {
+            double m = (2 * this.a * x) + this.b;
+            double b = ((this.a * (x*x)) + (this.b * x) + this.c) - (m * x);
+            return new Line(m, b);
+        }
+
+        /// <summary>
+        /// Function will find all intercept <c>Point</c>s of current <c>Parabola</c> instance with another <c>Line</c> instance that passed as <b>parameter</b>
+        /// </summary>
+        /// <param name="line"><c>Line</c> instance to check all <b>interception</b> <c>Point</c>s with current <c>Parabola</c> instance</param>
+        /// <returns>Array of <c>Point</c>s where <b>parameter</b> <c>Line</c> instance is <b>intercepting</b> with current <c>Parabola</c> instance</returns>
+        /// <remarks>
+        /// Should be used with <c><b>null</b></c> checks for each element or use PrintInterceptLine function
+        /// </remarks>
+        public Point[] InterceptLine(Line line)
+        {
+            Point[] points = new Point[2];
+            double b = this.b - line.GetSlope();
+            double c = this.c - line.GetB();
+            double x1;
+            double x2;
+
+            if ((b*b) - (4 * this.a * c) < 0)
+            {
+                points[0] = null;
+                points[1] = null;
+            }
+            else if (line.GetSlope() == 0 && Extreme().GetY() == line.GetB())
+            {
+                points[0] = this.Extreme();
+                points[1] = null;
+            }
+            else
+            {
+                x1 = (-b + Math.Sqrt((b*b) - (4 * this.a * c))) / (2 * this.a);
+                x2 = (-b - Math.Sqrt((b*b) - (4 * this.a * c))) / (2 * this.a);
+                points[0] = new Point(x1, (line.GetSlope() * x1) + line.GetB());
+                points[1] = new Point(x2, (line.GetSlope() * x2) + line.GetB());
+            }
+
+            return points;
+        }
+
+        /// <summary>
+        /// Function will safely print all <b>interception</b> <c>point</c>s between
+        /// current <c>Parabola</c> instance and <c>Line</c> instance passed as parameter
+        /// </summary>
+        /// <param name="line"><c>Line</c> instance to check all <b>interception</b> <c>Point</c>s with current <c>Parabola</c> instance</param>
+        public void PrintInterceptLine(Line line)
+        {
+            if (InterceptLine(line)[0] != null)
+            {
+                Console.Write($"{this} has interception point with {line}: ");
+                Console.Write(InterceptLine(line)[0]);
+                Console.Write(InterceptLine(line)[1] != null ? $" and {InterceptLine(line)[1]}\n" : "\n");
+            }
+            else
+            {
+                Console.WriteLine($"{this} has no interception points with {line}");
+            }
+        }
+
+        /// <summary>
+        /// Function will find <c>Line</c> that's perpendicular to given as <b>parameter</b> <c>Point</c> and
+        /// to <c>Point</c> at <b>X coordinate parameter</b> on current <c>Parabola</c> instance
+        /// </summary>
+        /// <param name="p"><c>Point</c> that Perpendicular <c>Line</c> will go through</param>
+        /// <param name="x">X coordinate of the <c>Point</c> on <c>Parabola</c> where the <b>tangent</b> that would be perpendicular to new <c>Line</c> </param>
+        /// <returns>new <c>Line</c> instance that is perpendicular to <b>tangent</b> on <b>X coordinate</b>
+        /// on current <c>Parabola</c> instance and also goes through <c>Point</c> that passed as <b>parameter</b></returns>
+        public Line PerpendicularFromPoint(Point p, double x)
+        {
+            double m = Tangent(x).Perpendicular(new Point(x, GetY(x))).GetSlope();
+            return new Line(m, p.GetY() - (m * p.GetX()));
+        }
+
+        /// <summary>
+        /// Function will find all intercept <c>Point</c>s of current <c>Parabola</c> instance with another <c>Parabola</c> instance that passed as <b>parameter</b>
+        /// </summary>
+        /// <param name="Parabola"><c>Parabola</c> instance to check all <b>interception</b> <c>Point</c>s with current <c>Parabola</c> instance</param>
+        /// <returns>Array of <c>Point</c>s where <b>parameter</b> <c>Parabola</c> instance is <b>intercepting</b> with current <c>Parabola</c> instance</returns>
+        /// <remarks>
+        /// Should be used with <c><b>null</b></c> checks for each element or use PrintInterceptParabola function
+        /// </remarks>
+        public Point[] InterceptParabola(Parabola par)
+        {
+            Point[] points = new Point[2];
+            double a = this.a - par.GetA();
+            double b = this.b - par.GetB();
+            double c = this.c - par.GetC();
+            double x1;
+            double x2;
+
+            if ((b*b) - (4 * a * c) < 0)
+            {
+                points[0] = null;
+                points[1] = null;
+            }
+            else if (a == 0)
+            {
+                x1 = -c / b;
+                points[0] = new Point(x1, GetY(x1));
+                points[1] = null;
+            }
+            else if ((b*b) - (4 * a * c) == 0)
+            {
+                x1 = -b / (2 * a);
+                points[0] = new Point(x1, par.GetY(x1));
+                points[1] = null;
+            }
+            else
+            {
+                x1 = (-b + Math.Sqrt((b*b) - (4 * a * c))) / (2 * a);
+                x2 = (-b - Math.Sqrt((b*b) - (4 * a * c))) / (2 * a);
+                points[0] = new Point(x1, GetY(x1));
+                points[1] = new Point(x2, GetY(x2));
+            }
+
+            return points;
+        }
+
+        /// <summary>
+        /// Function will find all intercept <c>Point</c>s of current <c>Parabola</c> instance with another <c>Parabola</c> instance that passed as <b>parameter</b>
+        /// </summary>
+        /// <param name="par"><c>Parabola</c> instance to check all <b>interception</b> <c>Point</c>s with current <c>Parabola</c> instance</param>
+        /// <returns>Array of <c>Point</c>s where <b>parameter</b> <c>Parabola</c> instance is <b>intercepting</b> with current <c>Parabola</c> instance</returns>
+        /// <remarks>
+        /// Should be used with <c><b>null</b></c> checks for each element or use PrintInterceptLine function
+        /// </remarks>
+        public void PrintInterceptParabola(Parabola par)
+        {
+            if (this.a == par.GetA() && this.b == par.GetB() && this.c == par.GetC())
+            {
+                Console.WriteLine($"{this} and {par} are the same Parabolas");
+            }
+            else if (InterceptParabola(par)[0] != null)
+            {
+                Console.Write($"{this} has interception point with {par}: ");
+                Console.Write(InterceptParabola(par)[0]);
+                Console.Write(InterceptParabola(par)[1] != null ? $" and {InterceptParabola(par)[1]}\n" : "\n");
+            }
+            else
+            {
+                Console.WriteLine($"{this} has no interception points with {par}");
+            }
+        }
+
         /// <summary>
         /// When printing the instance of <c>Parabola</b> forses to print it in f(x) = ax² + bx + c format
         /// </summary>
         /// <returns>String with all <b>parameters</b> of <c>parabola</c> instance in f(x) = ax² + bx + c format</returns>
         public override string ToString()
         {
-            return $"f(x) = {(this.a != 1 ? $"{this.a}" : "")}x^2{this.b: + #x; - #x;''}{this.c: + #; - #;''}";
+            return $"f(x) = {(this.a != 1 ? $"{this.a:0.##}" : "")}x²{this.b: + 0.##x; - 0.##x;''}{this.c: + 0.##; - 0.##;''}";
         }
 
-        public static void UnitTest()
+        /// <summary>
+        /// Prints current <c>Parabola</c> instance as vertext version of regular Parabola function
+        /// f(x) = ax² + bx + c -> f(x) = (x - p)² + k
+        /// </summary>
+        /// <returns>A formatted string with (x - p)² + k function of current <c>Parabola</c> instance</returns>
+        public string Vert() 
+        {
+            double p = (this.b / this.a) / -2;
+            double k = this.c - (this.a * (p*p));
+            return $"f(x) = (x{p: - 0.##; + 0.##;''})²{k: + 0.##; - 0.##;''}";
+        }
+
+        public static void UnitTest() 
         {
             Parabola parabola1 = new Parabola(1, 0, 0);
             Console.WriteLine(parabola1);
@@ -183,7 +377,45 @@ namespace Prjcts
             Console.WriteLine($"Is ( 2, 1 ) on {parabola4}: {parabola4.IsOnParabola(new Point(2, 1))}");
             Console.WriteLine($"Is ( 0, 1 ) on {parabola4}: {parabola4.IsOnParabola(new Point(0, 1))}");
 
+            Console.WriteLine($"{parabola1} is on {parabola1.Extreme()}");
+            Console.WriteLine($"{parabola2} is on {parabola2.Extreme()}");
+            Console.WriteLine($"{parabola3} is on {parabola3.Extreme()}");
+            Console.WriteLine($"{parabola4} is on {parabola4.Extreme()}");
 
+            Console.WriteLine($"{parabola1} on g(4) has this tangent: {parabola1.Tangent(4)}");
+            Console.WriteLine($"{parabola2} on g(4) has this tangent: {parabola2.Tangent(4)}");
+            Console.WriteLine($"{parabola3.Vert()} on g(4) has this tangent: {parabola3.Tangent(4)}");
+            Console.WriteLine($"{parabola4.Vert()} on g(4) has this tangent: {parabola4.Tangent(4)}");
+
+            parabola1.PrintInterceptLine(new Line(0, 9));
+            parabola1.PrintInterceptLine(new Line(5, 0));
+            parabola1.PrintInterceptLine(new Line(0, 0));
+
+            parabola2.PrintInterceptLine(new Line(0, 9));
+            parabola2.PrintInterceptLine(new Line(5, 0));
+            parabola2.PrintInterceptLine(new Line(0, 0));
+
+            parabola3.PrintInterceptLine(new Line(0, 5));
+            parabola3.PrintInterceptLine(new Line(5, 0));
+            parabola3.PrintInterceptLine(new Line(0, 0));
+
+            parabola4.PrintInterceptLine(new Line(0, 9));
+            parabola4.PrintInterceptLine(new Line(5, 0));
+            parabola4.PrintInterceptLine(new Line(0, 0));
+
+            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
+            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
+            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
+            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
+            parabola1.PrintInterceptParabola(new Parabola(0.5, 0, 3));
+            parabola1.PrintInterceptParabola(parabola1);
+            parabola1.PrintInterceptParabola(parabola2);
+            parabola1.PrintInterceptParabola(parabola3);
+            parabola1.PrintInterceptParabola(parabola4);
 
         }
     }
