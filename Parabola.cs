@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -287,13 +288,10 @@ namespace Prjcts
         }
 
         /// <summary>
-        /// Function will find all intercept <c>Point</c>s of current <c>Parabola</c> instance with another <c>Parabola</c> instance that passed as <b>parameter</b>
+        /// Function will safely print all <b>interception</b> <c>point</c>s between
+        /// current <c>Parabola</c> instance and <c>Parabola</c> instance passed as parameter
         /// </summary>
         /// <param name="par"><c>Parabola</c> instance to check all <b>interception</b> <c>Point</c>s with current <c>Parabola</c> instance</param>
-        /// <returns>Array of <c>Point</c>s where <b>parameter</b> <c>Parabola</c> instance is <b>intercepting</b> with current <c>Parabola</c> instance</returns>
-        /// <remarks>
-        /// Should be used with <c><b>null</b></c> checks for each element or use PrintInterceptLine function
-        /// </remarks>
         public void PrintInterceptParabola(Parabola par)
         {
             if (this.a == par.GetA() && this.b == par.GetB() && this.c == par.GetC())
@@ -310,6 +308,52 @@ namespace Prjcts
             {
                 Console.WriteLine($"{this} has no interception points with {par}");
             }
+        }
+
+        /// <summary>
+        /// Function will find area of the triangle between current <c>Parabola</c> instance <b>X axis</b>
+        /// </summary>
+        /// <returns>
+        /// An area between current <c>Parabola</c> instance and <b>X axis</b>
+        /// If there is no interception <c>Points</c> between current <c>Parabola</c> and <b>X axis</b> function will return 0
+        /// </returns>
+        public double ExtremeArea()
+        {
+            double area = 0;
+            Point xIntercept1 = Xintercept()[0];
+            Point xIntercept2 = Xintercept()[1];
+            if (xIntercept1 != null && xIntercept2 != null)
+            {
+                area = (Math.Abs(xIntercept2.GetX() - xIntercept1.GetX()) * Math.Abs(Extreme().GetY())) / 2;
+            }
+
+            return area;
+        }
+
+        /// <summary>
+        /// Function will find area of the triangle between current <c>Parabola</c> instance and passed as <b>parameter</b> <c>Line</c> instance
+        /// </summary>
+        /// <param name="line"><c>Line</c> instance to check area between it and current <c>Parabola</c> instance</param>
+        /// <returns>
+        /// An area between current <c>Parabola</c> instance and <b>parameter</b> <c>Line</c> instance
+        /// If there is no interception <c>Points</c> between current <c>Parabola</c> and <c>Line</c> function will return 0
+        /// </returns>
+        public double ExtremeArea(Line line)
+        {
+            double area = 0;
+            double s, a, b, c;
+            Point lineIntercept1 = InterceptLine(line)[0];
+            Point lineIntercept2 = InterceptLine(line)[1];
+            if (lineIntercept1 != null && lineIntercept2 != null)
+            {
+                a = lineIntercept1.Distance(lineIntercept2);
+                b = lineIntercept1.Distance(Extreme());
+                c = lineIntercept2.Distance(Extreme());
+                s = (a + b + c) / 2;
+                area = Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+            }
+
+            return area;
         }
 
         /// <summary>
@@ -347,7 +391,9 @@ namespace Prjcts
             Parabola parabola4 = new Parabola(3, 0);
             Console.WriteLine(parabola4);
 
-            Console.WriteLine($"Y intercepts: {parabola1.Yintercept()}, {parabola2.Yintercept()}, {parabola3.Yintercept()}, {parabola4.Yintercept()}");
+            Parabola parabola5 = new Parabola(0.1, 0, -10);
+
+            Console.WriteLine($"Y intercepts: {parabola1.Yintercept()}, {parabola2.Yintercept()}, {parabola3.Yintercept()}, {parabola4.Yintercept()}, {parabola5.Yintercept()}");
             Console.WriteLine("Xintercepts:");
 
             PrintXintercept(parabola1);
@@ -358,11 +404,14 @@ namespace Prjcts
 
             PrintXintercept(parabola4);
 
+            PrintXintercept(parabola5);
+
             Console.WriteLine("GET Y:");
             Console.WriteLine(parabola1.GetY(5));
             Console.WriteLine(parabola2.GetY(5));
             Console.WriteLine(parabola3.GetY(5));
             Console.WriteLine(parabola4.GetY(5));
+            Console.WriteLine(parabola5.GetY(5));
 
             Console.WriteLine("Is on parabola:");
             Console.WriteLine($"Is ( 1, 1 ) on {parabola1}: {parabola1.IsOnParabola(new Point(1, 1))}");
@@ -376,6 +425,9 @@ namespace Prjcts
 
             Console.WriteLine($"Is ( 2, 1 ) on {parabola4}: {parabola4.IsOnParabola(new Point(2, 1))}");
             Console.WriteLine($"Is ( 0, 1 ) on {parabola4}: {parabola4.IsOnParabola(new Point(0, 1))}");
+
+            Console.WriteLine($"Is ( -20 30 ) on {parabola5}: {parabola5.IsOnParabola(new Point(-20, 30))}");
+            Console.WriteLine($"Is ( 0, 1 ) on {parabola5}: {parabola5.IsOnParabola(new Point(0, 1))}");
 
             Console.WriteLine($"{parabola1} is on {parabola1.Extreme()}");
             Console.WriteLine($"{parabola2} is on {parabola2.Extreme()}");
@@ -405,17 +457,33 @@ namespace Prjcts
 
             Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
 
-            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+            Console.WriteLine($"Parabola {parabola2} perpendicular in -3, 8 is {parabola2.PerpendicularFromPoint(new Point(-3, 8), 2)}");
 
-            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+            Console.WriteLine($"Parabola {parabola3} perpendicular in -3, 8 is {parabola3.PerpendicularFromPoint(new Point(-3, 8), 2)}");
 
-            Console.WriteLine($"Parabola {parabola1} perpendicular in -3, 8 is {parabola1.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+            Console.WriteLine($"Parabola {parabola4} perpendicular in -3, 8 is {parabola4.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
+            Console.WriteLine($"Parabola {parabola5} perpendicular in -3, 8 is {parabola4.PerpendicularFromPoint(new Point(-3, 8), 2)}");
+
 
             parabola1.PrintInterceptParabola(new Parabola(0.5, 0, 3));
             parabola1.PrintInterceptParabola(parabola1);
             parabola1.PrintInterceptParabola(parabola2);
             parabola1.PrintInterceptParabola(parabola3);
             parabola1.PrintInterceptParabola(parabola4);
+            parabola1.PrintInterceptParabola(parabola5);
+
+            Console.WriteLine(parabola1.ExtremeArea() != 0 ? $"Parabola {parabola1} area between X intercepts and Extreme point is: {parabola1.ExtremeArea()}" : $"Parabola {parabola1} doesn't have X intercepts and therefore no extreme area");
+            Console.WriteLine(parabola2.ExtremeArea() != 0 ? $"Parabola {parabola2} area between X intercepts and Extreme point is: {parabola2.ExtremeArea()}" : $"Parabola {parabola2} doesn't have X intercepts and therefore no extreme area");
+            Console.WriteLine(parabola3.ExtremeArea() != 0 ? $"Parabola {parabola3} area between X intercepts and Extreme point is: {parabola3.ExtremeArea()}" : $"Parabola {parabola3} doesn't have X intercepts and therefore no extreme area");
+            Console.WriteLine(parabola4.ExtremeArea() != 0 ? $"Parabola {parabola4} area between X intercepts and Extreme point is: {parabola4.ExtremeArea()}" : $"Parabola {parabola4} doesn't have X intercepts and therefore no extreme area");
+            Console.WriteLine(parabola5.ExtremeArea() != 0 ? $"Parabola {parabola5} area between X intercepts and Extreme point is: {parabola5.ExtremeArea()}" : $"Parabola {parabola5} doesn't have X intercepts and therefore no extreme area");
+
+            Console.WriteLine(parabola1.ExtremeArea(new Line(4, 5)) != 0 ? $"Parabola {parabola1} area between {new Line(4, 5)} and Extreme point is: {parabola1.ExtremeArea(new Line(4, 5))}" : $"Parabola {parabola1} doesn't have two intercepts with {new Line(4, 5)} and therefore no extreme area");
+            Console.WriteLine(parabola2.ExtremeArea(new Line(4, 5)) != 0 ? $"Parabola {parabola2} area between {new Line(4, 5)} and Extreme point is: {parabola2.ExtremeArea(new Line(4, 5))}" : $"Parabola {parabola2} doesn't have two intercepts with {new Line(4, 5)} and therefore no extreme area");
+            Console.WriteLine(parabola3.ExtremeArea(new Line(4, 5)) != 0 ? $"Parabola {parabola3} area between {new Line(4, 5)} and Extreme point is: {parabola3.ExtremeArea(new Line(4, 5))}" : $"Parabola {parabola3} doesn't have two intercepts with {new Line(4, 5)} and therefore no extreme area");
+            Console.WriteLine(parabola4.ExtremeArea(new Line(4, 5)) != 0 ? $"Parabola {parabola4} area between {new Line(4, 5)} and Extreme point is: {parabola4.ExtremeArea(new Line(4, 5))}" : $"Parabola {parabola4} doesn't have two intercepts with {new Line(4, 5)} and therefore no extreme area");
+            Console.WriteLine(parabola5.ExtremeArea(new Line(4, 5)) != 0 ? $"Parabola {parabola5} area between {new Line(4, 5)} and Extreme point is: {parabola5.ExtremeArea(new Line(4, 5))}" : $"Parabola {parabola5} doesn't have two intercepts with {new Line(4, 5)} and therefore no extreme area");
 
         }
     }
