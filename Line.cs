@@ -164,7 +164,8 @@ namespace Prjcts
         /// <summary>
         /// Function will find out whether is a combination of current <c>Line</c> instance and <b>parameter</b> <c>Line</c> instance and <b>X Axis</b> could form a valid triangle
         /// </summary>
-        
+        /// <param name="line"><c>Line</c> instance to check if currenet <c>Line</c> instance can have a triangle between them</param>
+        /// <returns>Whether triangle is possible between current and <b>parameter</b> <c>line</c> instances</returns>
         public bool IsTrianglePossible(Line line)
         {
             return !(LineStatus(line) == -1 || LineStatus(line) == 0 || LineStatus(XAxis) == 0 || LineStatus(XAxis) == -1 || line.LineStatus(XAxis) == 0 || line.LineStatus(XAxis) == -1);
