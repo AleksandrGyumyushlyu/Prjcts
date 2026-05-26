@@ -1,5 +1,7 @@
-[Bb]in/
-[Ob]j/
+bin/
+Bin/
+obj/
+Obj/
 .idea/
 .vs/
 *.user

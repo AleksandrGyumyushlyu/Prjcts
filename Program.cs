@@ -7,11 +7,36 @@ namespace Prjcts
     {
         static void Main(string[] args)
         {
-            // Master branch is clear because I don't know what to do with it so I will leave it like this carelessly, only with cool functions I made (except that one with word finder)
-            // Make sure to checkout other branches to get to the homework because master is always empty
-            //
-            // Homework in classes - Classes-Homework branch
-            // Homework in sorting - Sorting-Homework branch
+            bool repeatChoosing = false;
+
+            do
+            {
+                repeatChoosing = false;
+
+                Console.Write("Choose what you want to test:\n1 - Checking Account system\n2 - Saving account system\n0 - Close\nChoose: ");
+
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '0':
+                        Console.WriteLine();
+                        Console.Write("Closed");
+                        break;
+                    case '1':
+                        Console.WriteLine();
+                        CheckingAccount.UnitTest();
+                        break;
+                    case '2':
+                        Console.WriteLine();
+                        SavingAccount.UnitTest();
+                        break;
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("Error");
+                        repeatChoosing = Funcs.RepeatChoosing();
+                        break;
+                }
+
+            } while (repeatChoosing);
         }
     }
 }

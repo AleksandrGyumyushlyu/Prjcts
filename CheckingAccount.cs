@@ -16,17 +16,19 @@ namespace Prjcts
         private double overdraft;
         private const double DEFAULT_OVERDRAFT = 1500;
 
-        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID, double overdraft)
+        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID, double overdraft = CheckingAccount.DEFAULT_OVERDRAFT, double balance = 0)
         {
             this.bankNum = bankNum;
             this.branchNum = branchNum;
             this.accountNum = accountNum;
             this.ownerID = ownerID;
-            this.balance = 0;
+            this.balance = balance;
             this.overdraft = overdraft;
         }
 
         public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID) : this(bankNum, branchNum, accountNum, ownerID, CheckingAccount.DEFAULT_OVERDRAFT) { }
+
+        public CheckingAccount(BasicAccount baseAcct , double overdraft = CheckingAccount.DEFAULT_OVERDRAFT) : this(baseAcct.GetBankNum(), baseAcct.GetBranchNum(), baseAcct.GetAccountNum(), baseAcct.GetOwnerID(), overdraft, baseAcct.GetBal()) { }
 
         public int GetBankNum()
         {
@@ -37,7 +39,7 @@ namespace Prjcts
         {
             return this.branchNum;
         }
-
+
         public int GetAccountNum()
         {
             return this.accountNum;
@@ -58,17 +60,66 @@ namespace Prjcts
             return this.overdraft;
         }
 
-        public void SetOverdraft(double newOverdraft)
+        public bool SetOverdraft(double newOverdraft)
         {
-            this.overdraft = newOverdraft >= 0 ? newOverdraft : this.overdraft;
+            if (newOverdraft >= 0)
+            {
+                this.overdraft = newOverdraft;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Deposit(double sum)
+        {
+            if (sum >= 0)
+            {
+                this.balance += sum;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Withdraw(double sum)
+        {
+            if (sum >= 0 && GetBal() - sum >= (GetOverDraft() * -1))
+            {
+                this.balance -= sum;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override string ToString()
         {
-            return $@" ________________________________
-                      |                                |
-                      | {GetBankNum()}{GetBranchNum}{}
-                      |________________________________|";
+            return $"Card number: {GetBankNum()}{GetBranchNum()}{GetAccountNum()}{GetOwnerID()}\nBalance: {GetBal()}\nMax overdraft: {GetOverDraft()}";
+        }
+
+        public static void UnitTest()
+        {
+            CheckingAccount chkAc = new CheckingAccount(53, 57, 3802, "0123");
+            Console.WriteLine(chkAc);
+
+            Console.WriteLine(chkAc.Deposit(150) ? "Deposited successfull" : "Failed to deposit");
+            Console.WriteLine(chkAc.GetBal());
+            Console.WriteLine(chkAc.Deposit(-1) ? "Deposited successfull" : "Failed to deposit");
+            Console.WriteLine(chkAc.GetBal());
+
+            Console.WriteLine(chkAc.Withdraw(-1) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(chkAc.GetBal());
+            Console.WriteLine(chkAc.Withdraw(150) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(chkAc.GetBal());
+            Console.WriteLine(chkAc.Withdraw(2000) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(chkAc.GetBal());
         }
 
     }
