@@ -73,5 +73,22 @@ namespace Prjcts
                 return false;
             }
         }
+        public static void UnitTest()
+        {
+            BasicAccount bsAcct = new BasicAccount(53, 57, 3802, "0123");
+            Console.WriteLine(bsAcct);
+
+            Console.WriteLine(bsAcct.Deposit(150) ? "Deposited successfull" : "Failed to deposit");
+            Console.WriteLine(bsAcct.GetBal());
+            Console.WriteLine(bsAcct.Deposit(-1) ? "Deposited successfull" : "Failed to deposit");
+            Console.WriteLine(bsAcct.GetBal());
+
+            Console.WriteLine(bsAcct.Withdraw(-1) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(bsAcct.GetBal());
+            Console.WriteLine(bsAcct.Withdraw(150) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(bsAcct.GetBal());
+            Console.WriteLine(bsAcct.Withdraw(2000) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(bsAcct.GetBal());
+        }
     }
 }
