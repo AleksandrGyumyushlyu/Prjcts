@@ -6,54 +6,21 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    internal class CheckingAccount
+    public class CheckingAccount : BasicAccount
     {
-        private int bankNum;
-        private int branchNum;
-        private int accountNum;
-        private string ownerID;
-        private double balance;
+        protected const double DEFAULT_OVERDRAFT = 1500;
         private double overdraft;
-        private const double DEFAULT_OVERDRAFT = 1500;
 
-        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID, double overdraft = CheckingAccount.DEFAULT_OVERDRAFT, double balance = 0)
+        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID, double overdraft, double balance) : base(bankNum, branchNum, accountNum, ownerID)
         {
-            this.bankNum = bankNum;
-            this.branchNum = branchNum;
-            this.accountNum = accountNum;
-            this.ownerID = ownerID;
-            this.balance = balance;
             this.overdraft = overdraft;
+            this.balance = balance;
         }
 
-        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID) : this(bankNum, branchNum, accountNum, ownerID, CheckingAccount.DEFAULT_OVERDRAFT) { }
+        public CheckingAccount(int bankNum, int branchNum, int accountNum, string ownerID) : this(bankNum, branchNum, accountNum, ownerID, CheckingAccount.DEFAULT_OVERDRAFT, 0) { }
 
-        public CheckingAccount(BasicAccount baseAcct , double overdraft = CheckingAccount.DEFAULT_OVERDRAFT) : this(baseAcct.GetBankNum(), baseAcct.GetBranchNum(), baseAcct.GetAccountNum(), baseAcct.GetOwnerID(), overdraft, baseAcct.GetBal()) { }
+        public CheckingAccount(BasicAccount baseAcct, double overdraft = CheckingAccount.DEFAULT_OVERDRAFT) : this(baseAcct.GetBankNum(), baseAcct.GetBranchNum(), baseAcct.GetAccountNum(), baseAcct.GetOwnerID(), overdraft, baseAcct.GetBal()) { }
 
-        public int GetBankNum()
-        {
-            return this.bankNum;
-        }
-
-        public int GetBranchNum()
-        {
-            return this.branchNum;
-        }
-
-        public int GetAccountNum()
-        {
-            return this.accountNum;
-        }
-
-        public string GetOwnerID()
-        {
-            return this.ownerID;
-        }
-
-        public double GetBal()
-        {
-            return this.balance;
-        }
 
         public double GetOverDraft()
         {
@@ -73,22 +40,9 @@ namespace Prjcts
             }
         }
 
-        public bool Deposit(double sum)
+        public override bool Withdraw(double sum)
         {
-            if (sum >= 0)
-            {
-                this.balance += sum;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool Withdraw(double sum)
-        {
-            if (sum >= 0 && GetBal() - sum >= (GetOverDraft() * -1))
+            if (sum >= 0 && GetBal() - sum >= -GetOverDraft())
             {
                 this.balance -= sum;
                 return true;
@@ -101,7 +55,7 @@ namespace Prjcts
 
         public override string ToString()
         {
-            return $"Card number: {GetBankNum()}{GetBranchNum()}{GetAccountNum()}{GetOwnerID()}\nBalance: {GetBal()}\nMax overdraft: {GetOverDraft()}";
+            return $"{base.ToString()}Max overdraft: {GetOverDraft()}";
         }
 
         public static void UnitTest()

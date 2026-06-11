@@ -6,52 +6,20 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    internal class SavingAccount
+    public class SavingAccount : BasicAccount
     {
-        private int bankNum;
-        private int branchNum;
-        private int accountNum;
-        private string ownerID;
-        private double balance;
         private Date savingEndDate;
 
         
-        public SavingAccount(int bankNum, int branchNum, int accountNum, string ownerID, Date savingEndDate, double balance = 0)
+        public SavingAccount(int bankNum, int branchNum, int accountNum, string ownerID, Date savingEndDate, double balance) : base(bankNum, branchNum, accountNum, ownerID)
         {
-            this.bankNum = bankNum;
-            this.branchNum = branchNum;
-            this.accountNum = accountNum;
-            this.ownerID = ownerID;
             this.balance = balance;
             this.savingEndDate = savingEndDate;
         }
 
+        public SavingAccount(int bankNum, int branchNum, int accountNum, string ownerID, Date savingEndDate) : this(bankNum, branchNum, accountNum, ownerID, savingEndDate, 0) { }
+
         public SavingAccount(BasicAccount baseAcct, Date savingEndDate) : this(baseAcct.GetBankNum(), baseAcct.GetBranchNum(), baseAcct.GetAccountNum(), baseAcct.GetOwnerID(), savingEndDate, baseAcct.GetBal()) { }
-
-        public int GetBankNum()
-        {
-            return this.bankNum;
-        }
-
-        public int GetBranchNum()
-        {
-            return this.branchNum;
-        }
-
-        public int GetAccountNum()
-        {
-            return this.accountNum;
-        }
-
-        public string GetOwnerID()
-        {
-            return this.ownerID;
-        }
-
-        public double GetBal()
-        {
-            return this.balance;
-        }
 
         public Date GetEndDate()
         {

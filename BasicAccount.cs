@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    internal class BasicAccount
+    public class BasicAccount
     {
         private int bankNum;
         private int branchNum;
         private int accountNum;
         private string ownerID;
-        private double balance;
+        protected double balance;
 
         public BasicAccount(int bankNum, int branchNum, int accountNum, string ownerID)
         {
@@ -61,7 +61,7 @@ namespace Prjcts
             }
         }
 
-        public bool Withdraw(double sum)
+        public virtual bool Withdraw(double sum)
         {
             if (sum >= 0 && GetBal() - sum >= 0)
             {
@@ -73,6 +73,12 @@ namespace Prjcts
                 return false;
             }
         }
+
+        public override string ToString()
+        {
+            return $"Card number: {GetBankNum()}{GetBranchNum()}{GetAccountNum()}{GetOwnerID()}\nBalance: {GetBal()}\n";
+        }
+
         public static void UnitTest()
         {
             BasicAccount bsAcct = new BasicAccount(53, 57, 3802, "0123");
