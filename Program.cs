@@ -13,7 +13,8 @@ namespace Prjcts
             {
                 repeatChoosing = false;
 
-                Console.Write("Choose what you want to test:\n1 - Checking Account system\n2 - Saving account system\n3 - Basic Account\n4 - Employee class\n0 - Close\nChoose: ");
+                Console.Write("Choose what you want to test:\n1 - Checking Account system\n2 - Saving account system\n3 - Basic Account\n4 - Employee class\n5 - Business Account\n0 - Close\n");
+                Console.Write("Choose: ");
 
                 switch (Console.ReadKey().KeyChar)
                 {
@@ -36,6 +37,10 @@ namespace Prjcts
                     case '4':
                         Console.WriteLine();
                         Employee.UnitTest();
+                        break;
+                    case '5':
+                        Console.WriteLine();
+                        BusinessAccount.UnitTest();
                         break;
                     default:
                         Console.WriteLine();

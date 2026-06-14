@@ -61,6 +61,19 @@ namespace Prjcts
             }
         }
 
+        public bool TransferMoney(BasicAccount otherAck, double sum)
+        {
+            if (this.Withdraw(sum))
+            {
+                otherAck.Deposit(sum);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public virtual bool Withdraw(double sum)
         {
             if (sum >= 0 && GetBal() - sum >= 0)
@@ -73,6 +86,7 @@ namespace Prjcts
                 return false;
             }
         }
+
 
         public override string ToString()
         {
