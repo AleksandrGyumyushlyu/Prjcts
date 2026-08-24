@@ -65,6 +65,11 @@ namespace Prjcts
             }
         }
 
+        public override bool AtRisk()
+        {
+            return this.GetBal() == 0;
+        }
+
         public override string ToString()
         {
             return $"Card number: {GetBankNum()}{GetBranchNum()}{GetAccountNum()}{GetOwnerID()}\nBalance: {GetBal()}\nSavings end date: {GetEndDate()}";
@@ -72,16 +77,18 @@ namespace Prjcts
 
         public static void UnitTest()
         {
-            SavingAccount svAc = new SavingAccount(53, 57, 3802, "0123", new Date());
+            SavingAccount svAc = new SavingAccount(53, 57, 3802, "0123", new Date(), 10000);
             Console.WriteLine(svAc);
 
-            Console.WriteLine(svAc.SetEndDate(new Date(27, 5, 2026)) ? "End date changed!" : "End date change failed");
+            Console.WriteLine(svAc.SetEndDate(new Date(21, 8, 2026)) ? "End date changed!" : "End date change failed");
             Console.WriteLine(svAc.GetEndDate());
-            Console.WriteLine(svAc.SetEndDate(new Date(23, 5, 2026)) ? "End date changed!" : "End date change failed");
+            Console.WriteLine(svAc.SetEndDate(new Date(26, 8, 2026)) ? "End date changed!" : "End date change failed");
             Console.WriteLine(svAc.GetEndDate());
 
-            Console.WriteLine(svAc.WithdrawAll(new Date(23, 5, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
-            Console.WriteLine(svAc.WithdrawAll(new Date(27, 5, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(svAc.WithdrawAll(new Date(19, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(svAc);
+            Console.WriteLine(svAc.WithdrawAll(new Date(27, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(svAc);
         }
     }
 }

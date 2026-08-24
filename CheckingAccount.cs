@@ -42,7 +42,7 @@ namespace Prjcts
 
         public override bool Withdraw(double sum)
         {
-            if (sum >= 0 && GetBal() - sum >= -GetOverDraft())
+            if (sum >= 0 && this.GetBal() - sum >= -this.GetOverDraft())
             {
                 this.balance -= sum;
                 return true;
@@ -51,6 +51,11 @@ namespace Prjcts
             {
                 return false;
             }
+        }
+
+        public override bool AtRisk()
+        {
+            return this.GetBal() < 0;
         }
 
         public override string ToString()

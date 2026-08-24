@@ -49,11 +49,10 @@ namespace Prjcts
                     default:
                         Console.WriteLine();
                         Console.WriteLine("Error");
-                        repeatChoosing = Funcs.RepeatChoosing();
                         break;
                 }
 
-            } while (repeatChoosing);
+            } while (Funcs.RepeatChoosing());
         }
     }
 }

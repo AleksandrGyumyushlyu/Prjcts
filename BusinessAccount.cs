@@ -47,6 +47,11 @@ namespace Prjcts
             }
         }
 
+        public override bool AtRisk()
+        {
+            return -this.GetBal() >= this.GetOverDraft() * 0.9;
+        }
+
         public override string ToString()
         {
             return $"Business Card:\nBusiness Name: {this.GetBizName()}\n{base.ToString()}";

@@ -87,6 +87,10 @@ namespace Prjcts
             }
         }
 
+        public virtual bool AtRisk()
+        {
+            return false;
+        }
 
         public override string ToString()
         {
