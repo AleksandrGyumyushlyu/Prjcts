@@ -9,7 +9,9 @@ namespace Prjcts
         {
             bool repeatChoosing = false;
             int n;
+            int n2;
             string input;
+            string input2;
 
             do
             {
@@ -47,18 +49,97 @@ namespace Prjcts
                         }
                         break;
                     case '2':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.NFactorialRecursive(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
                         break;
                     case '3':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.NOddFactorialRecursive(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
                         break;
                     case '4':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.DigitCountRecursive(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
                         break;
                     case '5':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine("Enter any positive integer number: ");
+                            input2 = Console.ReadLine();
+                            if (Funcs.IsInt(input2))
+                            {
+                                n2 = int.Parse(input2);
+                                Console.WriteLine(Recursion.RawRecursiveDivision(n, n2));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The input isn't an integer! Try again");
+                            }
+                            }
+                            else
+                            {
+                                Console.WriteLine("The input isn't an integer! Try again");
+                            }
                         break;
                     case '6':
                         break;
                     default:
                         Console.WriteLine();
-                        Console.WriteLine("There's no task under this symbol/number! Try again");
+                        Console.WriteLine("There's no task under this number/symbol! Try again");
                         break;
                 }
 
