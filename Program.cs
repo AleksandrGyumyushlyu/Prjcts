@@ -129,13 +129,174 @@ namespace Prjcts
                             {
                                 Console.WriteLine("The input isn't an integer! Try again");
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case '6':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine("Enter any positive integer number: ");
+                            input2 = Console.ReadLine();
+                            if (Funcs.IsInt(input2))
+                            {
+                                n2 = int.Parse(input2);
+                                Console.WriteLine(Recursion.RecursiveModulo(n, n2));
                             }
                             else
                             {
                                 Console.WriteLine("The input isn't an integer! Try again");
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
                         break;
-                    case '6':
+                    case '7':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine("Enter any positive integer number: ");
+                            input2 = Console.ReadLine();
+                            if (Funcs.IsInt(input2))
+                            {
+                                n2 = int.Parse(input2);
+                                Console.WriteLine(Recursion.IsMultiple(n, n2));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The input isn't an integer! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case '8':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.IsPrimeRecursive(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case '9':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.NeverOddOrEven(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'a':
+                    case 'A':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.MultipliedByToUpToN(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'b':
+                    case 'B':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.ChainToN(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'c':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine("Enter any positive integer number: ");
+                            input2 = Console.ReadLine();
+                            if (Funcs.IsInt(input2))
+                            {
+                                n2 = int.Parse(input2);
+                                Console.WriteLine(Recursion.MultiplesUpToN2(n, n2));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The input isn't an integer! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'C':
+                        break;
+                    case 'd':
+                    case 'D':
                         break;
                     default:
                         Console.WriteLine();
