@@ -18,7 +18,7 @@ namespace Prjcts
                 repeatChoosing = false;
 
                 Console.Write("Choose what task you want to test:\n1 - Task 1\n2 - Task 2\n3 - Task 3\n4 - Task 4\n5 - Task 5\n6 - Task 6\n");
-                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nD - Task 13\n0 - Exit\n");
+                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nd - Task 13 paragraph a\nD - Task 13 paragraph b\n0 - Exit\n");
                 Console.Write("Choose: ");
 
                 switch (Console.ReadKey().KeyChar)
@@ -270,6 +270,7 @@ namespace Prjcts
                         }
                         break;
                     case 'c':
+                    case 'C':
                         Console.WriteLine();
                         Console.WriteLine("Enter any positive integer number: ");
                         input = Console.ReadLine();
@@ -293,10 +294,47 @@ namespace Prjcts
                             Console.WriteLine("The input isn't an integer! Try again");
                         }
                         break;
-                    case 'C':
-                        break;
                     case 'd':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.QuadricSequenceNum(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
                     case 'D':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.QuadricSequenceSumToN(n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
                         break;
                     default:
                         Console.WriteLine();

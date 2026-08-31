@@ -51,7 +51,7 @@ namespace Prjcts
             return 1 + DigitCountRecursive(n/10);
         }
 
-        public static int RawRecursiveDivision(int a, int b)
+        public static int RawRecursiveDivision(int a, int b) // 5
         {
             if (a < b)
             {
@@ -61,7 +61,7 @@ namespace Prjcts
             return 1 + RawRecursiveDivision(a-b, b);
         }
 
-        public static int RecursiveModulo(int a, int b)
+        public static int RecursiveModulo(int a, int b) // 6
         {
             if (a < b)
             {
@@ -71,7 +71,7 @@ namespace Prjcts
             return RecursiveModulo(a-b, b);
         }
 
-        public static bool IsMultiple(int a, int b)
+        public static bool IsMultiple(int a, int b) // 7
         {
             if (a < 0)
             {
@@ -86,7 +86,7 @@ namespace Prjcts
             return IsMultiple(a - b, b);
         }
 
-        public static bool IsPrimeRecursive(int n, int divider = 9)
+        public static bool IsPrimeRecursive(int n, int divider = 9) // 8
         {
             if (divider <= 1)
             {
@@ -103,7 +103,7 @@ namespace Prjcts
             }
         }
 
-        // Checks if all digits are odd or all digits are even, if neither of these FALSE
+        // Checks if all digits are odd or all digits are even, if neither of these FALSE (Task   9)
         public static bool NeverOddOrEven(int n) // https://www.youtube.com/watch?v=XY3b4kVAV2Y
         {
             if (n < 10)
@@ -119,7 +119,7 @@ namespace Prjcts
             return NeverOddOrEven(n/10);
         }
 
-        public static int MultipliedByToUpToN(int n)
+        public static int MultipliedByToUpToN(int n) // 10
         {
             if (n <= 1)
             {
@@ -136,7 +136,7 @@ namespace Prjcts
             }
         }
 
-        public static double ChainToN(int n, int count = 1, int organ = 1)
+        public static double ChainToN(int n, int count = 1, int organ = 1) // 11
         {
             if (count > n)
             {
@@ -154,6 +154,40 @@ namespace Prjcts
 
         }
 
-        // public static int MultiplesUpToN2(int n,)
+        public static int MultiplesUpToN2(int n1, int n2, int multiple = 1) // 12
+        {
+            if (multiple * n1 > n2)
+            {
+                return 0;
+            }
+
+            return multiple * n1 + MultiplesUpToN2(n1, n2, multiple+1);
+        }
+
+        public static int QuadricSequenceNum(int n) // 13 a
+        {
+            if (n == 1)
+            {
+                return 0;
+            }
+            else if (n == 2)
+            {
+                return 1;
+            }
+            else
+            {
+                return (int)Math.Pow(QuadricSequenceNum(n - 1), 2) + (int)Math.Pow(QuadricSequenceNum(n - 2), 2);
+            }
+        }
+
+        public static int QuadricSequenceSumToN(int n) // 13 b
+        {
+            if (n <= 0)
+            {
+                return 0;
+            }
+
+            return QuadricSequenceNum(n) + QuadricSequenceSumToN(n-1);
+        }
     }
 }
