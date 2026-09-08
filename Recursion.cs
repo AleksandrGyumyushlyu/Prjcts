@@ -189,5 +189,67 @@ namespace Prjcts
 
             return QuadricSequenceNum(n) + QuadricSequenceSumToN(n-1);
         }
+
+        public static int RecursiveMax(int[] arr, int i = 0) // N
+        {
+            if (i == arr.Length-1)
+            {
+                return arr[i];
+            }
+
+            return Math.Max(arr[i], RecursiveMax(arr, i+1));
+        }
+
+        public static int SumArrToI(int[] arr, int i) // 14
+        {
+            if (i < 0)
+            {
+                return 0;
+            }
+
+            if (i == 0)
+            {
+                return arr[0];
+            }
+
+            return arr[i] + SumArrToI(arr, i-1);
+        }
+
+        public static int PosCountArrToN(int[] arr, int n) // 15
+        {
+            if (n == 0)
+            {
+                return arr[n] >= 0 ? 1 : 0;
+            }
+
+            return (arr[n] >= 0 ? 1 : 0) + PosCountArrToN(arr, n - 1);
+        }
+
+        public static int FindInArr(int[] arr, int n, int i = 0) // 16
+        {
+            if (i == arr.Length)
+            {
+                return -1;
+            }
+
+            if (arr[i] == n)
+            {
+                return i;
+            }
+            else
+            {
+                return FindInArr(arr, n, i + 1);
+            }
+        }
+
+        public static bool IsSorted(int[] arr, int i = 0) // 17
+        {
+            if (i == arr.Length - 2)
+            {
+                return arr[i] < arr[i + 1];
+            }
+
+            return arr[i] < arr[i+1] && IsSorted(arr, i + 1);
+        }
     }
 }

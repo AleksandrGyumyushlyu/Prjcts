@@ -7,6 +7,13 @@ namespace Prjcts
     {
         static void Main(string[] args)
         {
+            Program.Menu();
+            // Program.ClassTests();
+        }
+
+        
+        static void Menu()
+        {
             bool repeatChoosing = false;
             int n;
             int n2;
@@ -18,7 +25,9 @@ namespace Prjcts
                 repeatChoosing = false;
 
                 Console.Write("Choose what task you want to test:\n1 - Task 1\n2 - Task 2\n3 - Task 3\n4 - Task 4\n5 - Task 5\n6 - Task 6\n");
-                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nd - Task 13 paragraph a\nD - Task 13 paragraph b\n0 - Exit\n");
+                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nd - Task 13 paragraph a\nD - Task 13 paragraph b\nE - Task 14\n");
+                Console.WriteLine("F - Task 15\nG - Task 16\n");
+                Console.WriteLine("\n0 - Exit\n");
                 Console.Write("Choose: ");
 
                 switch (Console.ReadKey().KeyChar)
@@ -336,6 +345,80 @@ namespace Prjcts
                             Console.WriteLine("The input isn't an integer! Try again");
                         }
                         break;
+                    case 'E':
+                    case 'e':
+                        Console.WriteLine();
+                        
+                        int[] testArr = Funcs.GenArr(10, 0, 100);
+                        Funcs.PrintArray(testArr);
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.SumArrToI(testArr, n-1));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'F':
+                    case 'f':
+                        Console.WriteLine();
+                        
+                        int[] testArr1 = Funcs.GenArr(10, -50, 50);
+                        Funcs.PrintArray(testArr1);
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                Console.WriteLine(Recursion.PosCountArrToN(testArr1, n));
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'G':
+                    case 'g':
+                        Console.WriteLine();
+                        
+                        int[] testArr2 = Funcs.GenArr(10, -50, 50);
+                        Funcs.PrintArray(testArr2);
+                        Console.WriteLine("Enter any integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine(Recursion.FindInArr(testArr2, n));
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case 'H':
+                    case 'h':
+                        Console.WriteLine();
+                        int[] testArr3 = [0, 1, 2, 4, 5, 7, 4];
+                        Console.WriteLine(Recursion.IsSorted(testArr3));
+                        break;
                     default:
                         Console.WriteLine();
                         Console.WriteLine("There's no task under this number/symbol! Try again");
@@ -343,6 +426,13 @@ namespace Prjcts
                 }
 
             } while (Funcs.RepeatChoosing());
+        }
+
+        public static void ClassTests()
+        {
+            int[] arr = [12, 123, 12, 58];
+
+            Console.WriteLine(Recursion.RecursiveMax(arr));
         }
     }
 }
