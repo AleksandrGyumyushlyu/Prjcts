@@ -427,15 +427,15 @@ namespace Prjcts
                         break;
                     case 'j':
                     case 'J':
-
                         Console.WriteLine();
+                        int[,] testArr5 = {{39, 94, 85, 21, 76}, {39, 231, 21, 39, 59}};
                         
                         Console.WriteLine("Enter any integer number: ");
                         input = Console.ReadLine();
                         if (Funcs.IsInt(input))
                         {
                             n = int.Parse(input);
-                            Console.WriteLine(Recursion.);
+                            Console.WriteLine(Recursion.AppearsInLine(testArr5, n));
                         }
                         else
                         {

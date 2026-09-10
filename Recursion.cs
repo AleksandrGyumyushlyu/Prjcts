@@ -251,7 +251,7 @@ namespace Prjcts
             return arr[i] < arr[i+1] && IsSorted(arr, i + 1);
         }
 
-        public static bool HasPrimes(int[] arr, int i = 0)
+        public static bool HasPrimes(int[] arr, int i = 0) // 18
         {
             if (i == arr.Length - 1)
             {
@@ -268,7 +268,7 @@ namespace Prjcts
             }
         }
 
-        public static int AppearsInLine(int[,] arr, int n, int i = 0)
+        public static int AppearsInLine(int[,] arr, int n, int i = 0) // 19
         {
             if (i == arr.GetLength(0))
             {
@@ -277,7 +277,7 @@ namespace Prjcts
 
             bool isInArr = false;
 
-            for (int j = 0; j < arr.GetLength(1); j++)
+            for (int j = 0; j < arr.GetLength(1) && !isInArr; j++)
             {
                 if (arr[i,j] == n)
                 {
@@ -294,5 +294,6 @@ namespace Prjcts
                 return AppearsInLine(arr, n, i + 1);
             }
         }
+
     }
 }
