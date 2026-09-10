@@ -93,9 +93,10 @@ namespace Prjcts
                 return true;
             }
 
-            if (IsMultiple(n, divider))
+            if (divider != n && IsMultiple(n, divider))
             {
                 return false;
+                Console.WriteLine(divider);
             }
             else
             {
@@ -250,6 +251,23 @@ namespace Prjcts
             }
 
             return arr[i] < arr[i+1] && IsSorted(arr, i + 1);
+        }
+
+        public static bool HasPrimes(int[] arr, int i = 0)
+        {
+            if (i == arr.Length - 1)
+            {
+                return !IsPrimeRecursive(arr[i]);
+            }
+
+            if (!IsPrimeRecursive(arr[i]))
+            {
+                return HasPrimes(arr, i + 1);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -419,6 +419,12 @@ namespace Prjcts
                         int[] testArr3 = [0, 1, 2, 4, 5, 7, 4];
                         Console.WriteLine(Recursion.IsSorted(testArr3));
                         break;
+                    case 'i':
+                    case 'I':
+                        int[] testArr4 = Funcs.GenArr(10, 0, 100);
+                        Funcs.PrintArray(testArr4);
+                        Console.WriteLine(Recursion.HasPrimes(testArr4));
+                        break;
                     default:
                         Console.WriteLine();
                         Console.WriteLine("There's no task under this number/symbol! Try again");
