@@ -425,6 +425,23 @@ namespace Prjcts
                         Funcs.PrintArray(testArr4);
                         Console.WriteLine(Recursion.HasPrimes(testArr4));
                         break;
+                    case 'j':
+                    case 'J':
+
+                        Console.WriteLine();
+                        
+                        Console.WriteLine("Enter any integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            Console.WriteLine(Recursion.);
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
                     default:
                         Console.WriteLine();
                         Console.WriteLine("There's no task under this number/symbol! Try again");

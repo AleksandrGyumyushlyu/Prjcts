@@ -186,9 +186,7 @@ namespace Prjcts
             if (n <= 0)
             {
                 return 0;
-            }
-
-            return QuadricSequenceNum(n) + QuadricSequenceSumToN(n-1);
+            } return QuadricSequenceNum(n) + QuadricSequenceSumToN(n-1);
         }
 
         public static int RecursiveMax(int[] arr, int i = 0) // N
@@ -267,6 +265,33 @@ namespace Prjcts
             else
             {
                 return false;
+            }
+        }
+
+        public static int AppearsInLine(int[,] arr, int n, int i = 0)
+        {
+            if (i == arr.GetLength(0))
+            {
+                return 0;
+            }
+
+            bool isInArr = false;
+
+            for (int j = 0; j < arr.GetLength(1); j++)
+            {
+                if (arr[i,j] == n)
+                {
+                    isInArr = true;
+                }
+            }
+
+            if (isInArr)
+            {
+                return 1 + AppearsInLine(arr, n, i + 1);
+            }
+            else
+            {
+                return AppearsInLine(arr, n, i + 1);
             }
         }
     }
