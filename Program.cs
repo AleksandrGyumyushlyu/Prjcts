@@ -435,12 +435,21 @@ namespace Prjcts
                         if (Funcs.IsInt(input))
                         {
                             n = int.Parse(input);
-                            Console.WriteLine(Recursion.AppearsInLine(testArr5, n));
+                            Console.WriteLine(Recursion.AppearsInLines(testArr5, n));
                         }
                         else
                         {
                             Console.WriteLine("The input isn't an integer! Try again");
                         }
+                        break;
+                    case 'k':
+                    case 'K':
+                        Console.WriteLine();
+                        int[] testArr6 = {0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0};
+                        Funcs.PrintArray(testArr6);
+                        Console.WriteLine();
+
+                        Console.WriteLine("\n" + Recursion.RandomPalindrome(testArr6));
                         break;
                     default:
                         Console.WriteLine();

@@ -268,31 +268,67 @@ namespace Prjcts
             }
         }
 
-        public static int AppearsInLine(int[,] arr, int n, int i = 0) // 19
+
+        public static bool AppearsInLine(int[,] arr, int i, int j, int n)
+        {
+            if (j == arr.GetLength(1))
+            {
+                return false;
+            }
+
+            if (arr[i,j] == n)
+            {
+                return true;
+            }
+
+            return AppearsInLine(arr, i, j + 1, n);
+        }
+
+        public static int AppearsInLines(int[,] arr, int n, int i = 0) // 19
         {
             if (i == arr.GetLength(0))
             {
                 return 0;
             }
 
-            bool isInArr = false;
-
-            for (int j = 0; j < arr.GetLength(1) && !isInArr; j++)
-            {
-                if (arr[i,j] == n)
-                {
-                    isInArr = true;
-                }
-            }
+            bool isInArr = AppearsInLine(arr, i, 0, n);
 
             if (isInArr)
             {
-                return 1 + AppearsInLine(arr, n, i + 1);
+                return 1 + AppearsInLines(arr, n, i + 1);
             }
             else
             {
-                return AppearsInLine(arr, n, i + 1);
+                return AppearsInLines(arr, n, i + 1);
             }
+        }
+
+        public static bool RandomPalindrome(int[] arr)
+        {
+            Random rnd = new Random();
+            int n1, n2;
+
+            n1 = rnd.Next(0, arr.Length - 1);
+            n2 = rnd.Next(n1 + 1, arr.Length);
+
+            Console.WriteLine($"Index1: {n1}\nIndex2: {n2}\n");
+
+            return RandomPalindrome(arr, n1, n2);
+        }
+
+        private static bool RandomPalindrome(int[] arr, int n1, int n2)
+        {
+            if (n1 >= n2)
+            {
+                return true;
+            }
+            
+            if (arr[n1] != arr[n2])
+            {
+                return false;
+            }
+
+            return RandomPalindrome(arr, n1 + 1, n2 - 1);
         }
 
     }
