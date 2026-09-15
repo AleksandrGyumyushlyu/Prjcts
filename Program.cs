@@ -7,12 +7,12 @@ namespace Prjcts
     {
         static void Main(string[] args)
         {
-            Program.Menu();
-            // Program.ClassTests();
+            // Program.Menu1(); // Do the 1 to 23
+            // Program.ClassTests(); // not related
+            Program.Menu2(); // Do the 24 - 34 + etgars
         }
 
-        
-        static void Menu()
+        static void Menu1()
         {
             bool repeatChoosing = false;
             int n;
@@ -488,6 +488,67 @@ namespace Prjcts
             int[] arr = [12, 123, 12, 58];
 
             Console.WriteLine(Recursion.RecursiveMax(arr));
+        }
+
+        public static void Menu2()
+        {
+            bool repeatChoosing = false;
+            char lt1;
+            char lt2;
+
+            do
+            {
+                repeatChoosing = false;
+                string input;
+                int n;
+
+                Console.Write("Choose what task you want to test:\n1 - Task 1\n2 - Task 2\n3 - Task 3\n4 - Task 4\n5 - Task 5\n6 - Task 6\n");
+                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nd - Task 13 paragraph a\nD - Task 13 paragraph b\nE - Task 14\n");
+                Console.WriteLine("F - Task 15\nG - Task 16\n");
+                Console.WriteLine("\n0 - Exit\n");
+                Console.Write("Choose: ");
+                Console.WriteLine();
+
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        Console.WriteLine("Enter 2 lower case letters: ");
+                        lt1 = Console.ReadKey().KeyChar;
+                        Console.WriteLine();
+                        if (EngUtils.IsLowerCase(lt1))
+                        {
+                            Console.WriteLine("Enter second letter: ");
+                            lt2 = Console.ReadKey().KeyChar;
+                            Console.WriteLine();
+
+                            VoidRecursion.PrintBetweenLetters(lt1, lt2);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not a lower case letter, try again");
+                        }
+                        break;
+                    case '2':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            VoidRecursion.PrintMultiples(n);
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("There's no task under this number/symbol! Try again");
+                        break;
+                }
+
+            } while (Funcs.RepeatChoosing());
         }
     }
 }
