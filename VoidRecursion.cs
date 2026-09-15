@@ -31,6 +31,5 @@ namespace Prjcts
                 PrintMultiples(n, i + 1);
             }
         }
-
     }
 }

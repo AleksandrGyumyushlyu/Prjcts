@@ -502,9 +502,7 @@ namespace Prjcts
                 string input;
                 int n;
 
-                Console.Write("Choose what task you want to test:\n1 - Task 1\n2 - Task 2\n3 - Task 3\n4 - Task 4\n5 - Task 5\n6 - Task 6\n");
-                Console.Write("7 - Task 7\n8 - Task 8\n9 - Task\nA - Task 10\nB - Task 11\nC - Task 12\nd - Task 13 paragraph a\nD - Task 13 paragraph b\nE - Task 14\n");
-                Console.WriteLine("F - Task 15\nG - Task 16\n");
+                Console.Write("Choose what task you want to test:\n1 - 11 (24-34)");
                 Console.WriteLine("\n0 - Exit\n");
                 Console.Write("Choose: ");
                 Console.WriteLine();
