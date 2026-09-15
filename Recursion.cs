@@ -331,5 +331,41 @@ namespace Prjcts
             return RandomPalindrome(arr, n1 + 1, n2 - 1);
         }
 
+        public static int LowkeyAbc(string str, int i = 0)
+        {
+            if (i == str.Length)
+            {
+                return 0;
+            }
+
+            if (EngUtils.IsLowerCase(str[i]))
+            {
+                return 1 + LowkeyAbc(str, i + 1);
+            }
+            else
+            {
+                return 0 + LowkeyAbc(str, i + 1);
+            }
+        }
+
+        public static string AddStars(string str, string newStr = "", int i = 0)
+        {
+            if (i == str.Length)
+            {
+                return newStr;
+            }
+
+            if (i % 3 == 0 && i != 0)
+            {
+                newStr += "*";
+                newStr += str[i];
+            }
+            else
+            {
+                newStr += str[i];
+            }
+
+            return AddStars(str, newStr, i+1);
+        }
     }
 }

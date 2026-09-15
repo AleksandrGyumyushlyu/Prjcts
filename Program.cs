@@ -446,10 +446,25 @@ namespace Prjcts
                     case 'K':
                         Console.WriteLine();
                         int[] testArr6 = {0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0};
-                        Funcs.PrintArray(testArr6);
-                        Console.WriteLine();
+                        Funcs.PrintArray(testArr6); Console.WriteLine();
 
                         Console.WriteLine("\n" + Recursion.RandomPalindrome(testArr6));
+                        break;
+                    case 'l':
+                    case 'L':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter a string: ");
+                        input = Console.ReadLine();
+                        
+                        Console.WriteLine(Recursion.LowkeyAbc(input));
+                        break;
+                    case 'M':
+                    case 'm':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter a string: ");
+                        input = Console.ReadLine();
+                        
+                        Console.WriteLine(Recursion.AddStars(input));
                         break;
                     default:
                         Console.WriteLine();
