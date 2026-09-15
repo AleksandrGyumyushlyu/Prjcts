@@ -303,7 +303,7 @@ namespace Prjcts
             }
         }
 
-        public static bool RandomPalindrome(int[] arr)
+        public static bool RandomPalindrome(int[] arr) // 20
         {
             Random rnd = new Random();
             int n1, n2;
@@ -316,7 +316,7 @@ namespace Prjcts
             return RandomPalindrome(arr, n1, n2);
         }
 
-        private static bool RandomPalindrome(int[] arr, int n1, int n2)
+        private static bool RandomPalindrome(int[] arr, int n1, int n2) // 20
         {
             if (n1 >= n2)
             {
@@ -331,7 +331,7 @@ namespace Prjcts
             return RandomPalindrome(arr, n1 + 1, n2 - 1);
         }
 
-        public static int LowkeyAbc(string str, int i = 0)
+        public static int LowkeyAbc(string str, int i = 0) // 21
         {
             if (i == str.Length)
             {
@@ -348,7 +348,7 @@ namespace Prjcts
             }
         }
 
-        public static string AddStars(string str, string newStr = "", int i = 0)
+        public static string AddStars(string str, string newStr = "", int i = 0) // 22
         {
             if (i == str.Length)
             {
@@ -367,5 +367,24 @@ namespace Prjcts
 
             return AddStars(str, newStr, i+1);
         }
+
+        public static string ReverseStr(string str)
+        {
+            string newStr = "";
+            return ReverseStr(str, newStr, str.Length - 1);
+        }
+
+        private static string ReverseStr(string str, string newStr, int i) // 23
+        {
+            if (i < 0)
+            {
+                return newStr;
+            }
+
+            newStr += str[i];
+
+            return ReverseStr(str, newStr, i - 1);
+        }
+
     }
 }

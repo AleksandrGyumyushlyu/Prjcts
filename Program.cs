@@ -466,6 +466,14 @@ namespace Prjcts
                         
                         Console.WriteLine(Recursion.AddStars(input));
                         break;
+                    case 'n':
+                    case 'N':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter a string: ");
+                        input = Console.ReadLine();
+                        
+                        Console.WriteLine(Recursion.ReverseStr(input));
+                        break;
                     default:
                         Console.WriteLine();
                         Console.WriteLine("There's no task under this number/symbol! Try again");
