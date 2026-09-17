@@ -5,7 +5,7 @@ namespace Prjcts
 {
     internal class VoidRecursion
     {
-        public static void PrintBetweenLetters(char lt1, char lt2)
+        public static void PrintBetweenLetters(char lt1, char lt2) // 24
         {
             if (lt1 <= lt2)
             {
@@ -20,7 +20,7 @@ namespace Prjcts
             PrintMultiples(n, i);
         }
 
-        private static void PrintMultiples(int n, int i)
+        private static void PrintMultiples(int n, int i) // 25
         {
             if (n % i == 0)
             {
@@ -29,6 +29,18 @@ namespace Prjcts
             if (i < n)
             {
                 PrintMultiples(n, i + 1);
+            }
+        }
+
+        public static void PrintEvenDigits(int n)
+        {
+            if (n % 2 == 0)
+            {
+                Console.Write(n%10);
+            }
+            if (n > 9)
+            {
+                PrintEvenDigits(n / 10);
             }
         }
     }

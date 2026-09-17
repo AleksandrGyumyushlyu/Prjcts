@@ -510,6 +510,7 @@ namespace Prjcts
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
+                        Console.WriteLine();
                         Console.WriteLine("Enter 2 lower case letters: ");
                         lt1 = Console.ReadKey().KeyChar;
                         Console.WriteLine();
@@ -539,6 +540,28 @@ namespace Prjcts
                         {
                             Console.WriteLine("The input isn't an integer! Try again");
                         }
+                        break;
+                    case '3':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                VoidRecursion.PrintEvenDigits(n);
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
                         break;
                     default:
                         Console.WriteLine();
