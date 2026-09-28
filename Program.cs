@@ -562,6 +562,14 @@ namespace Prjcts
                             Console.WriteLine("The input isn't an integer! Try again");
                         }
                         break;
+                    case '4':
+                        Console.WriteLine();
+                        Console.WriteLine("Multiplication table: ");
+                        VoidRecursion.PrintMultyTable();
+                        break;
+                    case '5':
+                        Console.WriteLine();
+                        VoidRecursion.PrintGapSeries(4, 5, 8);
                         break;
                     default:
                         Console.WriteLine();
