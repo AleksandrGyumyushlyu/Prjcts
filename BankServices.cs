@@ -234,6 +234,71 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             return riskAccounts;
         }
 
+        public SavingAccount[] ZeroSavings()
+        {
+            int zeroSavingsCount = 0;
+            int i = 0;
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is SavingAccount && account.AtRisk())
+                {
+                    zeroSavingsCount++;
+                }
+            }
+
+            SavingAccount[] zeroSavingsAccounts = new SavingAccount[zeroSavingsCount];
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is SavingAccount && account.AtRisk())
+                {
+                    zeroSavingsAccounts[i] = (SavingAccount)account;
+                    i++;
+                }
+            }
+
+            return zeroSavingsAccounts;
+        }
+
+        public string[] LoanSugggestion()
+        {
+            CheckingAccount tmp;
+            int suggestionsCount = 0;
+            int i = 0;
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is CheckingAccount)
+                {
+                    tmp = (CheckingAccount)account;
+                    if (tmp.GetBal() < -tmp.GetOverDraft() / 2)
+                    {
+                        suggestionsCount++;
+                    }
+                }
+            }
+
+            string[] suggestions = new string[suggestionsCount];
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is CheckingAccount)
+                {
+                    tmp = (CheckingAccount)account;
+                    if (tmp.GetBal() < -tmp.GetOverDraft() / 2)
+                    {
+                        suggestions[i] = $"Type:{tmp.GetType().Name}, Num:{tmp.GetAccountNum()}, ID:{tmp.GetOwnerID()}, Balance:{tmp.GetBal()}";
+                        i++;
+                    }
+                }
+            }
+
+            return suggestions;
+        }
+
+
+
         public static void UnitTest()
         {
             BankServices bankAdmin = new BankServices();
@@ -262,6 +327,25 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
 
             Console.WriteLine(bankAdmin.GetRichestID());
 
+
+            bankAdmin.Add(new SavingAccount(1234, 1234, 5555, "3456", new Date(29, 1, 2028), 0));
+            bankAdmin.Add(new SavingAccount(1234, 1234, 6666, "4567", new Date(29, 1, 2028), 1200));
+            bankAdmin.Add(new BusinessAccount(1234, 1234, 7777, "5678", "AloniAshkeloni", 1500, -755));
+            bankAdmin.Add(new BusinessAccount(1234, 1234, 8888, "6789", "AloniAshdodi", 1500, 755));
+            bankAdmin.Add(new CheckingAccount(1234, 1234, 9999, "78910", 1500, -755));
+            bankAdmin.Add(new CheckingAccount(1234, 1234, 10000, "891011", 1500, +755));
+
+            foreach (BasicAccount account in bankAdmin.ZeroSavings())
+            {
+                Console.WriteLine(account);
+            }
+
+            Console.WriteLine();
+
+            foreach (string description in bankAdmin.LoanSugggestion())
+            {
+                Console.WriteLine(description);
+            }
         }
     }
 }
