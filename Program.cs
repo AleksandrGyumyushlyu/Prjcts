@@ -495,6 +495,7 @@ namespace Prjcts
             bool repeatChoosing = false;
             char lt1;
             char lt2;
+            int[,] testArr3 = {{1, 2, 4}, {1, 3, 6}, {1, 4, 9}};
 
             do
             {
@@ -570,6 +571,66 @@ namespace Prjcts
                     case '5':
                         Console.WriteLine();
                         VoidRecursion.PrintGapSeries(4, 5, 8);
+                        break;
+                    case '6':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                VoidRecursion.PrintStrangeSeries(n);
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case '7':
+                        Console.WriteLine();
+                        Console.WriteLine("Enter any positive integer number: ");
+                        input = Console.ReadLine();
+                        if (Funcs.IsInt(input))
+                        {
+                            n = int.Parse(input);
+                            if (n >= 0)
+                            {
+                                VoidRecursion.PrintUpDownSeries(n);
+                            }
+                            else
+                            {
+                                Console.WriteLine("The number isn't positive! Try again");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("The input isn't an integer! Try again");
+                        }
+                        break;
+                    case '8':
+                        Console.WriteLine();
+                        int[] testArr1 = [10, 20, 30, 40, 50, 60 ,70 , 80, 90, 100];
+                        VoidRecursion.PrintEvenArray(testArr1);
+                        break;
+                    case '9':
+                        Console.WriteLine();
+                        int[] testArr2 = [50, 70, 20, 30, 10];
+                        VoidRecursion.PrintShrinkingArray(testArr2);
+                        break;
+                    case 'a':
+                        Console.WriteLine();
+                        VoidRecursion.PrintTwoDimArray(testArr3);
+                        break;
+                    case 'b':
+                        Console.WriteLine();
+                        VoidRecursion.PrintMaxCols(testArr3);
                         break;
                     default:
                         Console.WriteLine();
