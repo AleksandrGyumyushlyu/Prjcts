@@ -7,6 +7,13 @@ namespace Prjcts
     {
         static void Main(string[] args)
         {
+
+        }
+
+        public static void Test1()
+        {
+            IntNode n1 = new IntNode(-17);
+            IntNode n = new IntNode(17, n1);
         }
 
         public static void Menu()
