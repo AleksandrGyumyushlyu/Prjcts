@@ -45,6 +45,117 @@ namespace Prjcts
             return output;
         }
 
+        public static int Count(IntNode node)
+        {
+            int count = 0;
+            while (node != null)
+            {
+                count++;
+                node = node.GetNext();
+            }
+            return count;
+        }
+
+        public static int SumNodes(IntNode node)
+        {
+            int sum = 0;
+            while (node != null)
+            {
+                sum += node.GetValue();
+                node = node.GetNext();
+            }
+            return sum;
+        }
+
+        public static int CountOddValues(IntNode node)
+        {
+            int count = 0;
+            while (node != null)
+            {
+                if (node.GetValue() % 2 != 0)
+                {
+                    count++;
+                }
+
+                node = node.GetNext();
+            }
+            return count;
+        }
+
+        public static int GetDifference(IntNode node)
+        {
+            int oddSum = 0;
+            int evenSum = 0;
+            // Never odd or eveN
+            while (node != null)
+            {
+                if (node.GetValue() % 2 == 0)
+                {
+                    evenSum += node.GetValue();
+                }
+                else
+                {
+                    oddSum += node.GetValue();
+                }
+
+                node = node.GetNext();
+            }
+
+            return Math.Abs(evenSum - oddSum);
+        }
+
+        public static bool IsPositive(IntNode node)
+        {
+            int negSum = 0;
+            int posSum = 0;
+            // Never neg or eveN
+            while (node != null)
+            {
+                if (node.GetValue() >= 0)
+                {
+                    posSum += node.GetValue();
+                }
+                else
+                {
+                    negSum += node.GetValue();
+                }
+
+                node = node.GetNext();
+            }
+
+            return posSum >= negSum;
+        }
+
+        public static bool IsIn(IntNode node, int num)
+        {
+            while (node != null)
+            {
+                if (node.GetValue() == num)
+                {
+                    return true;
+                }
+
+                node = node.GetNext();
+            }
+
+            return false;
+        }
+
+        public static bool IsInLesserOrder(IntNode node)
+        {
+            while (node.GetNext() != null)
+            {
+                if (node.GetValue() < node.GetNext().GetValue())
+                {
+                    return false;
+                }
+
+                node = node.GetNext();
+            }
+
+            return true;
+        }
+
         public override string ToString()
         {
             return this.value.ToString();
@@ -85,6 +196,11 @@ namespace Prjcts
             current.SetNext(null);
 
             Console.WriteLine(IntNode.AllNodesToString(head));
+        }
+
+        public static void Test2()
+        {
+            // TODO: Tests
         }
     }
 }
