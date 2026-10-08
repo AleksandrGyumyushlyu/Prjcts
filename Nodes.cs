@@ -9,7 +9,6 @@ namespace Prjcts
         private IntNode next;
 
         public IntNode(int value) { this.value = value; this.next = null; }
-
         public IntNode(int value, IntNode next) { this.value = value; this.next = next; }
 
         public int GetValue() { return this.value; }
@@ -18,6 +17,41 @@ namespace Prjcts
         public void SetValue(int value) { this.value = value; }
         public void SetNext(IntNode next) { this.next = next; }
 
+        /// <summary>Gets to the last node from current one</summary>
+        /// <returns>Last node in the list</returns>
+        public IntNode GetLastNode()
+        {
+            IntNode current = this;
+
+            while (current.GetNext() != null)
+            {
+                current = current.GetNext();
+            }
+
+            return current;
+        }
+
+        /// <summary>Turns all nodes from current one to the end to string</summary>
+        /// <param name="node">First node to turn to string</param>
+        /// <returns>String with all _values_ of the nodes in the list</returns>
+        public static string AllNodesToString(IntNode node)
+        {
+            string output = "";
+
+            while (node != null)
+            {
+                output += node;
+                if (node.GetNext() != null)
+                    output += ", ";
+
+                node = node.GetNext();
+            }
+
+            return output;
+        }
+
+        /// <summary>Override regular to string to print the node's value</summary>
+        /// <returns>Value in string</returns>
         public override string ToString()
         {
             return this.value.ToString();
@@ -43,49 +77,21 @@ namespace Prjcts
             n3 = null;
 
             IntNode n4 = new IntNode(99);
+
             current = head;
-
-            while (current.GetNext() != null)
-            {
-                current = current.GetNext();
-            }
-
+            current = head.GetLastNode();
             current.SetNext(n4);
 
-            current = head;
-
-            while (current != null)
-            {
-                Console.Write(current);
-                if (current.GetNext() != null)
-                    Console.Write(", ");
-
-                current = current.GetNext();
-            }
+            Console.WriteLine(IntNode.AllNodesToString(head));
 
             current = head;
-
-            Console.WriteLine();
-
             while (current.GetNext().GetNext() != null)
             {
                 current = current.GetNext();
             }
-
             current.SetNext(null);
 
-
-            current = head;
-
-            while (current != null)
-            {
-                Console.Write(current);
-                if (current.GetNext() != null)
-                    Console.Write(", ");
-
-                current = current.GetNext();
-            }
-
+            Console.WriteLine(IntNode.AllNodesToString(head));
         }
     }
 }
