@@ -17,8 +17,6 @@ namespace Prjcts
         public void SetValue(int value) { this.value = value; }
         public void SetNext(IntNode next) { this.next = next; }
 
-        /// <summary>Gets to the last node from current one</summary>
-        /// <returns>Last node in the list</returns>
         public IntNode GetLastNode()
         {
             IntNode current = this;
@@ -31,9 +29,6 @@ namespace Prjcts
             return current;
         }
 
-        /// <summary>Turns all nodes from current one to the end to string</summary>
-        /// <param name="node">First node to turn to string</param>
-        /// <returns>String with all _values_ of the nodes in the list</returns>
         public static string AllNodesToString(IntNode node)
         {
             string output = "";
@@ -50,8 +45,6 @@ namespace Prjcts
             return output;
         }
 
-        /// <summary>Override regular to string to print the node's value</summary>
-        /// <returns>Value in string</returns>
         public override string ToString()
         {
             return this.value.ToString();
