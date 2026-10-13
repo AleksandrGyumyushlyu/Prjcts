@@ -108,7 +108,7 @@ namespace Prjcts
         {
             int negSum = 0;
             int posSum = 0;
-            // Never neg or eveN
+            // Never odd or eveN
             while (node != null)
             {
                 if (node.GetValue() >= 0)
@@ -200,7 +200,23 @@ namespace Prjcts
 
         public static void Test2()
         {
-            // TODO: Tests
+            IntNode head = new IntNode(42);
+            IntNode n1 = new IntNode(58);
+            IntNode n2 = new IntNode(49);
+            IntNode n3 = new IntNode(42);
+            IntNode n4 = new IntNode(13);
+
+            head.SetNext(n1);
+            n1.SetNext(n2);
+            n2.SetNext(n3);
+            n3.SetNext(n4);
+
+            n1 = null;
+            n2 = null;
+            n3 = null;
+            n4 = null;
+
+            Console.WriteLine($"1: {IntNode.SumNodes(head)}\n2: {IntNode.CountOddValues(head)}\n3: {IntNode.GetDifference(head)}\n4: {IntNode.IsPositive(head)}\n5 True: {IntNode.IsIn(head, 49)}\n5 False: {IntNode.IsIn(head, 45)}\n6 False: {IntNode.IsInLesserOrder(head)}\n6: {IntNode.IsInLesserOrder(head.GetNext())}");
         }
     }
 }
