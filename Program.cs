@@ -7,7 +7,7 @@ namespace Prjcts
     {
         static void Main(string[] args)
         {
-            UnitTest.Test2();
+            UnitTest.Launcher();
         }
 
         public static void Menu()

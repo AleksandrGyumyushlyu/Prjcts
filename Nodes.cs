@@ -67,6 +67,11 @@ namespace Prjcts
 
     public class UnitTest()
     {
+        public static void Launcher()
+        {
+            UnitTest.Test3();
+        }
+
         public static int Count(IntNode node)
         {
             int count = 0;
@@ -216,6 +221,37 @@ namespace Prjcts
             }
         }
 
+        public static int CountSeries(IntNode head, int num)
+        {
+            IntNode curr = head;
+            int seriesCount = 0;
+            bool isSeries = false;
+
+            while (curr != null)
+            {
+                if (isSeries)
+                {
+                    if (curr.GetValue() != num)
+                    {
+                        isSeries = false;
+                        seriesCount++;
+                    }
+                }
+                else
+                {
+                    if (curr.GetValue() == num)
+                    {
+                        isSeries = true;
+                    }
+                }
+                
+                curr = curr.GetNext();
+            }
+
+            return seriesCount;
+        }
+
+
         public static void Test1()
         {
 
@@ -269,6 +305,13 @@ namespace Prjcts
 
             RemoveNode(head, head);
             Console.WriteLine(head.AllNodesToString());
+        }
+
+        public static void Test3()
+        {
+            IntNode head = IntNode.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
+            Console.WriteLine(head.AllNodesToString());
+            Console.WriteLine(CountSeries(head, 4));
         }
     }
 }
