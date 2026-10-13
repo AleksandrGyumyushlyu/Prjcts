@@ -17,6 +17,8 @@ namespace Prjcts
         public void SetValue(int value) { this.value = value; }
         public void SetNext(IntNode next) { this.next = next; }
 
+        public IntNode CopyNode() { return new IntNode(this.value, this.next); }
+
         public IntNode GetLastNode()
         {
             IntNode current = this;
@@ -29,22 +31,42 @@ namespace Prjcts
             return current;
         }
 
-        public static string AllNodesToString(IntNode node)
+        public static IntNode BuildNode(int[] arr)
         {
+            IntNode head = null;
+            for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                head = new IntNode(arr[i], head);
+            }
+
+            return head;
+        }
+
+        public string AllNodesToString()
+        {
+            IntNode curr = this;
             string output = "";
 
-            while (node != null)
+            while (curr != null)
             {
-                output += node;
-                if (node.GetNext() != null)
+                output += curr;
+                if (curr.GetNext() != null)
                     output += ", ";
 
-                node = node.GetNext();
+                curr = curr.GetNext();
             }
 
             return output;
         }
 
+        public override string ToString()
+        {
+            return this.value.ToString();
+        }
+    }
+
+    public class UnitTest()
+    {
         public static int Count(IntNode node)
         {
             int count = 0;
@@ -156,14 +178,44 @@ namespace Prjcts
             return true;
         }
 
-        public override string ToString()
+        public static void AddNode(IntNode prev, int value)
         {
-            return this.value.ToString();
+            if (prev.GetNext() != null)
+            {
+                prev.SetNext(new IntNode(value, prev.GetNext()));
+            }
+            else
+            {
+                prev.SetNext(new IntNode(value));
+            }
         }
-    }
 
-    public class UnitTest()
-    {
+        public static void RemoveNode(IntNode head, IntNode node)
+        {
+            IntNode curr = head;
+            IntNode prev = null;
+
+            if (curr != node)
+            {
+                while (curr != node)
+                {
+                    prev = curr;
+                    curr = curr.GetNext();
+                }
+
+                prev.SetNext(curr.GetNext());
+                curr.SetNext(null);
+                curr = null;
+            }
+            else
+            {
+                curr = head.GetNext();
+                head.SetValue(curr.GetValue());
+                head.SetNext(curr.GetNext());
+                curr.SetNext(null);
+            }
+        }
+
         public static void Test1()
         {
 
@@ -186,7 +238,7 @@ namespace Prjcts
             current = head.GetLastNode();
             current.SetNext(n4);
 
-            Console.WriteLine(IntNode.AllNodesToString(head));
+            Console.WriteLine(head.AllNodesToString());
 
             current = head;
             while (current.GetNext().GetNext() != null)
@@ -195,28 +247,28 @@ namespace Prjcts
             }
             current.SetNext(null);
 
-            Console.WriteLine(IntNode.AllNodesToString(head));
+            Console.WriteLine(head.AllNodesToString());
         }
 
         public static void Test2()
         {
-            IntNode head = new IntNode(42);
-            IntNode n1 = new IntNode(58);
-            IntNode n2 = new IntNode(49);
-            IntNode n3 = new IntNode(42);
-            IntNode n4 = new IntNode(13);
+            IntNode head = IntNode.BuildNode( [42, 58, 49, 42, 13] );
+            IntNode tmp = null;
 
-            head.SetNext(n1);
-            n1.SetNext(n2);
-            n2.SetNext(n3);
-            n3.SetNext(n4);
+            Console.WriteLine($"1: {UnitTest.SumNodes(head)}\n2: {UnitTest.CountOddValues(head)}");
+            Console.WriteLine($"3: {UnitTest.GetDifference(head)}\n4: {UnitTest.IsPositive(head)}");
+            Console.WriteLine($"5 True: {UnitTest.IsIn(head, 49)}\n5 False: {UnitTest.IsIn(head, 45)}\n6 False: {UnitTest.IsInLesserOrder(head)}\n6 True: {UnitTest.IsInLesserOrder(head.GetNext())}");
 
-            n1 = null;
-            n2 = null;
-            n3 = null;
-            n4 = null;
+            Console.WriteLine(head.AllNodesToString());
+            
+            AddNode(head.GetLastNode(), 11);
+            Console.WriteLine(head.AllNodesToString());
+            
+            RemoveNode(head, head.GetLastNode());
+            Console.WriteLine(head.AllNodesToString());
 
-            Console.WriteLine($"1: {IntNode.SumNodes(head)}\n2: {IntNode.CountOddValues(head)}\n3: {IntNode.GetDifference(head)}\n4: {IntNode.IsPositive(head)}\n5 True: {IntNode.IsIn(head, 49)}\n5 False: {IntNode.IsIn(head, 45)}\n6 False: {IntNode.IsInLesserOrder(head)}\n6: {IntNode.IsInLesserOrder(head.GetNext())}");
+            RemoveNode(head, head);
+            Console.WriteLine(head.AllNodesToString());
         }
     }
 }
