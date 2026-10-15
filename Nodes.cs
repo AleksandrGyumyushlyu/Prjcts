@@ -3,6 +3,72 @@ using System.ComponentModel;
 
 namespace Prjcts
 {
+    public class Node<T>
+    {
+        private T value;
+        private Node<T> next;
+
+        public Node(T value, Node<T> next = null)
+        {
+            this.value = value;
+            this.next = next;
+        }
+
+        public T GetValue() { return this.value; }
+        public Node<T> GetNext() { return this.next; }
+
+        public void SetValue(T value) { this.value = value; }
+        public void SetNext(Node<T> next) { this.next = next; }
+
+        public Node<T> CopyNode() { return new Node<T>(this.value, this.next); }
+
+        public Node<T> GetLastNode()
+        {
+            Node<T> current = this;
+
+            while (current.GetNext() != null)
+            {
+                current = current.GetNext();
+            }
+
+            return current;
+        }
+
+        public static Node<T> BuildNode(var[] arr)
+        {
+            IntNode head = null;
+            for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                head = new IntNode(arr[i], head);
+            }
+
+            return head;
+        }
+
+        public string AllNodesToString()
+        {
+            IntNode curr = this;
+            string output = "";
+
+            while (curr != null)
+            {
+                output += curr;
+                if (curr.GetNext() != null)
+                    output += ", ";
+
+                curr = curr.GetNext();
+            }
+
+            return output;
+        }
+
+        public override string ToString()
+        {
+            return this.value.ToString();
+        }
+
+    }
+
     public class IntNode
     {
         private int value;
@@ -288,15 +354,24 @@ namespace Prjcts
         public static IntNode RemoveNums(IntNode head, int num)
         {
             IntNode curr = head;
+            IntNode tmp = null;
 
             while (curr != null)
             {
+                Console.WriteLine("loop");
                 if (curr.GetValue() == num)
                 {
+                    tmp = curr.GetNext();
                     RemoveNode(head,curr);
+                    if (curr.GetNext() == null)
+                    {
+                        curr = tmp;
+                    }
                 }
-
-                curr = curr.GetNext();
+                else
+                {
+                    curr = curr.GetNext();
+                }
             }
 
             return head;
@@ -368,6 +443,7 @@ namespace Prjcts
             Console.WriteLine(EvenOddEqual(head2));
 
             Console.WriteLine(RemoveNums(head1, 6).AllNodesToString());
+            Console.WriteLine(RemoveNums(head2, 1).AllNodesToString());
         }
     }
 }
