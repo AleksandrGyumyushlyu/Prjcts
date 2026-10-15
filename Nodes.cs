@@ -242,15 +242,65 @@ namespace Prjcts
                     if (curr.GetValue() == num)
                     {
                         isSeries = true;
+                        if (curr.GetNext() == null)
+                        {
+                            seriesCount++;
+                        }
                     }
                 }
-                
+
                 curr = curr.GetNext();
             }
 
             return seriesCount;
         }
 
+        public static char EvenOddEqual(IntNode head)
+        {
+            IntNode curr = head;
+            int evenCount = 0;
+            int oddCount = 0;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() % 2 == 0)
+                {
+                    evenCount++;
+                }
+                else
+                {
+                    oddCount++;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            if (evenCount == oddCount)
+            {
+                return 's';
+            }
+            else
+            {
+                return evenCount > oddCount ? 'z' : 'e';
+            }
+        }
+
+        public static IntNode RemoveNums(IntNode head, int num)
+        {
+            IntNode curr = head;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() == num)
+                {
+                    RemoveNode(head,curr);
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return head;
+        }
 
         public static void Test1()
         {
@@ -309,9 +359,15 @@ namespace Prjcts
 
         public static void Test3()
         {
-            IntNode head = IntNode.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
-            Console.WriteLine(head.AllNodesToString());
-            Console.WriteLine(CountSeries(head, 4));
+            IntNode head1 = IntNode.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
+            IntNode head2 = IntNode.BuildNode([1,1,1,1,1,2,1,2,2,2]);
+            Console.WriteLine(head1.AllNodesToString());
+            Console.WriteLine(CountSeries(head1, 4));
+
+            Console.WriteLine(EvenOddEqual(head1));
+            Console.WriteLine(EvenOddEqual(head2));
+
+            Console.WriteLine(RemoveNums(head1, 6).AllNodesToString());
         }
     }
 }
