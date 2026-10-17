@@ -22,6 +22,25 @@ namespace Prjcts
 
         public Node<T> CopyNode() { return new Node<T>(this.value, this.next); }
 
+        public Node<T> CopyList()
+        {
+            Node<T> curr = this;
+            Node<T> cpHead = new Node<T>(this.GetValue());
+            Node<T> cpCurr = cpHead;
+
+            curr = curr.GetNext();
+
+            while (curr != null)
+            {
+                cpCurr.SetNext(new Node<T>(curr.GetValue()));
+                cpCurr = cpCurr.GetNext();
+
+                curr = curr.GetNext();
+            }
+
+            return cpHead;
+        }
+
         public Node<T> GetLastNode()
         {
             Node<T> current = this;
@@ -34,7 +53,7 @@ namespace Prjcts
             return current;
         }
 
-        public static Node<T> BuildNode(T[] arr)
+        public static Node<T> BuildList(T[] arr)
         {
             Node<T> head = null;
             for (int i = arr.Length - 1; i >= 0; i--)
@@ -45,7 +64,7 @@ namespace Prjcts
             return head;
         }
 
-        public string AllNodesToString()
+        public string ListToString()
         {
             Node<T> curr = this;
             string output = "";
@@ -97,7 +116,7 @@ namespace Prjcts
             return current;
         }
 
-        public static IntNode BuildNode(int[] arr)
+        public static IntNode BuildList(int[] arr)
         {
             IntNode head = null;
             for (int i = arr.Length - 1; i >= 0; i--)
@@ -108,7 +127,7 @@ namespace Prjcts
             return head;
         }
 
-        public string AllNodesToString()
+        public string ListToString()
         {
             IntNode curr = this;
             string output = "";
@@ -131,13 +150,8 @@ namespace Prjcts
         }
     }
 
-    public class UnitTest()
+    public class NodeFuncs
     {
-        public static void Launcher()
-        {
-            UnitTest.Test3();
-        }
-
         public static int CountNodes<T>(Node<T> head)
         {
             Node<T> curr = head;
@@ -362,7 +376,6 @@ namespace Prjcts
 
             while (curr != null)
             {
-                Console.WriteLine("loop");
                 if (curr.GetValue() == num)
                 {
                     tmp = curr.GetNext();
@@ -381,7 +394,180 @@ namespace Prjcts
             return head;
         }
 
-        public static void IntNodeTest1()
+        public static Node<int> CopyUniqVals(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> uniquesNode = new Node<int>(head.GetValue());
+            Node<int> uniqCurr = uniquesNode;
+
+            curr = curr.GetNext();
+
+            while (curr != null)
+            {
+                if (!IsIn(uniquesNode, curr.GetValue()))
+                {
+                    uniqCurr.SetNext(new Node<int>(curr.GetValue()));
+                    uniqCurr = uniqCurr.GetNext();
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return uniquesNode;
+        }
+
+        public static bool IsInRisingOrder(Node<int> head)
+        {
+            Node<int> curr = head;
+
+            while (curr.GetNext() != null)
+            {
+                if (curr.GetValue() >= curr.GetNext().GetValue())
+                {
+                    return false;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return true;
+        }
+
+        public static string ToStrInRising(Node<int> head)
+        {
+            Node<int> curr = head.GetNext();
+            string listToString = head.ToString();
+            int prevNum = head.GetValue();
+
+            while (curr != null)
+            {
+                if (curr.GetValue() > prevNum)
+                {
+                    listToString += ", " + curr.ToString();
+                }
+
+                prevNum = curr.GetValue();
+                curr = curr.GetNext();
+            }
+
+            return listToString;
+        }
+
+        public static Node<int> CreateOrder(int begginner, int num)
+        {
+            int currNum = begginner + 1;
+            Node<int> head = new Node<int>(begginner);
+            Node<int> curr = head;
+
+            for (int i = 1; i < num; i++, currNum++)
+            {
+                curr.SetNext(new Node<int>(currNum));
+                curr = curr.GetNext();
+            }
+
+            return head;
+        }
+
+        public static Node<int> RecordBackwardList()
+        {
+            Node<int> head = null;
+            string input;
+            int num = 0;
+
+            Console.WriteLine("Enter integers to put into a list, type -999 to stop.");
+            while (num != -999)
+            {
+                Console.Write("Enter an integer: ");
+                input = Console.ReadLine();
+                if (Funcs.IsInt(input))
+                {
+                    num = int.Parse(input);
+                    if (num != -999)
+                    {
+                        head = new Node<int>(num, head);
+                    }
+                }
+                else
+                {
+                    Console.Write("Input isn't an integer, try again: ");
+                }
+            }
+
+            if (head != null)
+            {
+                return head;
+            }
+            else
+            {
+                return new Node<int>(0);
+            }
+        }
+
+        public static bool IsBalanced(Node<int> head)
+        {
+            Node<int> curr = head;
+            double listAvg = (double)(NodeFuncs.SumNodes(head) /  NodeFuncs.CountNodes(head));
+            int belowAvgCount = 0;
+            int aboveAvgCount = 0;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() > listAvg)
+                {
+                    aboveAvgCount++;
+                }
+                else if (curr.GetValue() < listAvg) // what if there's value that equals to average?
+                {
+                    belowAvgCount++;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return belowAvgCount == aboveAvgCount;
+        }
+
+        public static Node<int> FindBiggestNum(Node<int> head)
+        {
+            Node<int> curr = head.GetNext();
+            Node<int> biggestNode = head;
+            int biggestNum = head.GetValue();
+
+            while(curr != null)
+            {
+                if (curr.GetValue() > biggestNum)
+                {
+                    biggestNum = curr.GetValue();
+                    biggestNode = curr;
+                }
+                curr = curr.GetNext();
+            }
+
+            return biggestNode;
+        }
+
+        public static Node<int> RemoveBiggest(Node<int> head, int n)
+        {
+            if (n == 0)
+            {
+                return head;
+            }
+            else
+            {
+                NodeFuncs.RemoveNode(head, NodeFuncs.FindBiggestNum(head));
+                return NodeFuncs.RemoveBiggest(head, n-1);
+            }
+        }
+    }
+
+    public class UnitTest
+    {
+        public static void Launcher()
+        {
+            UnitTest.Test3();
+        }
+
+        public static void IntNodeTest()
         {
 
             IntNode n1 = new IntNode(42);
@@ -403,7 +589,7 @@ namespace Prjcts
             current = head.GetLastNode();
             current.SetNext(n4);
 
-            Console.WriteLine(head.AllNodesToString());
+            Console.WriteLine(head.ListToString());
 
             current = head;
             while (current.GetNext().GetNext() != null)
@@ -412,42 +598,65 @@ namespace Prjcts
             }
             current.SetNext(null);
 
-            Console.WriteLine(head.AllNodesToString());
+            Console.WriteLine(head.ListToString());
         }
 
         public static void Test2()
         {
-            Node<int> head = Node<int>.BuildNode( [42, 58, 49, 42, 13] );
+            Node<int> head = Node<int>.BuildList( [42, 58, 49, 42, 13] );
             Node<int> tmp = null;
 
-            Console.WriteLine($"1: {UnitTest.SumNodes(head)}\n2: {UnitTest.CountOddValues(head)}");
-            Console.WriteLine($"3: {UnitTest.GetDifference(head)}\n4: {UnitTest.IsPositive(head)}");
-            Console.WriteLine($"5 True: {UnitTest.IsIn(head, 49)}\n5 False: {UnitTest.IsIn(head, 45)}\n6 False: {UnitTest.IsInLesserOrder(head)}\n6 True: {UnitTest.IsInLesserOrder(head.GetNext())}");
+            Console.WriteLine($"1: {NodeFuncs.SumNodes(head)}\n2: {NodeFuncs.CountOddValues(head)}");
+            Console.WriteLine($"3: {NodeFuncs.GetDifference(head)}\n4: {NodeFuncs.IsPositive(head)}");
+            Console.WriteLine($"5 True: {NodeFuncs.IsIn(head, 49)}\n5 False: {NodeFuncs.IsIn(head, 45)}\n6 False: {NodeFuncs.IsInLesserOrder(head)}\n6 True: {NodeFuncs.IsInLesserOrder(head.GetNext())}");
 
-            Console.WriteLine(head.AllNodesToString());
-            
-            AddNode(head.GetLastNode(), 11);
-            Console.WriteLine(head.AllNodesToString());
-            
-            RemoveNode(head, head.GetLastNode());
-            Console.WriteLine(head.AllNodesToString());
+            Console.WriteLine(head.ListToString());
 
-            RemoveNode(head, head);
-            Console.WriteLine(head.AllNodesToString());
+            NodeFuncs.AddNode(head.GetLastNode(), 11);
+            Console.WriteLine(head.ListToString());
+
+            NodeFuncs.RemoveNode(head, head.GetLastNode());
+            Console.WriteLine(head.ListToString());
+
+            NodeFuncs.RemoveNode(head, head);
+            Console.WriteLine(head.ListToString());
         }
 
         public static void Test3()
         {
-            Node<int> head1 = Node<int>.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
-            Node<int> head2 = Node<int>.BuildNode([1,1,1,1,1,2,1,2,2,2]);
-            Console.WriteLine(head1.AllNodesToString());
-            Console.WriteLine(CountSeries(head1, 4));
+            Node<int> head1 = Node<int>.BuildList([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
+            Node<int> head2 = Node<int>.BuildList([1,1,1,1,1,2,1,2,2,2]);
+            Node<int> head3 = Node<int>.BuildList([5, 2, 3, 6, 7, 18, 20, 26]);
+            Node<int> head4 = Node<int>.BuildList([3, 3, 7, 7]);
+            Node<int> head5 = Node<int>.BuildList([3, 3, 5, 9]);
 
-            Console.WriteLine(EvenOddEqual(head1));
-            Console.WriteLine(EvenOddEqual(head2));
+            Console.WriteLine(head1.ListToString());
+            Console.WriteLine(head2.ListToString());
+            Console.WriteLine(NodeFuncs.CountSeries(head1, 4));
 
-            Console.WriteLine(RemoveNums(head1, 6).AllNodesToString());
-            Console.WriteLine(RemoveNums(head2, 1).AllNodesToString());
+            Console.WriteLine(NodeFuncs.EvenOddEqual(head1));
+            Console.WriteLine(NodeFuncs.EvenOddEqual(head2));
+
+            Console.WriteLine(NodeFuncs.RemoveNums(head1.CopyList(), 6).ListToString());
+            Console.WriteLine(NodeFuncs.RemoveNums(head2.CopyList(), 1).ListToString());
+
+            Console.WriteLine(NodeFuncs.CopyUniqVals(head2).ListToString());
+            Console.WriteLine(NodeFuncs.CopyUniqVals(head1).ListToString());
+
+            Console.WriteLine(NodeFuncs.IsInRisingOrder(head3)); // False
+            Console.WriteLine(NodeFuncs.IsInRisingOrder(head3.GetNext())); // True
+
+            Console.WriteLine(NodeFuncs.ToStrInRising(head1));
+
+            Console.WriteLine(NodeFuncs.CreateOrder(2, 8).ListToString());
+
+            Console.WriteLine(NodeFuncs.RecordBackwardList().ListToString());
+
+            Console.WriteLine(NodeFuncs.IsBalanced(head1)); // False
+            Console.WriteLine(NodeFuncs.IsBalanced(head4)); // True
+            Console.WriteLine(NodeFuncs.IsBalanced(head5)); // False
+
+            Console.WriteLine(NodeFuncs.RemoveBiggest(head3.CopyList(), 4).ListToString());
         }
     }
 }
