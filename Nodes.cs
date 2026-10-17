@@ -34,12 +34,12 @@ namespace Prjcts
             return current;
         }
 
-        public static Node<T> BuildNode(var[] arr)
+        public static Node<T> BuildNode(T[] arr)
         {
-            IntNode head = null;
+            Node<T> head = null;
             for (int i = arr.Length - 1; i >= 0; i--)
             {
-                head = new IntNode(arr[i], head);
+                head = new Node<T>(arr[i], head);
             }
 
             return head;
@@ -47,7 +47,7 @@ namespace Prjcts
 
         public string AllNodesToString()
         {
-            IntNode curr = this;
+            Node<T> curr = this;
             string output = "";
 
             while (curr != null)
@@ -138,20 +138,23 @@ namespace Prjcts
             UnitTest.Test3();
         }
 
-        public static int Count(IntNode node)
+        public static int CountNodes<T>(Node<T> head)
         {
+            Node<T> curr = head;
             int count = 0;
-            while (node != null)
+
+            while (curr != null)
             {
                 count++;
-                node = node.GetNext();
+                curr = curr.GetNext();
             }
             return count;
         }
 
-        public static int SumNodes(IntNode node)
+        public static int SumNodes(Node<int> node)
         {
             int sum = 0;
+
             while (node != null)
             {
                 sum += node.GetValue();
@@ -160,9 +163,10 @@ namespace Prjcts
             return sum;
         }
 
-        public static int CountOddValues(IntNode node)
+        public static int CountOddValues(Node<int> node)
         {
             int count = 0;
+
             while (node != null)
             {
                 if (node.GetValue() % 2 != 0)
@@ -175,7 +179,7 @@ namespace Prjcts
             return count;
         }
 
-        public static int GetDifference(IntNode node)
+        public static int GetDifference(Node<int> node)
         {
             int oddSum = 0;
             int evenSum = 0;
@@ -197,7 +201,7 @@ namespace Prjcts
             return Math.Abs(evenSum - oddSum);
         }
 
-        public static bool IsPositive(IntNode node)
+        public static bool IsPositive(Node<int> node)
         {
             int negSum = 0;
             int posSum = 0;
@@ -219,11 +223,11 @@ namespace Prjcts
             return posSum >= negSum;
         }
 
-        public static bool IsIn(IntNode node, int num)
+        public static bool IsIn(Node<int> node, int value)
         {
             while (node != null)
             {
-                if (node.GetValue() == num)
+                if (node.GetValue() == value)
                 {
                     return true;
                 }
@@ -234,7 +238,7 @@ namespace Prjcts
             return false;
         }
 
-        public static bool IsInLesserOrder(IntNode node)
+        public static bool IsInLesserOrder(Node<int> node)
         {
             while (node.GetNext() != null)
             {
@@ -249,22 +253,22 @@ namespace Prjcts
             return true;
         }
 
-        public static void AddNode(IntNode prev, int value)
+        public static void AddNode<T>(Node<T> prev, T value)
         {
             if (prev.GetNext() != null)
             {
-                prev.SetNext(new IntNode(value, prev.GetNext()));
+                prev.SetNext(new Node<T>(value, prev.GetNext()));
             }
             else
             {
-                prev.SetNext(new IntNode(value));
+                prev.SetNext(new Node<T>(value));
             }
         }
 
-        public static void RemoveNode(IntNode head, IntNode node)
+        public static void RemoveNode<T>(Node<T> head, Node<T> node)
         {
-            IntNode curr = head;
-            IntNode prev = null;
+            Node<T> curr = head;
+            Node<T> prev = null;
 
             if (curr != node)
             {
@@ -287,9 +291,9 @@ namespace Prjcts
             }
         }
 
-        public static int CountSeries(IntNode head, int num)
+        public static int CountSeries(Node<int> head, int num)
         {
-            IntNode curr = head;
+            Node<int> curr = head;
             int seriesCount = 0;
             bool isSeries = false;
 
@@ -321,9 +325,9 @@ namespace Prjcts
             return seriesCount;
         }
 
-        public static char EvenOddEqual(IntNode head)
+        public static char EvenOddEqual(Node<int> head)
         {
-            IntNode curr = head;
+            Node<int> curr = head;
             int evenCount = 0;
             int oddCount = 0;
 
@@ -351,10 +355,10 @@ namespace Prjcts
             }
         }
 
-        public static IntNode RemoveNums(IntNode head, int num)
+        public static Node<int> RemoveNums(Node<int> head, int num)
         {
-            IntNode curr = head;
-            IntNode tmp = null;
+            Node<int> curr = head;
+            Node<int> tmp = null;
 
             while (curr != null)
             {
@@ -377,7 +381,7 @@ namespace Prjcts
             return head;
         }
 
-        public static void Test1()
+        public static void IntNodeTest1()
         {
 
             IntNode n1 = new IntNode(42);
@@ -413,8 +417,8 @@ namespace Prjcts
 
         public static void Test2()
         {
-            IntNode head = IntNode.BuildNode( [42, 58, 49, 42, 13] );
-            IntNode tmp = null;
+            Node<int> head = Node<int>.BuildNode( [42, 58, 49, 42, 13] );
+            Node<int> tmp = null;
 
             Console.WriteLine($"1: {UnitTest.SumNodes(head)}\n2: {UnitTest.CountOddValues(head)}");
             Console.WriteLine($"3: {UnitTest.GetDifference(head)}\n4: {UnitTest.IsPositive(head)}");
@@ -434,8 +438,8 @@ namespace Prjcts
 
         public static void Test3()
         {
-            IntNode head1 = IntNode.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
-            IntNode head2 = IntNode.BuildNode([1,1,1,1,1,2,1,2,2,2]);
+            Node<int> head1 = Node<int>.BuildNode([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
+            Node<int> head2 = Node<int>.BuildNode([1,1,1,1,1,2,1,2,2,2]);
             Console.WriteLine(head1.AllNodesToString());
             Console.WriteLine(CountSeries(head1, 4));
 
