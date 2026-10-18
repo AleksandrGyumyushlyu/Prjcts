@@ -88,68 +88,6 @@ namespace Prjcts
 
     }
 
-    public class IntNode
-    {
-        private int value;
-        private IntNode next;
-
-        public IntNode(int value) { this.value = value; this.next = null; }
-        public IntNode(int value, IntNode next) { this.value = value; this.next = next; }
-
-        public int GetValue() { return this.value; }
-        public IntNode GetNext() { return this.next; }
-
-        public void SetValue(int value) { this.value = value; }
-        public void SetNext(IntNode next) { this.next = next; }
-
-        public IntNode CopyNode() { return new IntNode(this.value, this.next); }
-
-        public IntNode GetLastNode()
-        {
-            IntNode current = this;
-
-            while (current.GetNext() != null)
-            {
-                current = current.GetNext();
-            }
-
-            return current;
-        }
-
-        public static IntNode BuildList(int[] arr)
-        {
-            IntNode head = null;
-            for (int i = arr.Length - 1; i >= 0; i--)
-            {
-                head = new IntNode(arr[i], head);
-            }
-
-            return head;
-        }
-
-        public string ListToString()
-        {
-            IntNode curr = this;
-            string output = "";
-
-            while (curr != null)
-            {
-                output += curr;
-                if (curr.GetNext() != null)
-                    output += ", ";
-
-                curr = curr.GetNext();
-            }
-
-            return output;
-        }
-
-        public override string ToString()
-        {
-            return this.value.ToString();
-        }
-    }
-
     public class NodeFuncs
     {
         public static int CountNodes<T>(Node<T> head)
@@ -506,7 +444,7 @@ namespace Prjcts
         public static bool IsBalanced(Node<int> head)
         {
             Node<int> curr = head;
-            double listAvg = (double)(NodeFuncs.SumNodes(head) /  NodeFuncs.CountNodes(head));
+            double listAvg = (double)(NodeFuncs.SumNodes(head) / NodeFuncs.CountNodes(head));
             int belowAvgCount = 0;
             int aboveAvgCount = 0;
 
@@ -558,105 +496,36 @@ namespace Prjcts
                 return NodeFuncs.RemoveBiggest(head, n-1);
             }
         }
-    }
 
-    public class UnitTest
-    {
-        public static void Launcher()
+        public static int CountCharOccurs(Node<char> head, char occurence)
         {
-            UnitTest.Test3();
-        }
+            Node<char> curr = head;
+            int countOccurences = 0;
 
-        public static void IntNodeTest()
-        {
-
-            IntNode n1 = new IntNode(42);
-            IntNode n2 = new IntNode(3);
-            IntNode n3 = new IntNode(51);
-            IntNode head = n1;
-            IntNode current = null;
-
-            n1.SetNext(n2);
-            n2.SetNext(n3);
-
-            n1 = null;
-            n2 = null;
-            n3 = null;
-
-            IntNode n4 = new IntNode(99);
-
-            current = head;
-            current = head.GetLastNode();
-            current.SetNext(n4);
-
-            Console.WriteLine(head.ListToString());
-
-            current = head;
-            while (current.GetNext().GetNext() != null)
+            while (curr != null)
             {
-                current = current.GetNext();
+                if (curr.GetValue() == occurence)
+                {
+                    countOccurences++;
+                }
+
+                curr = curr.GetNext();
             }
-            current.SetNext(null);
 
-            Console.WriteLine(head.ListToString());
+            return countOccurences;
         }
 
-        public static void Test2()
+        public static int[] CountAbcs(Node<char> abcs)
         {
-            Node<int> head = Node<int>.BuildList( [42, 58, 49, 42, 13] );
-            Node<int> tmp = null;
+            Node<char> head = null;
+            int[] abcsCount = new int[26];
 
-            Console.WriteLine($"1: {NodeFuncs.SumNodes(head)}\n2: {NodeFuncs.CountOddValues(head)}");
-            Console.WriteLine($"3: {NodeFuncs.GetDifference(head)}\n4: {NodeFuncs.IsPositive(head)}");
-            Console.WriteLine($"5 True: {NodeFuncs.IsIn(head, 49)}\n5 False: {NodeFuncs.IsIn(head, 45)}\n6 False: {NodeFuncs.IsInLesserOrder(head)}\n6 True: {NodeFuncs.IsInLesserOrder(head.GetNext())}");
+            for (int i = 0; i < abcsCount.Length; i++)
+            {
+                abcsCount[i] = CountCharOccurs(abcs, (char)(i + 'A')) + CountCharOccurs(abcs, (char)(i + 'a'));
+            }
 
-            Console.WriteLine(head.ListToString());
-
-            NodeFuncs.AddNode(head.GetLastNode(), 11);
-            Console.WriteLine(head.ListToString());
-
-            NodeFuncs.RemoveNode(head, head.GetLastNode());
-            Console.WriteLine(head.ListToString());
-
-            NodeFuncs.RemoveNode(head, head);
-            Console.WriteLine(head.ListToString());
-        }
-
-        public static void Test3()
-        {
-            Node<int> head1 = Node<int>.BuildList([4, 5, 6, 6, 3, 4, 4, 4, 22, 3, 6]);
-            Node<int> head2 = Node<int>.BuildList([1,1,1,1,1,2,1,2,2,2]);
-            Node<int> head3 = Node<int>.BuildList([5, 2, 3, 6, 7, 18, 20, 26]);
-            Node<int> head4 = Node<int>.BuildList([3, 3, 7, 7]);
-            Node<int> head5 = Node<int>.BuildList([3, 3, 5, 9]);
-
-            Console.WriteLine(head1.ListToString());
-            Console.WriteLine(head2.ListToString());
-            Console.WriteLine(NodeFuncs.CountSeries(head1, 4));
-
-            Console.WriteLine(NodeFuncs.EvenOddEqual(head1));
-            Console.WriteLine(NodeFuncs.EvenOddEqual(head2));
-
-            Console.WriteLine(NodeFuncs.RemoveNums(head1.CopyList(), 6).ListToString());
-            Console.WriteLine(NodeFuncs.RemoveNums(head2.CopyList(), 1).ListToString());
-
-            Console.WriteLine(NodeFuncs.CopyUniqVals(head2).ListToString());
-            Console.WriteLine(NodeFuncs.CopyUniqVals(head1).ListToString());
-
-            Console.WriteLine(NodeFuncs.IsInRisingOrder(head3)); // False
-            Console.WriteLine(NodeFuncs.IsInRisingOrder(head3.GetNext())); // True
-
-            Console.WriteLine(NodeFuncs.ToStrInRising(head1));
-
-            Console.WriteLine(NodeFuncs.CreateOrder(2, 8).ListToString());
-
-            Console.WriteLine(NodeFuncs.RecordBackwardList().ListToString());
-
-            Console.WriteLine(NodeFuncs.IsBalanced(head1)); // False
-            Console.WriteLine(NodeFuncs.IsBalanced(head4)); // True
-            Console.WriteLine(NodeFuncs.IsBalanced(head5)); // False
-
-            Console.WriteLine(NodeFuncs.RemoveBiggest(head3.CopyList(), 4).ListToString());
+            return abcsCount;
         }
     }
 }
