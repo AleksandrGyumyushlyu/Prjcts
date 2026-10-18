@@ -517,7 +517,6 @@ namespace Prjcts
 
         public static int[] CountAbcs(Node<char> abcs)
         {
-            Node<char> head = null;
             int[] abcsCount = new int[26];
 
             for (int i = 0; i < abcsCount.Length; i++)
