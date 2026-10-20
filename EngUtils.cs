@@ -9,6 +9,108 @@ namespace Prjcts
 {
     internal class EngUtils
     {
+        /// TODO: Comment
+        public static string reverseStr(string S1)
+        {
+            string S2 = "";
+            for (int i = S1.Length - 1; i >= 0; i--)
+            {
+                S2 += S1[i];
+            }
+            return S2;
+        }
+
+        /// TODO: Comment
+        public static int FindCharIndex(string S, char T)
+        {
+            for (int i = 0; i < S.Length; i++)
+            {
+                if (S[i] == T)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// TODO: Comment
+        public static bool FindInString(string S1, string S2)
+        {
+            for (int i = 0; i < S1.Length; i++)
+            {
+                for (int j = 0; j < S2.Length; j++)
+                {
+                    if (S1[i] == S2[j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        
+        /// TODO: Comment
+        public static string SortInAlphabetOrder(string S1, string S2)
+        { 
+            string inOrder = "";
+            
+            if (S1.Length > S2.Length)
+            {
+                for (int i = 0; i < 26; i++)
+                {
+                    for (int j = 0; j < S1.Length; j++)
+                    {
+                        if (S1[j] == 'a' + i || S1[j] == 'A' + i)
+                        {
+                            inOrder += S1[j];
+                        }
+                    }
+
+                }
+                return inOrder;
+            }
+
+            else
+            {
+                for (int i = 0; i < 26; i++)
+                {
+                    for (int j = 0; j < S2.Length; j++)
+                    {
+                        if (S2[j] == 'a' + i || S2[j] == 'A' + i)
+                        {
+                            inOrder += S2[j];
+                        }
+                    }
+
+                }
+                return inOrder;
+            }
+        }
+
+        /// TODO: Comment
+        public static string dictionaryOrder(string S1, string S2)
+        {
+            string S1CAPS = EngUtils.CapitalizeString(S1);
+            string S2CAPS = EngUtils.CapitalizeString(S2);
+
+            for (int i = 0; i < Math.Min(S1.Length, S2.Length); i++)
+            {
+                if (S1[i] < S2[i])
+                {
+                    return S1;
+                }
+                else if (S1[i] > S2[i])
+                {
+                    return S2;
+                }
+            }
+
+            return (S1.Length < S2.Length) ? S1 : S2;
+
+        }
+
         /// <summary>
         /// This function turns lower case english letter to upper case english letter, if not a letter ignores <br/>
         /// </summary>
