@@ -37,14 +37,24 @@ namespace Prjcts
         /// TODO: Comment
         public static bool FindInString(string S1, string S2)
         {
-            for (int i = 0; i < S1.Length; i++)
+            int similarCount = 0;
+            for (int i = 0; i < S1.Length - S2.Length + 1; i++)
             {
-                for (int j = 0; j < S2.Length; j++)
+                for (int j = 0, k = i; j < S2.Length; j++, k++)
                 {
-                    if (S1[i] == S2[j])
+                    if (S1[k] == S2[j])
                     {
-                        return true;
+                        similarCount += 1;
                     }
+                    else
+                    {
+                        similarCount = 0;
+                    }
+                }
+                
+                if (similarCount == S2.Length)
+                {
+                    return true;
                 }
             }
 
