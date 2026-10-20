@@ -317,7 +317,7 @@ namespace Prjcts
                 if (curr.GetValue() == num)
                 {
                     tmp = curr.GetNext();
-                    RemoveNode(head,curr);
+                    RemoveNode(head, curr);
                     if (curr.GetNext() == null)
                     {
                         curr = tmp;
@@ -471,7 +471,7 @@ namespace Prjcts
             Node<int> biggestNode = head;
             int biggestNum = head.GetValue();
 
-            while(curr != null)
+            while (curr != null)
             {
                 if (curr.GetValue() > biggestNum)
                 {
@@ -493,7 +493,7 @@ namespace Prjcts
             else
             {
                 NodeFuncs.RemoveNode(head, NodeFuncs.FindBiggestNum(head));
-                return NodeFuncs.RemoveBiggest(head, n-1);
+                return NodeFuncs.RemoveBiggest(head, n - 1);
             }
         }
 
@@ -544,6 +544,27 @@ namespace Prjcts
             }
 
             return nameCount;
+        }
+
+        public static Node<T> ReverseList<T>(Node<T> head)
+        {
+            Node<T> newHead = head.GetLastNode();
+            NodeFuncs.ReverseList(head, head.GetNext());
+            head.SetNext(null);
+
+            return newHead;
+        }
+
+        private static void ReverseList<T>(Node<T> prev, Node<T> curr)
+        {
+            if (curr.GetNext() == null)
+            {
+                curr.SetNext(prev);
+                return;
+            }
+
+            ReverseList(curr, curr.GetNext());
+            curr.SetNext(prev);
         }
     }
 }
