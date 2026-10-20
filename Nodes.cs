@@ -527,6 +527,23 @@ namespace Prjcts
             return abcsCount;
         }
 
+        public static int CountNameAppearance(Node<string> namesList, string name)
+        {
+            Node<string> currName = namesList;
+            int nameCount = 0;
+            name += ' ';
 
+            while (currName != null)
+            {
+                if (EngUtils.FindInString(currName.GetValue(), name))
+                {
+                    nameCount++;
+                }
+
+                currName = currName.GetNext();
+            }
+
+            return nameCount;
+        }
     }
 }

@@ -76,6 +76,11 @@ namespace  Prjcts
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'e'));
 
             Funcs.PrintArray(NodeFuncs.CountAbcs(charHead));
+            Console.WriteLine();
+
+            Console.WriteLine(NodeFuncs.CountNameAppearance(Node<string>.BuildList(["Josh Daveson", "Joshua NoJoshua", "Josh Rajeshovich", "David Atsalal", "Josh UltraKill"]), "Josh"));
+
+            
         }
     }
 }

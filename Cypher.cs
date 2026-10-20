@@ -92,7 +92,7 @@ namespace Prjcts
             key %= 26;
             for (int i = 0; i < str.Length; i++)
             {
-                if (EngUtils.isLowerCase(str[i]))
+                if (EngUtils.IsLowerCase(str[i]))
                 { 
                     if (str[i] + key > 'z')
                     { 
@@ -108,7 +108,7 @@ namespace Prjcts
                     }
                 }
 
-                else if (EngUtils.isUpperCase(str[i]))
+                else if (EngUtils.IsUpperCase(str[i]))
                 {
                     if (str[i] + key > 'Z')
                     {
@@ -163,7 +163,7 @@ namespace Prjcts
             while (key < 26)
             {
                 key++;
-                percentage = EngUtils.getEnglishWordPercentage(caesarDecypher(str, key));
+                percentage = EngUtils.GetEnglishWordPercentage(caesarDecypher(str, key));
                 if (percentage > maxPercentage)
                 {
                     maxPercentage = percentage;
@@ -206,9 +206,9 @@ namespace Prjcts
         input: string 
         output: true / false value
         */
-        public static bool isEncrypted(string str)
+        public static bool IsEncrypted(string str)
         {
-            if (EngUtils.getEnglishWordPercentage(str) >= 70)
+            if (EngUtils.GetEnglishWordPercentage(str) >= 70)
             {
                 return false;
             }
