@@ -235,7 +235,6 @@ namespace Prjcts
         {
             Node<T> curr = head;
             Node<T> prev = null;
-            Node<T> deleted = null;
 
             if (curr != node)
             {
@@ -251,13 +250,13 @@ namespace Prjcts
             }
             else
             {
-                deleted = new Node<T>(head.GetValue());
+                prev = new Node<T>(head.GetValue());
                 curr = head.GetNext();
                 head.SetValue(curr.GetValue());
                 head.SetNext(curr.GetNext());
                 curr.SetNext(null);
 
-                return deleted;
+                return prev;
             }
         }
 
