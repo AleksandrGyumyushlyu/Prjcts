@@ -100,7 +100,7 @@ namespace Prjcts
         }
 
         /// TODO: Comment
-        public static string dictionaryOrder(string S1, string S2)
+        public static string DictionaryOrder(string S1, string S2)
         {
             string S1CAPS = EngUtils.CapitalizeString(S1);
             string S2CAPS = EngUtils.CapitalizeString(S2);

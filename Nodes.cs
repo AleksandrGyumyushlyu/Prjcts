@@ -566,5 +566,23 @@ namespace Prjcts
             ReverseList(curr, curr.GetNext());
             curr.SetNext(prev);
         }
+
+        public static Node<string> AbcSort(Node<string> head)
+        {
+            Node<string> curr = head;
+
+            while (curr.GetNext() != null)
+            {
+                if (EngUtils.DictionaryOrder(curr.GetValue(), curr.GetNext().GetValue()) == curr.GetNext().GetValue())
+                {
+                    return curr;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return null;
+        }
+
     }
 }

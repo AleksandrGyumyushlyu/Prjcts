@@ -72,6 +72,7 @@ namespace Prjcts
         {
             Node<char> charHead = Node<char>.BuildList(['a', 'A', 'a', 'b', 'c', 'd', 'd', 'e', 'e']);
             Node<string> nameList = Node<string>.BuildList(["Josh Daveson", "Joshua NoJoshua", "Josh Rajeshovich", "David Atsalal", "Josh UltraKill"]);
+            Node<string> orderCheck = Node<string>.BuildList((["apple", "cat", "egg", "girl", "good", "luck", "love", "window"]));
 
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'a'));
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'e'));
@@ -84,7 +85,7 @@ namespace Prjcts
             nameList = NodeFuncs.ReverseList(nameList);
             Console.WriteLine(nameList.ListToString());
 
-
+            Console.WriteLine(NodeFuncs.AbcSort(orderCheck));
         }
     }
 }
