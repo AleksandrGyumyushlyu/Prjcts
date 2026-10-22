@@ -217,10 +217,25 @@ namespace Prjcts
             }
         }
 
-        public static void RemoveNode<T>(Node<T> head, Node<T> node)
+        public static void AddNode<T>(Node<T> prev, Node<T> newNode)
+        {
+            if (prev.GetNext() != null)
+            {
+                newNode.SetNext(prev.GetNext());
+                prev.SetNext(newNode);
+            }
+            else
+            {
+                newNode.SetNext(null);
+                prev.SetNext(newNode);
+            }
+        }
+
+        public static Node<T> RemoveNode<T>(Node<T> head, Node<T> node)
         {
             Node<T> curr = head;
             Node<T> prev = null;
+            Node<T> deleted = null;
 
             if (curr != node)
             {
@@ -232,14 +247,17 @@ namespace Prjcts
 
                 prev.SetNext(curr.GetNext());
                 curr.SetNext(null);
-                curr = null;
+                return curr;
             }
             else
             {
+                deleted = new Node<T>(head.GetValue());
                 curr = head.GetNext();
                 head.SetValue(curr.GetValue());
                 head.SetNext(curr.GetNext());
                 curr.SetNext(null);
+
+                return deleted;
             }
         }
 
@@ -584,5 +602,70 @@ namespace Prjcts
             return null;
         }
 
+        // NOTE:
+        // Task 22:
+        // Paragraph A:
+        // Example for 1 is: <any number>->null, example for 2: <any number>-><anynumber>->null
+        // Paragraph B:
+        // The function will return 1 if the length of the list is ODD (e.g. if there's only 1 node, or only 3 nodes)
+        // because num is 2 in the beggining, then after first iteration it's 3-2=1, after second it's 3-1=2, so it's either 1 or 2
+
+        public static Node<int> FindIn(Node<int> node, int value)
+        {
+            while (node != null)
+            {
+                if (node.GetValue() == value)
+                {
+                    return node;
+                }
+
+                node = node.GetNext();
+            }
+
+            return null;
+        }
+
+        public static bool HasOrder(Node<int> head, int n)
+        {
+            Node<int> curr = head;
+            int orderCount = 1;
+
+            while (curr.GetNext() != null)
+            {
+                if (curr.GetValue() + 1 == curr.GetNext().GetValue())
+                {
+                    orderCount++;
+                }
+                else
+                {
+                    orderCount = 1;
+                }
+
+                if (orderCount == n)
+                {
+                    return true;
+                }
+                
+                curr = curr.GetNext();
+            }
+
+            return false;
+        }
+
+        // TODO: FINISH THIS
+        public static void NeverOddOrEven(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> tmp = null;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() % 2 == 1)
+                {
+                    tmp = NodeFuncs.RemoveNode(head, curr);
+                    NodeFuncs.AddNode(head.GetLastNode(), tmp);
+                }
+            }
+        }
     }
 }
