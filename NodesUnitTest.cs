@@ -88,7 +88,7 @@ namespace Prjcts
 
             Console.WriteLine(NodeFuncs.AbcSort(orderCheck));
 
-            Console.WriteLine(NodeFuncs.HasOrder(intHead, 4));
+            Console.WriteLine(NodeFuncs.HasOrder(intHead, 5));
         }
     }
 }
