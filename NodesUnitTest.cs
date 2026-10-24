@@ -73,7 +73,8 @@ namespace Prjcts
             Node<char> charHead = Node<char>.BuildList(['a', 'A', 'a', 'b', 'c', 'd', 'd', 'e', 'e']);
             Node<string> nameList = Node<string>.BuildList(["Josh Daveson", "Joshua NoJoshua", "Josh Rajeshovich", "David Atsalal", "Josh UltraKill"]);
             Node<string> orderCheck = Node<string>.BuildList((["apple", "cat", "egg", "girl", "good", "luck", "love", "window"]));
-            Node<int> intHead = Node<int>.BuildList([5, 6, 7, 8, 9, 18, 20, 26]);
+            Node<int> intHead1 = Node<int>.BuildList([5, 6, 7, 8, 9, 18, 20, 26]);
+            Node<int> intHead2 = Node<int>.BuildList([1,3,5,7,9,11,2,4,6,8,10,12]);
 
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'a'));
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'e'));
@@ -88,7 +89,13 @@ namespace Prjcts
 
             Console.WriteLine(NodeFuncs.AbcSort(orderCheck));
 
-            Console.WriteLine(NodeFuncs.HasOrder(intHead, 5));
+            Console.WriteLine(NodeFuncs.HasOrder(intHead1, 5));
+
+            NodeFuncs.NeverOddOrEven(intHead1);
+            Console.WriteLine(intHead1.ListToString());
+
+            NodeFuncs.NeverOddOrEven(intHead2);
+            Console.WriteLine(intHead2.ListToString());
         }
     }
 }

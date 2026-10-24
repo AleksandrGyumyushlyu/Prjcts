@@ -644,25 +644,43 @@ namespace Prjcts
                 {
                     return true;
                 }
-                
+
                 curr = curr.GetNext();
             }
 
             return false;
         }
 
-        // TODO: FINISH THIS
+        public static void swapValues<T>(Node<T> node1, Node<T> node2)
+        {
+            Node<T> tmp = new Node<T>(node1.GetValue());
+            node1.SetValue(node2.GetValue());
+            node2.SetValue(tmp.GetValue());
+        }
+
         public static void NeverOddOrEven(Node<int> head)
         {
             Node<int> curr = head;
-            Node<int> tmp = null;
+            Node<int> odd = null;
+            bool inSearch = false;
 
             while (curr != null)
             {
-                if (curr.GetValue() % 2 == 1)
+                if (curr.GetValue() % 2 == 1 && !inSearch)
                 {
-                    tmp = NodeFuncs.RemoveNode(head, curr);
-                    NodeFuncs.AddNode(head.GetLastNode(), tmp);
+                    odd = curr;
+                    inSearch = true;
+                    curr = curr.GetNext();
+                }
+                else if (curr.GetValue() % 2 == 0 && inSearch)
+                {
+                    NodeFuncs.swapValues(odd, curr);
+                    inSearch = false;
+                    curr = odd.GetNext();
+                }
+                else
+                {
+                    curr = curr.GetNext();
                 }
             }
         }
