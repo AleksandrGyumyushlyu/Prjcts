@@ -248,7 +248,7 @@ namespace Prjcts
                 curr.SetNext(null);
                 return curr;
             }
-            else
+            else if (curr.GetNext() != null)
             {
                 prev = new Node<T>(head.GetValue());
                 curr = head.GetNext();
@@ -257,6 +257,10 @@ namespace Prjcts
                 curr.SetNext(null);
 
                 return prev;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -677,6 +681,38 @@ namespace Prjcts
                     NodeFuncs.swapValues(odd, curr);
                     inSearch = false;
                     curr = odd.GetNext();
+                }
+                else
+                {
+                    curr = curr.GetNext();
+                }
+            }
+        }
+
+        public static void CutSeries(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> next = head.GetNext();
+
+            while (curr != null && (next = curr.GetNext()) != null && next.GetNext() != null)
+            {
+                if (curr.GetValue() == next.GetValue() &&
+                    curr.GetValue() == next.GetNext().GetValue() &&
+                    next.GetValue() == next.GetNext().GetValue())
+                {
+                    while ((next = curr.GetNext()) != null && next.GetValue() == curr.GetValue())
+                    {
+                        NodeFuncs.RemoveNode(curr, next);
+                    }
+
+                    if (next != null)
+                    {
+                        NodeFuncs.RemoveNode(curr, curr);
+                    }
+                    else
+                    {
+                        NodeFuncs.RemoveNode(head, curr);
+                    }
                 }
                 else
                 {

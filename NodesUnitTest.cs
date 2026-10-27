@@ -75,6 +75,8 @@ namespace Prjcts
             Node<string> orderCheck = Node<string>.BuildList((["apple", "cat", "egg", "girl", "good", "luck", "love", "window"]));
             Node<int> intHead1 = Node<int>.BuildList([5, 6, 7, 8, 9, 18, 20, 26]);
             Node<int> intHead2 = Node<int>.BuildList([1,3,5,7,9,11,2,4,6,8,10,12]);
+            Node<int> intHead3 = Node<int>.BuildList([1,3,3,3,4,5,5,6,9,9,9,9]);
+            Node<int> intHead4 = Node<int>.BuildList([9, 9, 9, 9, 9]);
 
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'a'));
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'e'));
@@ -96,6 +98,9 @@ namespace Prjcts
 
             NodeFuncs.NeverOddOrEven(intHead2);
             Console.WriteLine(intHead2.ListToString());
+
+            NodeFuncs.CutSeries(intHead3);
+            Console.WriteLine(intHead3.ListToString());
         }
     }
 }
