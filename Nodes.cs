@@ -64,6 +64,18 @@ namespace Prjcts
             return head;
         }
 
+        public int GetLength()
+        {
+            Node<T> curr = this;
+            int count = 0;
+
+            while (curr != null)
+            {
+                count++;
+                curr = curr.GetNext();
+            }
+        }
+
         public string ListToString()
         {
             Node<T> curr = this;
@@ -697,8 +709,8 @@ namespace Prjcts
             while (curr != null && (next = curr.GetNext()) != null && next.GetNext() != null)
             {
                 if (curr.GetValue() == next.GetValue() &&
-                    curr.GetValue() == next.GetNext().GetValue() &&
-                    next.GetValue() == next.GetNext().GetValue())
+                        curr.GetValue() == next.GetNext().GetValue() &&
+                        next.GetValue() == next.GetNext().GetValue())
                 {
                     while ((next = curr.GetNext()) != null && next.GetValue() == curr.GetValue())
                     {
@@ -720,5 +732,50 @@ namespace Prjcts
                 }
             }
         }
+
+        public static bool AreEqual<T>(Node<T> first, Node<T> second)
+        {
+            return EqualityComparer<T>.Default.Equals(first.GetValue(), second.GetValue());
+        }
+
+        public static bool IsPolindrome<T>(Node<T> head)
+        {
+            Node<T> rvsHead = NodeFuncs.ReverseList(head.CopyList());
+            Node<T> curr = head;
+            Node<T> rvsCurr = rvsHead;
+
+            while (curr != null && rvsCurr != null)
+            {
+                if (!AreEqual(curr, rvsCurr))
+                {
+                    return false;
+                }
+
+                curr = curr.GetNext();
+                rvsCurr = rvsCurr.GetNext();
+            }
+
+            return true;
+        }
+
+        public static bool IsNPolindrome<T>(Node<T> head, int n)
+        {
+            // Node<T> tmp = head.CopyList();
+            // NodeFuncs.RemoveNode(intHead6, intHead6.GetLastNode());
+            Node<T> curr = head;
+            int count = 0;
+
+            while (curr.GetLength() < n && curr != null)
+            {
+                curr = curr.GetNext();
+            }
+
+            if (curr.GetLength() != n)
+            {
+                return false; // FIXME:
+            }
+
+        }
+
     }
 }

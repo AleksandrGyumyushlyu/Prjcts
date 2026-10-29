@@ -77,6 +77,7 @@ namespace Prjcts
             Node<int> intHead2 = Node<int>.BuildList([1,3,5,7,9,11,2,4,6,8,10,12]);
             Node<int> intHead3 = Node<int>.BuildList([1,3,3,3,4,5,5,6,9,9,9,9]);
             Node<int> intHead4 = Node<int>.BuildList([9, 9, 9, 9, 9]);
+            Node<int> intHead5 = Node<int>.BuildList(([1,2,3,4,5,6,5,4,3,2,1]));
 
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'a'));
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'e'));
@@ -101,6 +102,12 @@ namespace Prjcts
 
             NodeFuncs.CutSeries(intHead3);
             Console.WriteLine(intHead3.ListToString());
+
+            Console.WriteLine(NodeFuncs.IsPolindrome(intHead5));
+            Node<int> intHead6 = intHead5.CopyList();
+            NodeFuncs.RemoveNode(intHead6, intHead6.GetLastNode());
+            Console.WriteLine(NodeFuncs.IsPolindrome(intHead6));
+            Console.WriteLine(NodeFuncs.IsPolindrome(intHead3));
         }
     }
 }
