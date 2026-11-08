@@ -74,6 +74,8 @@ namespace Prjcts
                 count++;
                 curr = curr.GetNext();
             }
+
+            return count;
         }
 
         public string ListToString()
@@ -758,23 +760,70 @@ namespace Prjcts
             return true;
         }
 
-        public static bool IsNPolindrome<T>(Node<T> head, int n)
+        public static Node<T> moveInList<T>(Node<T> head, int n)
         {
-            // Node<T> tmp = head.CopyList();
-            // NodeFuncs.RemoveNode(intHead6, intHead6.GetLastNode());
             Node<T> curr = head;
             int count = 0;
 
-            while (curr.GetLength() < n && curr != null)
+            while (count < n && curr != null)
             {
                 curr = curr.GetNext();
+                count++;
             }
 
-            if (curr.GetLength() != n)
+            return curr;
+        }
+
+        public static bool IsNPolindrome<T>(Node<T> head, int listLength, int start, int end)
+        {
+            Node<T> rvsHead = NodeFuncs.ReverseList(head.CopyList());
+            Node<T> curr = head;
+            Node<T> rvsCurr = rvsHead;
+            int count = 0;
+
+            if (end < listLength)
             {
-                return false; // FIXME:
+                curr = moveInList(head, start);
+                rvsCurr = moveInList(rvsCurr, listLength - end);
+
+                while (curr != null && rvsCurr != null && count < end)
+                {
+                    if (!AreEqual(curr, rvsCurr))
+                    {
+                        return false;
+                    }
+
+                    curr = curr.GetNext();
+                    rvsCurr = rvsCurr.GetNext();
+                    count++;
+                }
+            }
+            else
+            {
+                return false;
             }
 
+            return count <= end;
+        }
+
+
+        public static bool IsPolindromeN<T>(Node<T> head, int n)
+        {
+            Node<T> curr = head;
+            int listLength = head.GetLength();
+            int count = 0;
+
+            while (count < listLength)
+            {
+                if (IsNPolindrome(curr, listLength, count, n - count))
+                {
+                    return true;
+                }
+
+                count++;
+            }
+
+            return false;
         }
 
     }
