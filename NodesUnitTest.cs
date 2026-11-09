@@ -110,7 +110,10 @@ namespace Prjcts
             Console.WriteLine(NodeFuncs.IsPolindrome(intHead6));
             Console.WriteLine(NodeFuncs.IsPolindrome(intHead3));
 
-            Console.WriteLine(NodeFuncs.IsPolindromeN(intHead7, 11));
+            Console.WriteLine(NodeFuncs.IsPolindrome(intHead7, 11));
+
+            Console.WriteLine(NodeFuncs.LongestPolindrome(intHead7));
+            Console.WriteLine(NodeFuncs.IsPolindrome(intHead7, 18));
         }
     }
 }

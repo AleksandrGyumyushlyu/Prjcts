@@ -803,11 +803,11 @@ namespace Prjcts
                 return false;
             }
 
-            return count <= end;
+            return true;
         }
 
 
-        public static bool IsPolindromeN<T>(Node<T> head, int n)
+        public static bool IsPolindrome<T>(Node<T> head, int n)
         {
             Node<T> curr = head;
             int listLength = head.GetLength();
@@ -824,6 +824,24 @@ namespace Prjcts
             }
 
             return false;
+        }
+
+        public static int LongestPolindrome<T>(Node<T> head)
+        {
+            int length = head.GetLength();
+            int size = 1;
+            int maxSize = 1;
+
+            while (size <= length)
+            {
+                if (IsPolindrome(head, size))
+                {
+                    maxSize = size;
+                }
+                size++;
+            }
+
+            return maxSize;
         }
 
     }
