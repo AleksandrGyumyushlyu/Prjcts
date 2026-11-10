@@ -76,8 +76,8 @@ namespace Prjcts
             Node<int> intHead1 = Node<int>.BuildList([5, 6, 7, 8, 9, 18, 20, 26]);
             Node<int> intHead2 = Node<int>.BuildList([1,3,5,7,9,11,2,4,6,8,10,12]);
             Node<int> intHead3 = Node<int>.BuildList([1,3,3,3,4,5,5,6,9,9,9,9]);
-            Node<int> intHead4 = Node<int>.BuildList([9, 9, 9, 9, 9]);
-            Node<int> intHead5 = Node<int>.BuildList(([1,2,3,4,5,6,5,4,3,2,1]));
+            Node<int> intHead4 = Node<int>.BuildList([9,9,9,9,9]);
+            Node<int> intHead5 = Node<int>.BuildList([1,2,3,4,5,6,5,4,3,2,1]);
             Node<int> intHead7 = Node<int>.BuildList(([2,4,5,6,7,1,2,3,4,5,6,5,4,3,2,1,3,4,5]));
 
             Console.WriteLine(NodeFuncs.CountCharOccurs(charHead, 'a'));
@@ -114,6 +114,8 @@ namespace Prjcts
 
             Console.WriteLine(NodeFuncs.LongestPolindrome(intHead7));
             Console.WriteLine(NodeFuncs.IsPolindrome(intHead7, 18));
+
+            Console.WriteLine(NodeFuncs.Merge(intHead4, intHead5).ListToString());
         }
     }
 }

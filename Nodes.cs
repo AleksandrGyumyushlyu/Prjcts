@@ -806,7 +806,7 @@ namespace Prjcts
             return true;
         }
 
-
+        //  FIXME:
         public static bool IsPolindrome<T>(Node<T> head, int n)
         {
             Node<T> curr = head;
@@ -826,6 +826,7 @@ namespace Prjcts
             return false;
         }
 
+        //  FIXME:
         public static int LongestPolindrome<T>(Node<T> head)
         {
             int length = head.GetLength();
@@ -844,5 +845,91 @@ namespace Prjcts
             return maxSize;
         }
 
+        public static Node<int> Merge(Node<int> list1, Node<int> list2)
+        {
+            Node<int> newList = null;
+            Node<int> newCurr = null;
+            
+            if (list1 != null && list2 != null)
+            {
+                newList = new Node<int>(list1.GetValue() + list2.GetValue());
+                list1 = list1.GetNext();
+                list2 = list2.GetNext();
+            }
+            else if (list1 != null)
+            {
+                newList = new Node<int>(list1.GetValue());
+                list1 = list1.GetNext();
+            }
+            else if (list2 != null)
+            {
+                newList = new Node<int>(list2.GetValue());
+                list2 = list2.GetNext();
+            }
+
+            newCurr = newList;
+
+            while (list1 != null || list2 != null)
+            {
+                if (list1 != null && list2 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list1.GetValue() + list2.GetValue()));
+                    list1 = list1.GetNext();
+                    list2 = list2.GetNext();
+                }
+                else if (list1 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list1.GetValue()));
+                    list1 = list1.GetNext();
+                }
+                else if (list2 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list2.GetValue()));
+                    list2 = list2.GetNext();
+                }
+                newCurr = newCurr.GetNext();
+            }
+
+            return newList;
+        }
+
+        public static Node<int> Shared(Node<int> lst1, Node<int> lst2)
+        {
+            Node<int> newHead = null;
+            Node<int> newCurr = null;
+
+            while (lst1 != null)
+            {
+                if (lst1.GetValue() == lst2.GetValue())
+                {
+                    if (newHead == null)
+                    {
+                        newHead = new Node<int>(lst1.GetValue());
+                        newCurr = newHead;
+                    }
+                    else
+                    {
+                        newCurr.SetNext(new Node<int>(lst1.GetValue()));
+                        newCurr = newCurr.GetNext();
+                    }
+                    lst1 = lst1.GetNext();
+                    lst2 = lst2.GetNext();
+                    newCurr = newCurr.GetNext();
+                }
+                else
+                {
+                    if (lst1.GetValue() > lst2.GetValue())
+                    {
+                        lst1 = lst1.GetNext();
+                    }
+                    else
+                    {
+                        lst2 = lst2.GetNext();
+                    }
+                }
+            }
+
+            return newHead;
+        }
     }
 }
