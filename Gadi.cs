@@ -77,6 +77,15 @@ public class Gadi
         }
     }
 
+    static void printColor(ConsoleColor color, long limit)
+    {
+        for (int i = 1; i <= limit; i++)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(i + " ");
+        }
+    }
+
     public static void printHelper1()
     {
         printColor(ConsoleColor.Blue);
@@ -94,8 +103,13 @@ public class Gadi
         // Console.ReadKey();
         // Task.Run(printRed);
         // Task.Run(printGreen);
-        Task.Run(() => printColor(ConsoleColor.Blue));
-        Task.Run(() => printColor(ConsoleColor.White));
+        // Task.Run(() => printColor(ConsoleColor.Blue));
+        // Task.Run(() => printColor(ConsoleColor.White));
+        // Console.ReadKey();
+
+        Task.Run(() => printColor(ConsoleColor.Blue, 1000000000000000));
+        Task.Run(() => printColor(ConsoleColor.White, 1000000000000000));
         Console.ReadKey();
     }
+
 }
