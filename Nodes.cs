@@ -931,5 +931,11 @@ namespace Prjcts
 
             return newHead;
         }
+
+        // 40a: true example: 1, -2, 3, -4, 5, -6
+        //     false example: 1, 2, 3, 4, 5, 6
+        //
+        // 40b
+        // The exit condition is the end of the series, the function will stop when it gets to last node
     }
 }
