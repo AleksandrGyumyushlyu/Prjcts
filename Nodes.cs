@@ -937,5 +937,70 @@ namespace Prjcts
         //
         // 40b
         // The exit condition is the end of the series, the function will stop when it gets to last node
+
+        public static int RecursiveEvenCount(Node<int> head)
+        {
+            if (head.GetNext() == null)
+            {
+                return head.GetValue() % 2 == 0 ? 1 : 0;
+            }
+
+            if (head.GetValue() % 2 == 0)
+            {
+                return 1 + RecursiveEvenCount(head.GetNext());
+            }
+            else
+            {
+                return 0 + RecursiveEvenCount(head.GetNext());
+            }
+        }
+
+        public static void RecursiveEvenPlacePrint(Node<int> head, bool even = false)
+        {
+            if (head.GetNext() == null)
+            {
+                return;
+            }
+
+            if (even)
+            {
+                Console.WriteLine(head.GetValue());
+                RecursiveEvenPlacePrint(head.GetNext(), false);
+            }
+
+            RecursiveEvenPlacePrint(head.GetNext(), true);
+        }
+
+        public static int MostPopularResult(Node<SheshBesh> head)
+        {
+            int[] arr = new int[6];
+            int biggestNum = 0;
+            int biggestIndex = 0;
+
+            while (head != null)
+            {
+                arr[head.GetValue().die1]++;
+                arr[head.GetValue().die2]++;
+
+                head = head.GetNext();
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (arr[i] > biggestNum)
+                {
+                    biggestNum = arr[i];
+                    biggestIndex = i;
+                }
+            }
+
+            return biggestIndex + 1;
+        }
+    }
+
+    public class SheshBesh
+    {
+        public int die1;
+        public int die2;
     }
 }

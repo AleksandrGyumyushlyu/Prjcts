@@ -116,6 +116,9 @@ namespace Prjcts
             Console.WriteLine(NodeFuncs.IsPolindrome(intHead7, 18));
 
             Console.WriteLine(NodeFuncs.Merge(intHead4, intHead5).ListToString());
+
+            Console.WriteLine(NodeFuncs.RecursiveEvenCount(intHead1));
+            NodeFuncs.RecursiveEvenPlacePrint(intHead1);
         }
     }
 }
