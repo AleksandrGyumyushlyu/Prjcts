@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    public class CheckingAccount : BasicAccount
+    public class CheckingAccount : BasicAccount, IComparable
     {
         protected const double DEFAULT_OVERDRAFT = 1500;
         private double overdraft;
@@ -40,16 +40,56 @@ namespace Prjcts
             }
         }
 
-        public override bool Withdraw(double sum)
+        public override bool Withdraw(object o)
         {
-            if (sum >= 0 && this.GetBal() - sum >= -this.GetOverDraft())
+            double sum;
+
+            if (o is double)
             {
-                this.balance -= sum;
-                return true;
+                sum = (double)o;
+
+                if (sum >= 0 && this.GetBal() - sum >= -this.GetOverDraft())
+                {
+                    this.balance -= sum;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
+            }
+        }
+
+        int IComparable.CompareTo(object o)
+        {
+            CheckingAccount other;
+
+            if (o is CheckingAccount)
+            {
+                other = (CheckingAccount)o;
+                double thisValue = this.GetBal() + this.GetOverDraft();
+                double otherValue = other.GetBal() + other.GetOverDraft();
+
+                if (thisValue > otherValue)
+                {
+                    return 1;
+                }
+                else if (thisValue < otherValue)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
             }
         }
 

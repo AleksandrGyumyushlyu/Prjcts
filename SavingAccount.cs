@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    public class SavingAccount : BasicAccount
+    public class SavingAccount : BasicAccount, IComparable
     {
         private Date savingEndDate;
 
@@ -28,7 +28,7 @@ namespace Prjcts
 
         public bool SetEndDate(Date newEndDate)
         {
-            if (newEndDate.CompareTo(GetEndDate()) > 0)
+            if (((IComparable)newEndDate).CompareTo(GetEndDate()) > 0)
             {
                 this.savingEndDate = newEndDate;
                 return true;
@@ -39,29 +39,42 @@ namespace Prjcts
             }
         }
 
-        public bool Deposit(double sum)
+        public override bool Withdraw(object o)
         {
-            if (sum >= 0)
+            Date withdrawalDate;
+
+            if (o is Date)
             {
-                this.balance += sum;
-                return true;
-            }
+                withdrawalDate = (Date)o;
+
+                if (((IComparable)withdrawalDate).CompareTo(GetEndDate()) >= 0)
+                {
+                    this.balance = 0;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                } }
             else
             {
                 return false;
             }
         }
 
-        public bool WithdrawAll(Date withdrawalDate)
+        int IComparable.CompareTo(object obj)
         {
-            if (withdrawalDate.CompareTo(GetEndDate()) >= 0)
+            SavingAccount other;
+
+            if (obj is SavingAccount)
             {
-                this.balance = 0;
-                return true;
+                other = (SavingAccount)obj;
+
+                return ((IComparable)this.GetEndDate()).CompareTo(other.GetEndDate());
             }
             else
             {
-                return false;
+                return 0;
             }
         }
 
@@ -85,9 +98,9 @@ namespace Prjcts
             Console.WriteLine(svAc.SetEndDate(new Date(26, 8, 2026)) ? "End date changed!" : "End date change failed");
             Console.WriteLine(svAc.GetEndDate());
 
-            Console.WriteLine(svAc.WithdrawAll(new Date(19, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(svAc.Withdraw(new Date(19, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
             Console.WriteLine(svAc);
-            Console.WriteLine(svAc.WithdrawAll(new Date(27, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
+            Console.WriteLine(svAc.Withdraw(new Date(27, 8, 2026)) ? "Withdrawal was successfull" : "Failed to withdraw");
             Console.WriteLine(svAc);
         }
     }

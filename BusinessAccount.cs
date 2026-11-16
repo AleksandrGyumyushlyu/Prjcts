@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    public class BusinessAccount : CheckingAccount
+    public class BusinessAccount : CheckingAccount, IComparable
     {
         protected const double DEFAULT_OVERDRAFT = 5000;
         private string businessName;
@@ -17,6 +17,10 @@ namespace Prjcts
         {
             this.businessName = businessName;
         }
+
+        public BusinessAccount(int bankNum, int branchNum, int accountNum,
+                string ownerID, string businessName, double overdraft)
+            : this (bankNum, branchNum, accountNum, ownerID, businessName, overdraft, 0) { }
 
         public BusinessAccount(int bankNum, int branchNum, int accountNum,
             string ownerID, string businessName)
@@ -44,6 +48,35 @@ namespace Prjcts
             else
             {
                 return false;
+            }
+        }
+
+        int IComparable.CompareTo(object o)
+        {
+            CheckingAccount other;
+
+            if (o is CheckingAccount)
+            {
+                other = (CheckingAccount)o;
+                double thisValue = this.GetBal() + this.GetOverDraft();
+                double otherValue = other.GetBal() + other.GetOverDraft();
+
+                if (thisValue > otherValue)
+                {
+                    return 1;
+                }
+                else if (thisValue < otherValue)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0; // I asked a llm what to do if object isn't object i need and it told me to throw an error and I don't know how to do that so ZERRO cuz why not
             }
         }
 

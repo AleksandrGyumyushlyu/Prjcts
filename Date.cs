@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    public class Date {
+    public class Date : IComparable
+    {
         private int day;
         private int month;
         private int year;
@@ -212,7 +213,7 @@ namespace Prjcts
             {
                 for (int j = 0; j < dates.Length - i - 1; j++)
                 {
-                    if (dates[j].CompareTo(dates[j+1]) > 0)
+                    if (((IComparable)dates[j]).CompareTo(dates[j+1]) > 0)
                     {
                         tmp = dates[j + 1];
                         dates[j + 1] = dates[j];
@@ -232,23 +233,34 @@ namespace Prjcts
         /// </code>
         /// </example> 
         /// </summary>
-        /// <param name="other">Other date</param>
+        /// <param name="o">Possibly other date, if not date returns zero</param>
         /// <returns>0 if Dates are the same <br/>
         /// Negative number if Date the function is operated on is earlier than <c>other</c> date <br/>
         /// Positive number if Date the function is operated on is after the <c>other</c> date </returns>
-        public int CompareTo(Date other)
+        int IComparable.CompareTo(object o)
         {
-            if (this.year != other.GetYear())
+            Date other;
+
+            if (o is Date)
             {
-                return this.year - other.GetYear();
-            }
-            else if (this.month != other.GetMonth())
-            {
-                return this.month - other.GetMonth();
+                other = (Date)o;
+
+                if (this.year != other.GetYear())
+                {
+                    return this.year - other.GetYear();
+                }
+                else if (this.month != other.GetMonth())
+                {
+                    return this.month - other.GetMonth();
+                }
+                else
+                {
+                    return this.day - other.GetDay();
+                }
             }
             else
             {
-                return this.day - other.GetDay();
+                return 0;
             }
         }
 
@@ -297,10 +309,10 @@ namespace Prjcts
             Console.WriteLine(copyDate);
 
 
-            Console.WriteLine(new Date().CompareTo(new Date(2,3,2026)) > 0 ? "Before current date" : "After current Date");
+            Console.WriteLine(((IComparable)new Date()).CompareTo(new Date(2,3,2026)) > 0 ? "Before current date" : "After current Date");
 
 
-            Console.WriteLine(new Date(28, 2, 2026).CompareTo(new Date(5,7,2013)) > 0 ? "Before current date" : "After current Date");
+            Console.WriteLine(((IComparable)new Date(28, 2, 2026)).CompareTo(new Date(5,7,2013)) > 0 ? "Before current date" : "After current Date");
 
             Date[] dates = {currentDate, randomDate, copyDate, otherDate};
 

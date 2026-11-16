@@ -12,18 +12,64 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
         int lastFreeIndex;
         protected const int DEFAULT_ACKS_AMOUNT = 100;
 
-        public BankServices(int accountsAmount)
+        private readonly static Random rnd = new Random();
+
+        public BankServices(int accountsAmount, bool toGenerate)
         {
-            this.accounts = new BasicAccount[accountsAmount];
-            lastFreeIndex = 0;
+            if (!toGenerate)
+            {
+                this.accounts = new BasicAccount[accountsAmount];
+                this.lastFreeIndex = 0;
+            }
+            else
+            {
+                this.lastFreeIndex = 0;
+                int checkingCount = 0, savingCount = 0, businessCount = 0;
+                if (accountsAmount <= 0) { accountsAmount = 10; }
+                this.accounts = new BasicAccount[accountsAmount];
+                this.accounts[0] = new BusinessAccount(17, 171, 717, "Mr. Josh", "Josh Bank Inc.", 9999999);
+                this.lastFreeIndex++;
+                for (int i = 1; i < this.accounts.Length; i++)
+                {
+                    int r = BankServices.rnd.Next(3);
+                    if (r == 0)
+                    {
+                        savingCount++;
+                        this.accounts[i] = new SavingAccount(17, 171, rnd.Next(1000, 10000), "Account#" + i, new Date(rnd.Next(1, 29), rnd.Next(1, 13), rnd.Next(DateTime.Now.Year - 1, DateTime.Now.Year + 2)));
+                        if (BankServices.rnd.Next(2) == 0)
+                            this.accounts[i].Deposit(rnd.Next(1000, 10000));
+                    }
+                    else if (r == 1)
+                    {
+                        checkingCount++;
+                        this.accounts[i] = new CheckingAccount(17, 171, rnd.Next(1000, 10000), "Account#" + i);
+                        this.accounts[i].Deposit(rnd.Next(1000));
+                        ((CheckingAccount)this.accounts[i]).Withdraw(rnd.Next(1000));
+                    }
+                    else
+                    {
+                        businessCount++;
+                        this.accounts[i] = new BusinessAccount(17, 171, rnd.Next(1000, 10000), "Owner#0" + i, "Account#" + i);
+                        this.accounts[i].Deposit(rnd.Next(1000));
+                        ((CheckingAccount)this.accounts[i]).Withdraw(rnd.Next(1000));
+                    }
+                    this.lastFreeIndex++;
+                }
+                Console.WriteLine($"S={savingCount}, C={checkingCount}, B={businessCount}");
+            }
         }
 
-        public BankServices() : this(DEFAULT_ACKS_AMOUNT) {}
+        public BankServices() : this(DEFAULT_ACKS_AMOUNT, false) {}
 
         /// Access all accounts (accounts array)
         public BasicAccount[] GetAccounts()
         {
             return this.accounts;
+        }
+
+        public int GetLastFreeIndex()
+        {
+            return this.lastFreeIndex;
         }
 
         /// Overwrite accounts array with another array
@@ -60,11 +106,10 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             {
                 if (account != null && account.GetAccountNum() == accountNumber)
                 {
+                    return account.ToString();
                 }
-                return account.ToString();
             }
             return "";
-
         }
 
         public int AccountsAmount(int accountNumber)
@@ -297,18 +342,28 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             return suggestions;
         }
 
+        public override string ToString()
+        {
+            string allInfo = "";
 
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                allInfo += account.ToString();
+            }
+
+            return allInfo;
+        }
 
         public static void UnitTest()
         {
             BankServices bankAdmin = new BankServices();
-            bankAdmin.Add(new BasicAccount(1234, 1234, 1111, "1234"));
+            bankAdmin.Add(new CheckingAccount(1234, 1234, 1111, "1234"));
             bankAdmin.GetAccounts()[0].Deposit(200);
-            bankAdmin.Add(new BasicAccount(1234, 1234, 2222, "1234"));
+            bankAdmin.Add(new BusinessAccount(1234, 1234, 2222, "1234", "Biba and Boba"));
             bankAdmin.GetAccounts()[1].Deposit(150);
-            bankAdmin.Add(new BasicAccount(1234, 1234, 3333, "2345"));
+            bankAdmin.Add(new SavingAccount(1234, 1234, 3333, "2345", new Date(1,2,2027)));
             bankAdmin.GetAccounts()[2].Deposit(200);
-            bankAdmin.Add(new BasicAccount(1234, 1234, 4444, "2345"));
+            bankAdmin.Add(new CheckingAccount(1234, 1234, 4444, "2345"));
             bankAdmin.GetAccounts()[3].Deposit(200);
             Console.WriteLine(bankAdmin.GetInfoOf(1111));
 

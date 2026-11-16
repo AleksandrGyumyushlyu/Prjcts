@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prjcts
 {
-    public class BasicAccount
+    public abstract class BasicAccount
     {
         private int bankNum;
         private int branchNum;
@@ -48,7 +48,7 @@ namespace Prjcts
             return this.balance;
         }
 
-        public bool Deposit(double sum)
+        public virtual bool Deposit(double sum)
         {
             if (sum >= 0)
             {
@@ -74,45 +74,26 @@ namespace Prjcts
             }
         }
 
-        public virtual bool Withdraw(double sum)
-        {
-            if (sum >= 0 && GetBal() - sum >= 0)
-            {
-                this.balance -= sum;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public abstract bool Withdraw(object o);
 
-        public virtual bool AtRisk()
-        {
-            return false;
-        }
+        public abstract bool AtRisk();
 
         public override string ToString()
         {
             return $"Card number: {GetBankNum()}{GetBranchNum()}{GetAccountNum()}{GetOwnerID()}\nBalance: {GetBal()}\n";
         }
-
-        public static void UnitTest()
-        {
-            BasicAccount bsAcct = new BasicAccount(53, 57, 3802, "0123");
-            Console.WriteLine(bsAcct);
-
-            Console.WriteLine(bsAcct.Deposit(150) ? "Deposited successfull" : "Failed to deposit");
-            Console.WriteLine(bsAcct.GetBal());
-            Console.WriteLine(bsAcct.Deposit(-1) ? "Deposited successfull" : "Failed to deposit");
-            Console.WriteLine(bsAcct.GetBal());
-
-            Console.WriteLine(bsAcct.Withdraw(-1) ? "Withdrawal was successfull" : "Failed to withdraw");
-            Console.WriteLine(bsAcct.GetBal());
-            Console.WriteLine(bsAcct.Withdraw(150) ? "Withdrawal was successfull" : "Failed to withdraw");
-            Console.WriteLine(bsAcct.GetBal());
-            Console.WriteLine(bsAcct.Withdraw(2000) ? "Withdrawal was successfull" : "Failed to withdraw");
-            Console.WriteLine(bsAcct.GetBal());
-        }
     }
 }
+
+        // Withdraw implementation if account is like a debit card which for some reason doesn't exist idk whyy
+        // {
+        //     if (sum >= 0 && GetBal() - sum >= 0)
+        //     {
+        //         this.balance -= sum;
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         return false;
+        //     }
+        // }
