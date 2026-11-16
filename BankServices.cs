@@ -342,6 +342,60 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             return suggestions;
         }
 
+        public Node<BusinessAccount> GetBusinessByWealthValue()
+        {
+            Node<BusinessAccount> head = null;
+            Node<BusinessAccount> curr = null;
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is BusinessAccount)
+                {
+                    if (head == null)
+                    {
+                        head = new Node<BusinessAccount>((BusinessAccount)account);
+                        curr = head;
+                    }
+                    else
+                    {
+                        curr.SetNext(new Node<BusinessAccount>((BusinessAccount)account));
+                        curr = curr.GetNext();
+                    }
+                }
+            }
+
+            SortServices.NodeBubbleSort(head);
+
+            return head;
+        }
+
+        public Node<SavingAccount> GetSavingByDueDate()
+        {
+            Node<SavingAccount> head = null;
+            Node<SavingAccount> curr = null;
+
+            foreach (BasicAccount account in this.GetAccounts())
+            {
+                if (account is SavingAccount)
+                {
+                    if (head == null)
+                    {
+                        head = new Node<SavingAccount>((SavingAccount)account);
+                        curr = head;
+                    }
+                    else
+                    {
+                        curr.SetNext(new Node<SavingAccount>((SavingAccount)account));
+                        curr = curr.GetNext();
+                    }
+                }
+            }
+
+            SortServices.NodeBubbleSort(head);
+
+            return head;
+        }
+
         public override string ToString()
         {
             string allInfo = "";
@@ -354,7 +408,7 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             return allInfo;
         }
 
-        public static void UnitTest()
+        public static void UnitTestObsolete()
         {
             BankServices bankAdmin = new BankServices();
             bankAdmin.Add(new CheckingAccount(1234, 1234, 1111, "1234"));
@@ -401,6 +455,15 @@ namespace Prjcts // All comments should be temporary for now, they should be lik
             {
                 Console.WriteLine(description);
             }
+        }
+
+        public static void UnitTest()
+        {
+            BankServices sortTest = new BankServices(7, true);
+
+            Console.WriteLine(sortTest.GetBusinessByWealthValue().ListToString());
+            Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(sortTest.GetSavingByDueDate().ListToString());
         }
     }
 }

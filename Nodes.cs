@@ -1,0 +1,1027 @@
+using Prjcts;
+using System.ComponentModel;
+
+namespace Prjcts
+{
+    public class Node<T>
+    {
+        private T value;
+        private Node<T> next;
+        private Node<T> prev;
+
+        public Node(T value, Node<T> next = null, Node<T> prev = null)
+        {
+            this.value = value;
+            this.next = next;
+            this.prev = prev;
+        }
+
+        public T GetValue() { return this.value; }
+        public Node<T> GetNext() { return this.next; }
+        public Node<T> GetPrev() { return this.prev; }
+
+        public void SetValue(T value) { this.value = value; }
+        public void SetNext(Node<T> next) { this.next = next; }
+        public void SetPrev(Node<T> prev) { this.prev = prev; }
+
+        public Node<T> CopyNode() { return new Node<T>(this.value, this.next, this.prev); }
+
+        public Node<T> CopyList()
+        {
+            Node<T> curr = this;
+            Node<T> cpHead = new Node<T>(this.GetValue());
+            Node<T> cpCurr = cpHead;
+
+            curr = curr.GetNext();
+
+            while (curr != null)
+            {
+                cpCurr.SetNext(new Node<T>(curr.GetValue()));
+                cpCurr = cpCurr.GetNext();
+
+                curr = curr.GetNext();
+            }
+
+            return cpHead;
+        }
+
+        public Node<T> GetLastNode()
+        {
+            Node<T> current = this;
+
+            while (current.GetNext() != null)
+            {
+                current = current.GetNext();
+            }
+
+            return current;
+        }
+
+        // public static Node<T> BuildList(T[] arr)
+        // {
+        //     Node<T> head = null;
+        //     for (int i = arr.Length - 1; i >= 0; i--)
+        //     {
+        //         head = new Node<T>(arr[i], head);
+        //     }
+        //
+        //     return head;
+        // }
+
+        public static Node<T> BuildList(T[] arr)
+        {
+            Node<T> head = null;
+            Node<T> curr = null;
+            head = new Node<T>(arr[0], null, head);
+            curr = head;
+            for (int i = 1; i < arr.Length; i--)
+            {
+                curr.SetNext(new Node<T>(arr[i], null, curr));
+                curr = curr.GetNext();
+            }
+
+            return head;
+        }
+
+        public int GetLength()
+        {
+            Node<T> curr = this;
+            int count = 0;
+
+            while (curr != null)
+            {
+                count++;
+                curr = curr.GetNext();
+            }
+
+            return count;
+        }
+
+        public string ListToString()
+        {
+            Node<T> curr = this;
+            string output = "";
+
+            while (curr != null)
+            {
+                output += curr.ToString();
+                if (curr.GetNext() != null)
+                    output += ", ";
+
+                curr = curr.GetNext();
+            }
+
+            return output;
+        }
+
+        public override string ToString()
+        {
+            return this.value.ToString();
+        }
+
+    }
+
+    public class NodeFuncs
+    {
+        public static int CountNodes<T>(Node<T> head)
+        {
+            Node<T> curr = head;
+            int count = 0;
+
+            while (curr != null)
+            {
+                count++;
+                curr = curr.GetNext();
+            }
+            return count;
+        }
+
+        public static int SumNodes(Node<int> node)
+        {
+            int sum = 0;
+
+            while (node != null)
+            {
+                sum += node.GetValue();
+                node = node.GetNext();
+            }
+            return sum;
+        }
+
+        public static int CountOddValues(Node<int> node)
+        {
+            int count = 0;
+
+            while (node != null)
+            {
+                if (node.GetValue() % 2 != 0)
+                {
+                    count++;
+                }
+
+                node = node.GetNext();
+            }
+            return count;
+        }
+
+        public static int GetDifference(Node<int> node)
+        {
+            int oddSum = 0;
+            int evenSum = 0;
+            // Never odd or eveN
+            while (node != null)
+            {
+                if (node.GetValue() % 2 == 0)
+                {
+                    evenSum += node.GetValue();
+                }
+                else
+                {
+                    oddSum += node.GetValue();
+                }
+
+                node = node.GetNext();
+            }
+
+            return Math.Abs(evenSum - oddSum);
+        }
+
+        public static bool IsPositive(Node<int> node)
+        {
+            int negSum = 0;
+            int posSum = 0;
+            // Never odd or eveN
+            while (node != null)
+            {
+                if (node.GetValue() >= 0)
+                {
+                    posSum += node.GetValue();
+                }
+                else
+                {
+                    negSum += node.GetValue();
+                }
+
+                node = node.GetNext();
+            }
+
+            return posSum >= negSum;
+        }
+
+        public static bool IsIn(Node<int> node, int value)
+        {
+            while (node != null)
+            {
+                if (node.GetValue() == value)
+                {
+                    return true;
+                }
+
+                node = node.GetNext();
+            }
+
+            return false;
+        }
+
+        public static bool IsInLesserOrder(Node<int> node)
+        {
+            while (node.GetNext() != null)
+            {
+                if (node.GetValue() < node.GetNext().GetValue())
+                {
+                    return false;
+                }
+
+                node = node.GetNext();
+            }
+
+            return true;
+        }
+
+        public static void AddNode<T>(Node<T> prev, T value)
+        {
+            if (prev.GetNext() != null)
+            {
+                prev.SetNext(new Node<T>(value, prev.GetNext()));
+            }
+            else
+            {
+                prev.SetNext(new Node<T>(value));
+            }
+        }
+
+        public static void AddNode<T>(Node<T> prev, Node<T> newNode)
+        {
+            if (prev.GetNext() != null)
+            {
+                newNode.SetNext(prev.GetNext());
+                prev.SetNext(newNode);
+            }
+            else
+            {
+                newNode.SetNext(null);
+                prev.SetNext(newNode);
+            }
+        }
+
+        public static Node<T> RemoveNode<T>(Node<T> head, Node<T> node)
+        {
+            Node<T> curr = head;
+            Node<T> prev = null;
+
+            if (curr != node)
+            {
+                while (curr != node)
+                {
+                    prev = curr;
+                    curr = curr.GetNext();
+                }
+
+                prev.SetNext(curr.GetNext());
+                curr.SetNext(null);
+                return curr;
+            }
+            else if (curr.GetNext() != null)
+            {
+                prev = new Node<T>(head.GetValue());
+                curr = head.GetNext();
+                head.SetValue(curr.GetValue());
+                head.SetNext(curr.GetNext());
+                curr.SetNext(null);
+
+                return prev;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static int CountSeries(Node<int> head, int num)
+        {
+            Node<int> curr = head;
+            int seriesCount = 0;
+            bool isSeries = false;
+
+            while (curr != null)
+            {
+                if (isSeries)
+                {
+                    if (curr.GetValue() != num)
+                    {
+                        isSeries = false;
+                        seriesCount++;
+                    }
+                }
+                else
+                {
+                    if (curr.GetValue() == num)
+                    {
+                        isSeries = true;
+                        if (curr.GetNext() == null)
+                        {
+                            seriesCount++;
+                        }
+                    }
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return seriesCount;
+        }
+
+        public static char EvenOddEqual(Node<int> head)
+        {
+            Node<int> curr = head;
+            int evenCount = 0;
+            int oddCount = 0;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() % 2 == 0)
+                {
+                    evenCount++;
+                }
+                else
+                {
+                    oddCount++;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            if (evenCount == oddCount)
+            {
+                return 's';
+            }
+            else
+            {
+                return evenCount > oddCount ? 'z' : 'e';
+            }
+        }
+
+        public static Node<int> RemoveNums(Node<int> head, int num)
+        {
+            Node<int> curr = head;
+            Node<int> tmp = null;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() == num)
+                {
+                    tmp = curr.GetNext();
+                    RemoveNode(head, curr);
+                    if (curr.GetNext() == null)
+                    {
+                        curr = tmp;
+                    }
+                }
+                else
+                {
+                    curr = curr.GetNext();
+                }
+            }
+
+            return head;
+        }
+
+        public static Node<int> CopyUniqVals(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> uniquesNode = new Node<int>(head.GetValue());
+            Node<int> uniqCurr = uniquesNode;
+
+            curr = curr.GetNext();
+
+            while (curr != null)
+            {
+                if (!IsIn(uniquesNode, curr.GetValue()))
+                {
+                    uniqCurr.SetNext(new Node<int>(curr.GetValue()));
+                    uniqCurr = uniqCurr.GetNext();
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return uniquesNode;
+        }
+
+        public static bool IsInRisingOrder(Node<int> head)
+        {
+            Node<int> curr = head;
+
+            while (curr.GetNext() != null)
+            {
+                if (curr.GetValue() >= curr.GetNext().GetValue())
+                {
+                    return false;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return true;
+        }
+
+        public static string ToStrInRising(Node<int> head)
+        {
+            Node<int> curr = head.GetNext();
+            string listToString = head.ToString();
+            int prevNum = head.GetValue();
+
+            while (curr != null)
+            {
+                if (curr.GetValue() > prevNum)
+                {
+                    listToString += ", " + curr.ToString();
+                }
+
+                prevNum = curr.GetValue();
+                curr = curr.GetNext();
+            }
+
+            return listToString;
+        }
+
+        public static Node<int> CreateOrder(int begginner, int num)
+        {
+            int currNum = begginner + 1;
+            Node<int> head = new Node<int>(begginner);
+            Node<int> curr = head;
+
+            for (int i = 1; i < num; i++, currNum++)
+            {
+                curr.SetNext(new Node<int>(currNum));
+                curr = curr.GetNext();
+            }
+
+            return head;
+        }
+
+        public static Node<int> RecordBackwardList()
+        {
+            Node<int> head = null;
+            string input;
+            int num = 0;
+
+            Console.WriteLine("Enter integers to put into a list, type -999 to stop.");
+            while (num != -999)
+            {
+                Console.Write("Enter an integer: ");
+                input = Console.ReadLine();
+                if (Funcs.IsInt(input))
+                {
+                    num = int.Parse(input);
+                    if (num != -999)
+                    {
+                        head = new Node<int>(num, head);
+                    }
+                }
+                else
+                {
+                    Console.Write("Input isn't an integer, try again: ");
+                }
+            }
+
+            if (head != null)
+            {
+                return head;
+            }
+            else
+            {
+                return new Node<int>(0);
+            }
+        }
+
+        public static bool IsBalanced(Node<int> head)
+        {
+            Node<int> curr = head;
+            double listAvg = (double)(NodeFuncs.SumNodes(head) / NodeFuncs.CountNodes(head));
+            int belowAvgCount = 0;
+            int aboveAvgCount = 0;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() > listAvg)
+                {
+                    aboveAvgCount++;
+                }
+                else if (curr.GetValue() < listAvg) // what if there's value that equals to average?
+                {
+                    belowAvgCount++;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return belowAvgCount == aboveAvgCount;
+        }
+
+        public static Node<int> FindBiggestNum(Node<int> head)
+        {
+            Node<int> curr = head.GetNext();
+            Node<int> biggestNode = head;
+            int biggestNum = head.GetValue();
+
+            while (curr != null)
+            {
+                if (curr.GetValue() > biggestNum)
+                {
+                    biggestNum = curr.GetValue();
+                    biggestNode = curr;
+                }
+                curr = curr.GetNext();
+            }
+
+            return biggestNode;
+        }
+
+        public static Node<int> RemoveBiggest(Node<int> head, int n)
+        {
+            if (n == 0)
+            {
+                return head;
+            }
+            else
+            {
+                NodeFuncs.RemoveNode(head, NodeFuncs.FindBiggestNum(head));
+                return NodeFuncs.RemoveBiggest(head, n - 1);
+            }
+        }
+
+        public static int CountCharOccurs(Node<char> head, char occurence)
+        {
+            Node<char> curr = head;
+            int countOccurences = 0;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() == occurence)
+                {
+                    countOccurences++;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return countOccurences;
+        }
+
+        public static int[] CountAbcs(Node<char> abcs)
+        {
+            int[] abcsCount = new int[26];
+
+            for (int i = 0; i < abcsCount.Length; i++)
+            {
+                abcsCount[i] = CountCharOccurs(abcs, (char)(i + 'A')) + CountCharOccurs(abcs, (char)(i + 'a'));
+            }
+
+            return abcsCount;
+        }
+
+        public static int CountNameAppearance(Node<string> namesList, string name)
+        {
+            Node<string> currName = namesList;
+            int nameCount = 0;
+            name += ' ';
+
+            while (currName != null)
+            {
+                if (EngUtils.FindInString(currName.GetValue(), name))
+                {
+                    nameCount++;
+                }
+
+                currName = currName.GetNext();
+            }
+
+            return nameCount;
+        }
+
+        public static Node<T> ReverseList<T>(Node<T> head)
+        {
+            Node<T> newHead = head.GetLastNode();
+            NodeFuncs.ReverseList(head, head.GetNext());
+            head.SetNext(null);
+
+            return newHead;
+        }
+
+        private static void ReverseList<T>(Node<T> prev, Node<T> curr)
+        {
+            if (curr.GetNext() == null)
+            {
+                curr.SetNext(prev);
+                return;
+            }
+
+            ReverseList(curr, curr.GetNext());
+            curr.SetNext(prev);
+        }
+
+        public static Node<string> AbcSort(Node<string> head)
+        {
+            Node<string> curr = head;
+
+            while (curr.GetNext() != null)
+            {
+                if (EngUtils.DictionaryOrder(curr.GetValue(), curr.GetNext().GetValue()) == curr.GetNext().GetValue())
+                {
+                    return curr;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return null;
+        }
+
+        // NOTE:
+        // Task 22:
+        // Paragraph A:
+        // Example for 1 is: <any number>->null, example for 2: <any number>-><anynumber>->null
+        // Paragraph B:
+        // The function will return 1 if the length of the list is ODD (e.g. if there's only 1 node, or only 3 nodes)
+        // because num is 2 in the beggining, then after first iteration it's 3-2=1, after second it's 3-1=2, so it's either 1 or 2
+
+        public static Node<int> FindIn(Node<int> node, int value)
+        {
+            while (node != null)
+            {
+                if (node.GetValue() == value)
+                {
+                    return node;
+                }
+
+                node = node.GetNext();
+            }
+
+            return null;
+        }
+
+        public static bool HasOrder(Node<int> head, int n)
+        {
+            Node<int> curr = head;
+            int orderCount = 1;
+
+            while (curr.GetNext() != null)
+            {
+                if (curr.GetValue() + 1 == curr.GetNext().GetValue())
+                {
+                    orderCount++;
+                }
+                else
+                {
+                    orderCount = 1;
+                }
+
+                if (orderCount == n)
+                {
+                    return true;
+                }
+
+                curr = curr.GetNext();
+            }
+
+            return false;
+        }
+
+        public static void SwapValues<T>(Node<T> node1, Node<T> node2)
+        {
+            Node<T> tmp = new Node<T>(node1.GetValue());
+            node1.SetValue(node2.GetValue());
+            node2.SetValue(tmp.GetValue());
+        }
+
+        public static void NeverOddOrEven(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> odd = null;
+            bool inSearch = false;
+
+            while (curr != null)
+            {
+                if (curr.GetValue() % 2 == 1 && !inSearch)
+                {
+                    odd = curr;
+                    inSearch = true;
+                    curr = curr.GetNext();
+                }
+                else if (curr.GetValue() % 2 == 0 && inSearch)
+                {
+                    NodeFuncs.SwapValues(odd, curr);
+                    inSearch = false;
+                    curr = odd.GetNext();
+                }
+                else
+                {
+                    curr = curr.GetNext();
+                }
+            }
+        }
+
+        public static void CutSeries(Node<int> head)
+        {
+            Node<int> curr = head;
+            Node<int> next = head.GetNext();
+
+            while (curr != null && (next = curr.GetNext()) != null && next.GetNext() != null)
+            {
+                if (curr.GetValue() == next.GetValue() &&
+                        curr.GetValue() == next.GetNext().GetValue() &&
+                        next.GetValue() == next.GetNext().GetValue())
+                {
+                    while ((next = curr.GetNext()) != null && next.GetValue() == curr.GetValue())
+                    {
+                        NodeFuncs.RemoveNode(curr, next);
+                    }
+
+                    if (next != null)
+                    {
+                        NodeFuncs.RemoveNode(curr, curr);
+                    }
+                    else
+                    {
+                        NodeFuncs.RemoveNode(head, curr);
+                    }
+                }
+                else
+                {
+                    curr = curr.GetNext();
+                }
+            }
+        }
+
+        public static bool AreEqual<T>(Node<T> first, Node<T> second)
+        {
+            return EqualityComparer<T>.Default.Equals(first.GetValue(), second.GetValue());
+        }
+
+        public static bool IsPolindrome<T>(Node<T> head)
+        {
+            Node<T> rvsHead = NodeFuncs.ReverseList(head.CopyList());
+            Node<T> curr = head;
+            Node<T> rvsCurr = rvsHead;
+
+            while (curr != null && rvsCurr != null)
+            {
+                if (!AreEqual(curr, rvsCurr))
+                {
+                    return false;
+                }
+
+                curr = curr.GetNext();
+                rvsCurr = rvsCurr.GetNext();
+            }
+
+            return true;
+        }
+
+        public static Node<T> moveInList<T>(Node<T> head, int n)
+        {
+            Node<T> curr = head;
+            int count = 0;
+
+            while (count < n && curr != null)
+            {
+                curr = curr.GetNext();
+                count++;
+            }
+
+            return curr;
+        }
+
+        public static bool IsNPolindrome<T>(Node<T> head, int listLength, int start, int end)
+        {
+            Node<T> rvsHead = NodeFuncs.ReverseList(head.CopyList());
+            Node<T> curr = head;
+            Node<T> rvsCurr = rvsHead;
+            int count = 0;
+
+            if (end < listLength)
+            {
+                curr = moveInList(head, start);
+                rvsCurr = moveInList(rvsCurr, listLength - end);
+
+                while (curr != null && rvsCurr != null && count < end)
+                {
+                    if (!AreEqual(curr, rvsCurr))
+                    {
+                        return false;
+                    }
+
+                    curr = curr.GetNext();
+                    rvsCurr = rvsCurr.GetNext();
+                    count++;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        //  FIXME:
+        public static bool IsPolindrome<T>(Node<T> head, int n)
+        {
+            Node<T> curr = head;
+            int listLength = head.GetLength();
+            int count = 0;
+
+            while (count < listLength)
+            {
+                if (IsNPolindrome(curr, listLength, count, n - count))
+                {
+                    return true;
+                }
+
+                count++;
+            }
+
+            return false;
+        }
+
+        //  FIXME:
+        public static int LongestPolindrome<T>(Node<T> head)
+        {
+            int length = head.GetLength();
+            int size = 1;
+            int maxSize = 1;
+
+            while (size <= length)
+            {
+                if (IsPolindrome(head, size))
+                {
+                    maxSize = size;
+                }
+                size++;
+            }
+
+            return maxSize;
+        }
+
+        public static Node<int> Merge(Node<int> list1, Node<int> list2)
+        {
+            Node<int> newList = null;
+            Node<int> newCurr = null;
+            
+            if (list1 != null && list2 != null)
+            {
+                newList = new Node<int>(list1.GetValue() + list2.GetValue());
+                list1 = list1.GetNext();
+                list2 = list2.GetNext();
+            }
+            else if (list1 != null)
+            {
+                newList = new Node<int>(list1.GetValue());
+                list1 = list1.GetNext();
+            }
+            else if (list2 != null)
+            {
+                newList = new Node<int>(list2.GetValue());
+                list2 = list2.GetNext();
+            }
+
+            newCurr = newList;
+
+            while (list1 != null || list2 != null)
+            {
+                if (list1 != null && list2 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list1.GetValue() + list2.GetValue()));
+                    list1 = list1.GetNext();
+                    list2 = list2.GetNext();
+                }
+                else if (list1 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list1.GetValue()));
+                    list1 = list1.GetNext();
+                }
+                else if (list2 != null)
+                {
+                    newCurr.SetNext(new Node<int>(list2.GetValue()));
+                    list2 = list2.GetNext();
+                }
+                newCurr = newCurr.GetNext();
+            }
+
+            return newList;
+        }
+
+        public static Node<int> Shared(Node<int> lst1, Node<int> lst2)
+        {
+            Node<int> newHead = null;
+            Node<int> newCurr = null;
+
+            while (lst1 != null)
+            {
+                if (lst1.GetValue() == lst2.GetValue())
+                {
+                    if (newHead == null)
+                    {
+                        newHead = new Node<int>(lst1.GetValue());
+                        newCurr = newHead;
+                    }
+                    else
+                    {
+                        newCurr.SetNext(new Node<int>(lst1.GetValue()));
+                        newCurr = newCurr.GetNext();
+                    }
+                    lst1 = lst1.GetNext();
+                    lst2 = lst2.GetNext();
+                    newCurr = newCurr.GetNext();
+                }
+                else
+                {
+                    if (lst1.GetValue() > lst2.GetValue())
+                    {
+                        lst1 = lst1.GetNext();
+                    }
+                    else
+                    {
+                        lst2 = lst2.GetNext();
+                    }
+                }
+            }
+
+            return newHead;
+        }
+
+        // 40a: true example: 1, -2, 3, -4, 5, -6
+        //     false example: 1, 2, 3, 4, 5, 6
+        //
+        // 40b
+        // The exit condition is the end of the series, the function will stop when it gets to last node
+
+        public static int RecursiveEvenCount(Node<int> head)
+        {
+            if (head.GetNext() == null)
+            {
+                return head.GetValue() % 2 == 0 ? 1 : 0;
+            }
+
+            if (head.GetValue() % 2 == 0)
+            {
+                return 1 + RecursiveEvenCount(head.GetNext());
+            }
+            else
+            {
+                return 0 + RecursiveEvenCount(head.GetNext());
+            }
+        }
+
+        public static void RecursiveEvenPlacePrint(Node<int> head, bool even = false)
+        {
+            if (head.GetNext() == null)
+            {
+                return;
+            }
+
+            if (even)
+            {
+                Console.WriteLine(head.GetValue());
+                RecursiveEvenPlacePrint(head.GetNext(), false);
+            }
+
+            RecursiveEvenPlacePrint(head.GetNext(), true);
+        }
+
+        public static int MostPopularResult(Node<SheshBesh> head)
+        {
+            int[] arr = new int[6];
+            int biggestNum = 0;
+            int biggestIndex = 0;
+
+            while (head != null)
+            {
+                arr[head.GetValue().die1]++;
+                arr[head.GetValue().die2]++;
+
+                head = head.GetNext();
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (arr[i] > biggestNum)
+                {
+                    biggestNum = arr[i];
+                    biggestIndex = i;
+                }
+            }
+
+            return biggestIndex + 1;
+        }
+
+
+    }
+
+    public class SheshBesh
+    {
+        public int die1;
+        public int die2;
+    }
+}
