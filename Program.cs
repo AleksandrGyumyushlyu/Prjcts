@@ -60,6 +60,8 @@ namespace Prjcts
         {
             // InheritanceLauncher();
             StackPractice.Launcher();
+            Console.Write("\n\nPress any key.......................");
+            Console.ReadKey();
         }
     }
 }

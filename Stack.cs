@@ -78,7 +78,55 @@ namespace Prjcts
 
         public static Stack<T> BuildStack<T>(T[] arr)
         {
+            Stack<T> s = new Stack<T>();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                s.Push(arr[i]);
+            }
 
+            return s;
+        }
+
+        public static Stack<T> BuildStackR<T>(T[] arr)
+        {
+            Stack<T> s = new Stack<T>();
+            for (int i = arr.Length - 1; i >= 0; i++)
+            {
+                s.Push(arr[i]);
+            }
+
+            return s;
+        }
+
+        public static Stack<T> CopyStack<T>(Stack<T> s)
+        {
+            Stack<T> newStack = new Stack<T>();
+            Stack<T> tempStack = new Stack<T>();
+
+            while (!s.IsEmpty())
+            {
+                tempStack.Push(s.Pop());
+            }
+
+            while (!tempStack.IsEmpty())
+            {
+                newStack.Push(tempStack.Top());
+                s.Push(tempStack.Pop());
+            }
+
+            return newStack;
+        }
+
+        public static bool SearchInt(Stack<int> s, int x)
+        {
+            Stack<int> stk = CopyStack(s);
+
+            while(!stk.IsEmpty())
+            {
+                if (stk.Pop() == x)
+                    return true;
+            }
+            return false;
         }
 
         public static bool IsSorted(Stack<int> s)
@@ -120,18 +168,18 @@ namespace Prjcts
             Stack<T> tmp = new Stack<T>();
             T firstItem;
 
-            while (!s.IsEmpty())
+            firstItem = s.Pop();
+
+            while(!s.IsEmpty())
             {
                 tmp.Push(s.Pop());
             }
 
-            firstItem = tmp.Pop();
-
-            while (!tmp.IsEmpty())
+            s.Push(firstItem);
+            while(!tmp.IsEmpty())
             {
                 s.Push(tmp.Pop());
             }
-            s.Push(firstItem);
         }
 
         public static string BackX(Stack<string> addresses, string arg)
@@ -150,7 +198,8 @@ namespace Prjcts
             {
                 Console.Write("Enter number 2-9: ");
                 xIn = Console.ReadKey().KeyChar;
-                if (xIn - '0' >= 2 || xIn - '0' <= 9)
+                Console.WriteLine();
+                if (xIn - '0' >= 2 && xIn - '0' <= 9)
                 {
                     xNum = xIn - '0';
                 }
@@ -184,21 +233,45 @@ namespace Prjcts
 
         }
 
+        public static bool AreSimilar(Stack<int> s1, Stack<int> s2)
+        {
+            Stack<int> c1 = CopyStack(s1);
+ 
+            while (!c1.IsEmpty())
+            {
+                if (!SearchInt(s2, c1.Pop()))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public static void UnitTest1()
         {
             Random rnd = new Random();
-            Stack<int> stack1 = new Stack<int>();
-            for (int i = 0; i < 17; i++)
-            {
-                stack1.Push(rnd.Next(0, 100));
-            }
-
-            Stack<string> stack2 = newStack<string>();
+            Stack<int> stack1 = BuildStack(Funcs.GenArr(17, 0, 100));
             Console.WriteLine(stack1);
+
+            Stack<string> stack2 = BuildStack(["Cooking", "GitHub", "Stationery", "SomeBullshit"]);
+            Stack<int> stack3 = BuildStack([2, 3, 5, 6]);
+            Stack<int> stack4 = BuildStack([3, 2, 6, 5]);
+            Console.WriteLine(stack2);
 
             Console.WriteLine($"Task5: {IsSorted(stack1)}");
             RoundAbout(stack1);
-            Console.WriteLine($"Task6: {stack1}");
+            Console.WriteLine($"Task6: {stack1}\n");
+
+            // Console.WriteLine(BackX(stack2, "Back"));
+            // Console.WriteLine(stack2);
+            //
+            // Console.WriteLine(BackX(stack2, "BackX"));
+            // Console.WriteLine(stack2);
+
+            Console.WriteLine(stack3);
+            Console.WriteLine(stack4);
+            Console.WriteLine(AreSimilar(stack3, stack4));
         }
     }
 }
