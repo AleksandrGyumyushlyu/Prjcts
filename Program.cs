@@ -5,7 +5,7 @@ namespace Prjcts
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void InheritanceLauncher()
         {
             bool repeatChoosing = false;
 
@@ -54,6 +54,12 @@ namespace Prjcts
                 }
 
             } while (Funcs.RepeatChoosing());
+        }
+
+        static void Main(string[] args)
+        {
+            // InheritanceLauncher();
+            StackPractice.Launcher();
         }
     }
 }
