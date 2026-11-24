@@ -248,9 +248,111 @@ namespace Prjcts
             return true;
         }
 
+        public static bool AreEqual<T>(T val1, T val2)
+        {
+            return EqualityComparer<T>.Default.Equals(val1, val2);
+        }
+
+        public static bool IsIn<T>(Stack<T> s, T val)
+        {
+            Stack<T> tmp = new Stack<T>();
+
+            while (!s.IsEmpty())
+            {
+                tmp.Push(s.Pop());
+                if (AreEqual(tmp.Top(), val))
+                {
+                    return true;
+                }
+            }
+
+            while (!tmp.IsEmpty())
+            {
+                s.Push(tmp.Pop());
+            }
+
+            return false;
+        }
+
+        public static bool IsInRecursive<T>(Stack<T> s, T val)
+        {
+            return IsInRecursive(s, val, CopyStack(s));
+        }
+
+        public static bool IsInRecursive<T>(Stack<T> s, T val, Stack<T> tmp)
+        {
+            if (tmp.IsEmpty())
+            {
+                return false;
+            }
+
+            if (AreEqual(val, tmp.Pop()))
+            {
+                return true;
+            }
+            else
+            {
+                return IsInRecursive(s, val, tmp);
+            }
+        }
+
+        public static bool AreSameRecursive<T>(Stack<T> s1, Stack<T> s2)
+        {
+            return AreSameRecursive(s1, s2, CopyStack(s1), CopyStack(s2));
+        }
+
+        public static bool AreSameRecursive<T>(Stack<T> s1, Stack<T> s2, Stack<T> tmp1, Stack<T> tmp2)
+        {
+            if (tmp1.IsEmpty() && tmp2.IsEmpty())
+            {
+                return true;
+            }
+            else if (tmp1.IsEmpty() || tmp2.IsEmpty())
+            {
+                return false;
+            }
+
+            if (!AreEqual(tmp1.Pop(),tmp2.Pop()))
+            {
+                return false;
+            }
+
+            return AreSameRecursive(s1, s2, tmp1, tmp2);
+        }
+
+        public static void RisesLowers(Stack<int> s)
+        {
+            Stack<int> tmp = new Stack<int>();
+            bool firstIteration = true;
+            int borderNum = 0;
+
+            while (!s.IsEmpty())
+            {
+                tmp.Push(s.Pop());
+
+                if (firstIteration)
+                {
+                    firstIteration = false;
+                    borderNum = tmp.Top();
+                }
+                else
+                {
+                    if (tmp.Top() > borderNum)
+                    {
+                        borderNum = tmp.Top();
+                    }
+
+                }
+            }
+
+            while (!tmp.IsEmpty())
+            {
+                s.Push(tmp.Pop());
+            }
+        }
+
         public static void UnitTest1()
         {
-            Random rnd = new Random();
             Stack<int> stack1 = BuildStack(Funcs.GenArr(17, 0, 100));
             Console.WriteLine(stack1);
 
@@ -265,13 +367,29 @@ namespace Prjcts
 
             // Console.WriteLine(BackX(stack2, "Back"));
             // Console.WriteLine(stack2);
-            //
+            // // Does ReadKey and it's ANOYING
             // Console.WriteLine(BackX(stack2, "BackX"));
             // Console.WriteLine(stack2);
 
             Console.WriteLine(stack3);
             Console.WriteLine(stack4);
             Console.WriteLine(AreSimilar(stack3, stack4));
+
+            Console.WriteLine(IsIn(stack2, "Cooking"));
+            Console.WriteLine(IsIn(stack2, "Aboba"));
+
+            // Console.WriteLine(IsIn(stack3, 3));
+            // Console.WriteLine("Second");
+            // Console.WriteLine(IsIn(stack3, 7));
+
+            Console.WriteLine(IsInRecursive(stack3, 3));
+            Console.WriteLine("Second");
+            Console.WriteLine(IsInRecursive(stack3, 7));
+
+            Console.WriteLine(AreSameRecursive(stack3, stack3));
+            Console.WriteLine(AreSameRecursive(stack3, stack4));
+
+            
         }
     }
 }
