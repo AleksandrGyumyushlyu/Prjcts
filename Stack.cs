@@ -117,6 +117,11 @@ namespace Prjcts
             return newStack;
         }
 
+        public static bool AreEqual<T>(T val1, T val2)
+        {
+            return EqualityComparer<T>.Default.Equals(val1, val2);
+        }
+
         public static bool SearchInt(Stack<int> s, int x)
         {
             Stack<int> stk = CopyStack(s);
@@ -248,11 +253,6 @@ namespace Prjcts
             return true;
         }
 
-        public static bool AreEqual<T>(T val1, T val2)
-        {
-            return EqualityComparer<T>.Default.Equals(val1, val2);
-        }
-
         public static bool IsIn<T>(Stack<T> s, T val)
         {
             Stack<T> tmp = new Stack<T>();
@@ -276,55 +276,63 @@ namespace Prjcts
 
         public static bool IsInRecursive<T>(Stack<T> s, T val)
         {
-            return IsInRecursive(s, val, CopyStack(s));
-        }
-
-        public static bool IsInRecursive<T>(Stack<T> s, T val, Stack<T> tmp)
-        {
-            if (tmp.IsEmpty())
+            if (s.IsEmpty())
             {
                 return false;
             }
 
-            if (AreEqual(val, tmp.Pop()))
+            T x = s.Pop();
+            bool isEqual = false;
+
+            if (AreEqual(val, x))
             {
-                return true;
+                isEqual = true;
             }
             else
             {
-                return IsInRecursive(s, val, tmp);
+                isEqual = IsInRecursive(s, val);
             }
+
+            s.Push(x);
+            return isEqual;
         }
 
         public static bool AreSameRecursive<T>(Stack<T> s1, Stack<T> s2)
         {
-            return AreSameRecursive(s1, s2, CopyStack(s1), CopyStack(s2));
-        }
+            T x1, x2;
+            bool areEqual = false;
 
-        public static bool AreSameRecursive<T>(Stack<T> s1, Stack<T> s2, Stack<T> tmp1, Stack<T> tmp2)
-        {
-            if (tmp1.IsEmpty() && tmp2.IsEmpty())
+            if (s1.IsEmpty() && s2.IsEmpty())
             {
                 return true;
             }
-            else if (tmp1.IsEmpty() || tmp2.IsEmpty())
+            else if (s1.IsEmpty() || s2.IsEmpty())
             {
                 return false;
             }
 
-            if (!AreEqual(tmp1.Pop(),tmp2.Pop()))
+            x1 = s1.Pop();
+            x2 = s2.Pop();
+
+            if (AreEqual(x1, x2))
             {
-                return false;
+                areEqual = AreSameRecursive(s1, s2);
             }
 
-            return AreSameRecursive(s1, s2, tmp1, tmp2);
+            s1.Push(x1);
+            s2.Push(x2);
+
+            return areEqual;
         }
 
         public static void RisesLowers(Stack<int> s)
         {
             Stack<int> tmp = new Stack<int>();
             bool firstIteration = true;
+            bool foundBorder = false;
             int borderNum = 0;
+            int lowerCount = 0;
+            int risingCount = 0 ;
 
             while (!s.IsEmpty())
             {
@@ -335,13 +343,22 @@ namespace Prjcts
                     firstIteration = false;
                     borderNum = tmp.Top();
                 }
-                else
+                else if (!foundBorder)
                 {
                     if (tmp.Top() > borderNum)
                     {
                         borderNum = tmp.Top();
+                        lowerCount++;
                     }
-
+                    else if (tmp.Top() < borderNum)
+                    {
+                        foundBorder = true;
+                        risingCount++;
+                    }
+                }
+                else
+                {
+                    risingCount++;
                 }
             }
 
@@ -349,47 +366,71 @@ namespace Prjcts
             {
                 s.Push(tmp.Pop());
             }
+
+            Console.WriteLine(lowerCount > risingCount ? "Lowering sequence is longer" : "Rising sequence is longer");
+        }
+
+        public static int Sum(Stack<int> s)
+        {
+            if (s.IsEmpty())
+            {
+                return 0;
+            }
+            else
+            {
+                return s.Pop() + Sum(s);
+            }
         }
 
         public static void UnitTest1()
         {
-            Stack<int> stack1 = BuildStack(Funcs.GenArr(17, 0, 100));
-            Console.WriteLine(stack1);
+            // Stack<int> stack1 = BuildStack(Funcs.GenArr(17, 0, 100));
+            // Console.WriteLine(stack1);
 
             Stack<string> stack2 = BuildStack(["Cooking", "GitHub", "Stationery", "SomeBullshit"]);
             Stack<int> stack3 = BuildStack([2, 3, 5, 6]);
             Stack<int> stack4 = BuildStack([3, 2, 6, 5]);
-            Console.WriteLine(stack2);
-
-            Console.WriteLine($"Task5: {IsSorted(stack1)}");
-            RoundAbout(stack1);
-            Console.WriteLine($"Task6: {stack1}\n");
+            Stack<int> stack5 = BuildStack([2, 3, 4, 5, 7, 4, 2, 1]);
+            // Console.WriteLine(stack2);
+            //
+            // Console.WriteLine($"Task5: {IsSorted(stack1)}");
+            // RoundAbout(stack1);
+            // Console.WriteLine($"Task6: {stack1}\n");
 
             // Console.WriteLine(BackX(stack2, "Back"));
             // Console.WriteLine(stack2);
-            // // Does ReadKey and it's ANOYING
             // Console.WriteLine(BackX(stack2, "BackX"));
             // Console.WriteLine(stack2);
 
-            Console.WriteLine(stack3);
-            Console.WriteLine(stack4);
-            Console.WriteLine(AreSimilar(stack3, stack4));
-
-            Console.WriteLine(IsIn(stack2, "Cooking"));
-            Console.WriteLine(IsIn(stack2, "Aboba"));
+            // Console.WriteLine(stack3);
+            // Console.WriteLine(stack4);
+            // Console.WriteLine(AreSimilar(stack3, stack4));
+            //
+            // Console.WriteLine(IsIn(stack2, "Cooking"));
+            // Console.WriteLine(IsIn(stack2, "Aboba"));
 
             // Console.WriteLine(IsIn(stack3, 3));
             // Console.WriteLine("Second");
             // Console.WriteLine(IsIn(stack3, 7));
 
-            Console.WriteLine(IsInRecursive(stack3, 3));
-            Console.WriteLine("Second");
-            Console.WriteLine(IsInRecursive(stack3, 7));
+            // Console.WriteLine("IsInRTrue");
+            // Console.WriteLine(IsInRecursive(stack3, 3));
+            // Console.WriteLine("IsInRFalse");
+            // Console.WriteLine(IsInRecursive(stack3, 7));
 
-            Console.WriteLine(AreSameRecursive(stack3, stack3));
-            Console.WriteLine(AreSameRecursive(stack3, stack4));
+            // Console.WriteLine(AreSameRecursive(stack3, CopyStack(stack3)));
+            // Console.WriteLine(stack3);
+            // Console.WriteLine(stack3);
+            // Console.WriteLine(AreSameRecursive(stack3, stack4));
+            // Console.WriteLine(stack3);
+            // Console.WriteLine(stack4);
 
-            
+            // RisesLowers(stack5);
+
+            // 13b: The function purpose is to copy the stack
+
+            // 15b: To reverse the stack
+            // 15c: O(n) because going the length n 3 times, and O(3n) = O(n) and cuz there aren't nested loops
         }
     }
 }
